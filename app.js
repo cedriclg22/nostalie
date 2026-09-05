@@ -1,6 +1,6 @@
-/* Melimo — logique partagée (stockage local, générateur de mots fléchés, banques de distracteurs) */
+/* Nostalie — logique partagée (stockage local, générateur de mots fléchés, banques de distracteurs) */
 
-const STORAGE_PREFIX = 'melimo_board_';
+const STORAGE_PREFIX = 'nostalie_board_';
 
 const Store = {
   save(id, data) {
@@ -209,8 +209,8 @@ function buildDemoBoard() {
       ],
       audio: null
     },
-    colorPrimary: '#d9527a',
-    colorSecondary: '#fbead9',
+    colorPrimary: '#8C5B4E',
+    colorSecondary: '#F5F0E9',
     finalWord: 'Vacances'
   };
 }
@@ -233,9 +233,9 @@ function shade(hex, percent) {
 }
 
 function applyBoardColors(board) {
-  document.documentElement.style.setProperty('--primary', board.colorPrimary || '#d9527a');
-  document.documentElement.style.setProperty('--secondary', board.colorSecondary || '#fbead9');
-  document.documentElement.style.setProperty('--primary-dark', shade(board.colorPrimary || '#d9527a', -18));
+  document.documentElement.style.setProperty('--primary', board.colorPrimary || '#8C5B4E');
+  document.documentElement.style.setProperty('--secondary', board.colorSecondary || '#F5F0E9');
+  document.documentElement.style.setProperty('--primary-dark', shade(board.colorPrimary || '#8C5B4E', -18));
 }
 
 /* ---------- Rendu de l'affiche (partagé entre poster.html et l'aperçu en direct de create.html) ---------- */

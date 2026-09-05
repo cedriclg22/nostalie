@@ -1,4 +1,4 @@
-/* Melimo — affiche imprimable (PDF via impression navigateur), style pêle-mêle façon maquette papier */
+/* Nostalie — affiche imprimable (PDF via impression navigateur), style pêle-mêle façon maquette papier */
 
 const board = loadBoard();
 const root = document.getElementById('content');

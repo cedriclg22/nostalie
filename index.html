@@ -3,305 +3,476 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Melimo — Les souvenirs deviennent un jeu</title>
-<meta name="description" content="Melimo : un tableau familial personnalisé avec photos, mini-jeux et vidéo surprise, à envoyer à ceux que vous aimez.">
+<title>Nostalie — Vos souvenirs, en vrai, chez ceux que vous aimez</title>
+<meta name="description" content="Nostalie : le cadre jeu créé par l'IA, le puzzle photo chaque mois et le cadre photo écran connecté. Pour les familles, les grands-parents et les amoureux.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=19">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
+
   <div class="top-banner">
     <div class="topbar">
-      <a class="logo" href="index.html">Melimo</a>
+      <a class="logo" href="index.html">Nostalie</a>
       <nav class="nav">
-        <a class="navlink" href="#comment-ca-marche">Comment ça marche</a>
-        <a class="navlink" href="#pourquoi">Pourquoi Melimo</a>
+        <a class="navlink" href="#produits">Nos produits</a>
+        <a class="navlink" href="#pour-qui">Pour qui</a>
+        <a class="navlink" href="#comment">Comment ça marche</a>
         <a class="navlink" href="#tarifs">Tarifs</a>
-        <a class="btn small" href="create.html">Créer mon tableau</a>
+        <a class="navlink" href="#app">App mobile</a>
+        <a class="btn small" href="create.html">Créer mon cadre</a>
       </nav>
     </div>
 
     <!-- HERO -->
-    <div class="hero">
-      <p>Un tableau familial personnalisé à offrir : photos, mini-jeux et vidéo surprise à débloquer.</p>
-      <div class="hero-ctas">
-        <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon premier tableau</a>
-        <a class="btn ghost" href="#apercu-live"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> Voir un exemple</a>
+    <header class="hero">
+      <div class="hero-copy">
+        <span class="hero-eyebrow"><span class="dot"></span> Trois façons de faire vivre vos photos</span>
+        <h1>Vos souvenirs méritent mieux qu'une <em class="wonk">pellicule</em> de téléphone.</h1>
+        <p class="hero-sub">Un cadre jeu, un puzzle chaque mois, un cadre écran connecté.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#produits"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Découvrir les 3 produits</a>
+          <a class="btn ghost" href="view.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> Voir un exemple</a>
+        </div>
+        <div class="hero-proof">
+          <span class="proof-dots">
+            <span style="background-image:url('image/mamie-remplit-affiche.jpg')"></span>
+            <span style="background-image:url('image/enfants-babyfoot.jpg')"></span>
+            <span style="background-image:url('image/couple-tient-poster.jpg')"></span>
+          </span>
+          Pensé pour les familles, les grands-parents et les amoureux.
+        </div>
       </div>
+      <div class="hero-visual">
+        <div class="hero-collage">
+          <img class="hc-2" src="image/couple-pointe-poster.jpg" alt="Des grands-parents montrent du doigt une photo de leur cadre Nostalie">
+          <img class="hc-1" src="image/enfants-calin.jpg" alt="Deux enfants se font un câlin">
+          <img class="hc-3" src="image/famille-plage-rochers.jpg" alt="Une famille sur les rochers au bord de la mer">
+          <div class="hc-badge"><b>Chaque mois</b><span>un nouveau souvenir arrive par la poste.</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="strip">
+      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Jeux générés par l'IA</div>
+      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="6" width="13" height="10" rx="2"/><path d="M14.5 9.5h4l3 3.2V16h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg> Envoyé chez vos proches</div>
+      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg> Cadre écran connecté</div>
+      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></svg> Sans engagement</div>
     </div>
   </div>
 
+  <!-- PRODUITS -->
+  <section class="section" id="produits">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="kicker">Nos produits</span>
+        <h2>Trois objets, une même idée</h2>
+        <p>Sur un mur, sur une table, sur la porte du frigo.</p>
+      </div>
+
+      <div class="prodgrid">
+
+        <article class="prodcard">
+          <div class="prodcard-media photo" style="--tint: var(--rose)">
+            <img class="media-photo" src="image/poster-mur-salon.jpg" alt="Le cadre jeu Nostalie accroché au mur d'un salon">
+          </div>
+          <div class="prodcard-body">
+            <div class="prod-num">Produit 01</div>
+            <h3>Cadre jeu</h3>
+            <p>Un tableau à accrocher, avec 5 mini-jeux fabriqués à partir de vos photos.</p>
+            <ul class="prod-list">
+              <li>5 jeux générés par l'IA</li>
+              <li>Vidéo surprise à débloquer</li>
+              <li>Cadre en bois envoyé une fois</li>
+            </ul>
+            <div class="prod-foot">
+              <div class="prod-price">19,90 €<small>par mois</small></div>
+              <a class="btn small" href="create.html">Créer</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prodcard">
+          <div class="prodcard-media" style="--tint: var(--sky)">
+            <div class="puzzle-mock" style="--puz:url('image/famille-plage-rochers.jpg')">
+            <i style="background-position:0.00% 0.00%"></i>
+            <i style="background-position:25.00% 0.00%"></i>
+            <i style="background-position:50.00% 0.00%"></i>
+            <i style="background-position:75.00% 0.00%"></i>
+            <i class="loose" style="background-position:100.00% 0.00%"></i>
+            <i style="background-position:0.00% 33.33%"></i>
+            <i style="background-position:25.00% 33.33%"></i>
+            <i style="background-position:50.00% 33.33%"></i>
+            <i style="background-position:75.00% 33.33%"></i>
+            <i style="background-position:100.00% 33.33%"></i>
+            <i style="background-position:0.00% 66.67%"></i>
+            <i style="background-position:25.00% 66.67%"></i>
+            <i style="background-position:50.00% 66.67%"></i>
+            <i style="background-position:75.00% 66.67%"></i>
+            <i style="background-position:100.00% 66.67%"></i>
+            <i style="background-position:0.00% 100.00%"></i>
+            <i style="background-position:25.00% 100.00%"></i>
+            <i style="background-position:50.00% 100.00%"></i>
+            <i style="background-position:75.00% 100.00%"></i>
+            <i style="background-position:100.00% 100.00%"></i>
+            </div>
+          </div>
+          <div class="prodcard-body">
+            <div class="prod-num">Produit 02</div>
+            <h3>Puzzle photo</h3>
+            <p>Une photo, ou un montage, imprimée sur un puzzle et envoyée chaque mois.</p>
+            <ul class="prod-list">
+              <li>1 photo ou un montage</li>
+              <li>200 pièces, boîte personnalisée</li>
+              <li>Un nouveau puzzle chaque mois</li>
+            </ul>
+            <div class="prod-foot">
+              <div class="prod-price">24,90 €<small>par mois</small></div>
+              <a class="btn small" href="create.html">Créer</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="prodcard">
+          <div class="prodcard-media" style="--tint: var(--sage)">
+            <div class="device-mock">
+              <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+              <div class="screen"><img src="image/bebe-mer.jpg" alt="Le cadre photo écran Nostalie affichant une photo de famille"></div>
+              <div class="magnet"></div>
+            </div>
+          </div>
+          <div class="prodcard-body">
+            <div class="prod-num">Produit 03</div>
+            <h3>Cadre photo écran</h3>
+            <p>Un écran connecté sur le frigo ou au mur. La famille y envoie ses photos depuis l'app.</p>
+            <ul class="prod-list">
+              <li>Wi-Fi, mise à jour automatique</li>
+              <li>Aimanté ou encadré</li>
+              <li>Photos et contributeurs illimités</li>
+            </ul>
+            <div class="prod-foot">
+              <div class="prod-price">9 €<small>par mois + 129 € l'écran</small></div>
+              <a class="btn small" href="#app">Découvrir</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DETAIL PRODUITS -->
+  <section class="section alt" id="detail">
+    <div class="section-inner">
+
+      <div class="detail">
+        <div class="detail-media" style="--tint: var(--rose)">
+          <img class="full portrait" src="image/mamie-remplit-affiche.jpg" alt="Une grand-mère remplit les jeux de son cadre Nostalie au stylo">
+        </div>
+        <div class="detail-copy">
+          <span class="kicker">Produit 01</span>
+          <h3>Le cadre jeu</h3>
+          <p>Vous choisissez vos photos et quelques mots. L'IA en fait cinq jeux sur mesure, et la vidéo surprise se débloque une fois tout résolu. Les créations des utilisateurs enrichissent la banque de jeux.</p>
+          <div class="chips">
+            <span class="chip">Pêle-mêle</span>
+            <span class="chip">Mots fléchés</span>
+            <span class="chip">Rébus</span>
+            <span class="chip">Différences</span>
+            <span class="chip">Vidéo surprise</span>
+          </div>
+          <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon cadre jeu</a>
+        </div>
+      </div>
+
+      <div class="detail reverse">
+        <div class="detail-media" style="--tint: var(--sky)">
+          <div class="puzzle-mock" style="--puz:url('image/enfants-plage-lunettes.jpg'); max-width:320px">
+            <i style="background-position:0.00% 0.00%"></i>
+            <i style="background-position:25.00% 0.00%"></i>
+            <i style="background-position:50.00% 0.00%"></i>
+            <i style="background-position:75.00% 0.00%"></i>
+            <i style="background-position:100.00% 0.00%"></i>
+            <i style="background-position:0.00% 33.33%"></i>
+            <i style="background-position:25.00% 33.33%"></i>
+            <i style="background-position:50.00% 33.33%"></i>
+            <i style="background-position:75.00% 33.33%"></i>
+            <i style="background-position:100.00% 33.33%"></i>
+            <i style="background-position:0.00% 66.67%"></i>
+            <i style="background-position:25.00% 66.67%"></i>
+            <i style="background-position:50.00% 66.67%"></i>
+            <i style="background-position:75.00% 66.67%"></i>
+            <i style="background-position:100.00% 66.67%"></i>
+            <i class="loose" style="background-position:0.00% 100.00%"></i>
+            <i style="background-position:25.00% 100.00%"></i>
+            <i style="background-position:50.00% 100.00%"></i>
+            <i style="background-position:75.00% 100.00%"></i>
+            <i style="background-position:100.00% 100.00%"></i>
+          </div>
+        </div>
+        <div class="detail-copy">
+          <span class="kicker">Produit 02</span>
+          <h3>Le puzzle photo</h3>
+          <p>Une photo, ou un montage, sur un puzzle 200 pièces. On l'assemble à plusieurs et on découvre l'image en même temps que le souvenir. Vos envois se préparent à l'avance depuis l'app.</p>
+          <div class="chips">
+            <span class="chip">200 pièces</span>
+            <span class="chip">1 photo ou un montage</span>
+            <span class="chip">Boîte personnalisée</span>
+            <span class="chip">Livré chaque mois</span>
+          </div>
+          <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Composer mon puzzle</a>
+        </div>
+      </div>
+
+      <div class="detail">
+        <div class="detail-media" style="--tint: var(--sage)">
+          <div class="device-mock" style="max-width:320px">
+            <div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+            <div class="screen"><img src="image/enfants-babyfoot.jpg" alt="Cadre photo écran connecté affichant des enfants au baby-foot"></div>
+            <div class="magnet"></div>
+          </div>
+        </div>
+        <div class="detail-copy">
+          <span class="kicker">Produit 03</span>
+          <h3>Le cadre photo écran</h3>
+          <p>Un écran fin, aimanté au frigo ou encadré au mur. Connecté une fois au Wi-Fi, il affiche en quelques secondes chaque photo envoyée depuis l'app. Rien à faire de l'autre côté.</p>
+          <div class="chips">
+            <span class="chip">Wi-Fi</span>
+            <span class="chip">Aimanté ou encadré</span>
+            <span class="chip">Photos illimitées</span>
+            <span class="chip">9 €/mois</span>
+          </div>
+          <a class="btn" href="#app"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Télécharger l'app</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- POUR QUI -->
+  <section class="section" id="pour-qui">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="kicker">Pour qui</span>
+        <h2>Ceux à qui ça fait le plus d'effet</h2>
+        <p>Trois manières de dire « je pense à toi ».</p>
+      </div>
+      <div class="audience">
+        <div class="aud-card">
+          <img src="image/fami.jpg" alt="Une mère et ses enfants préparent leur cadre Nostalie">
+          <div class="aud-body">
+            <h4>Les familles</h4>
+            <p>On choisit les photos ensemble, et le colis devient un petit événement.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <img src="image/couple-pointe-poster.jpg" alt="Des grands-parents jouent avec leur cadre Nostalie">
+          <div class="aud-body">
+            <h4>Les grands-parents</h4>
+            <p>Rien à installer. Une affiche à remplir, un puzzle à monter, un écran qui se remplit seul.</p>
+          </div>
+        </div>
+        <div class="aud-card">
+          <img src="image/couple-tient-poster.jpg" alt="Un couple tient son cadre Nostalie">
+          <div class="aud-body">
+            <h4>Les amoureux</h4>
+            <p>Vos souvenirs à deux en énigmes, avec un message vidéo au bout.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- COMMENT CA MARCHE -->
-  <section class="landing" id="comment-ca-marche">
-    <div class="landing-inner">
+  <section class="section alt" id="comment">
+    <div class="section-inner">
       <div class="section-head">
         <span class="kicker">Comment ça marche</span>
-        <h2>Deux expériences, un seul tableau</h2>
-        <p>Vous créez, l'IA met en forme, vos proches jouent — sans rien avoir à écrire.</p>
+        <h2>Trois minutes de votre côté</h2>
+        <p>Mise en page, jeux, impression, envoi : c'est nous.</p>
       </div>
-      <div class="tracks">
-        <div class="track">
-          <img class="track-photo" src="image/fami.jpg" alt="Une maman et ses deux enfants créent leur tableau Melimo ensemble sur l'ordinateur">
-          <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3C7 3 3 6.8 3 11.5 3 15 5.5 17 8.5 17c1 0 1.5-.6 1.5-1.3 0-.6-.3-1-.3-1.6 0-.9.8-1.6 1.8-1.6H14c3.3 0 6-2.4 6-6C20 4.6 16.6 3 12 3z"/><circle cx="7.5" cy="10.5" r="1" fill="currentColor" stroke="none"/><circle cx="10.5" cy="7" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="7.5" r="1" fill="currentColor" stroke="none"/></svg> Côté famille</h3>
-          <ol class="steps">
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f8d9c9"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span class="step-num">1</span></div>
-              <div class="step-body"><b>Pêle-mêle</b> — choisissez 5 à 10 photos et l'objet caché à retrouver.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#cfe8f0"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span class="step-num">2</span></div>
-              <div class="step-body"><b>Mots fléchés</b> — ajoutez vos mots et définitions, l'IA vous aide si besoin.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f0d9e4"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13 7l3.5 3.5"/></svg><span class="step-num">3</span></div>
-              <div class="step-body"><b>Rébus</b> — sélectionnez des emojis pour faire deviner un mot.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#dcead0"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg><span class="step-num">4</span></div>
-              <div class="step-body"><b>Jeu des différences</b> — placez l'indice sur une photo souvenir.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f6e2b8"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l1.3-3.8a1.5 1.5 0 0 1 1.9-.9l12.6 4.2a1.5 1.5 0 0 1 .95 1.9L19.2 12H3V9.5z"/><path d="M6.5 5.3L8 9.5M11.5 6.9L13 11.1"/><rect x="3" y="12" width="18" height="8" rx="2"/></svg><span class="step-num">5</span></div>
-              <div class="step-body"><b>Photo + vidéo</b> — ajoutez la vidéo surprise (30s à 5 min) qui sera débloquée à la fin.</div>
-            </li>
-          </ol>
+      <div class="howto">
+        <div class="how-step">
+          <h4>Vous choisissez vos photos</h4>
+          <p>Depuis le web ou l'app, en quelques minutes.</p>
         </div>
-        <div class="track">
-          <img class="track-photo" src="image/mamie-remplit-affiche.jpg" alt="Une grand-mère remplit son tableau Melimo avec un stylo">
-          <h3><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="8.5" r="2.5"/><path d="M3 20c0-3.3 2.5-5.5 5.5-5.5S14 16.7 14 20"/><path d="M14.5 15c2.5.2 4.5 2 4.5 5"/></svg> Côté destinataire</h3>
-          <ol class="steps">
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f8d9c9"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 7.5l9 6 9-6"/></svg><span class="step-num">1</span></div>
-              <div class="step-body">Il reçoit le tableau imprimé.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#cfe8f0"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="10" rx="5"/><path d="M7 11v4M5 13h4"/><circle cx="15.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="14.5" r="1" fill="currentColor" stroke="none"/></svg><span class="step-num">2</span></div>
-              <div class="step-body">Il joue aux 5 mini-jeux.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f0d9e4"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6.5 6.5 0 0 0-3.8 11.8c.6.4.8 1 .8 1.7v.5h6v-.5c0-.7.2-1.3.8-1.7A6.5 6.5 0 0 0 12 3z"/></svg><span class="step-num">3</span></div>
-              <div class="step-body">Chaque jeu résolu révèle un indice du mot final.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#dcead0"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l1.3-3.8a1.5 1.5 0 0 1 1.9-.9l12.6 4.2a1.5 1.5 0 0 1 .95 1.9L19.2 12H3V9.5z"/><path d="M6.5 5.3L8 9.5M11.5 6.9L13 11.1"/><rect x="3" y="12" width="18" height="8" rx="2"/></svg><span class="step-num">4</span></div>
-              <div class="step-body">Une fois tout résolu, la <b>vidéo surprise</b> se lance automatiquement.</div>
-            </li>
-            <li>
-              <div class="step-icon-wrap" style="--step-color:#f6e2b8"><svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg><span class="step-num">5</span></div>
-              <div class="step-body">Le <b>cadre</b> envoyé une première fois se réutilise à chaque nouvel envoi.</div>
-            </li>
-          </ol>
+        <div class="how-step">
+          <h4>L'IA fabrique le contenu</h4>
+          <p>Jeux, définitions, rébus, montage du puzzle. Vous corrigez ce que vous voulez.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RENOUVELLEMENT -->
-  <section class="landing alt" id="renouvellement">
-    <div class="landing-inner">
-      <div class="renew-block">
-        <div class="renew-photo-wrap">
-          <img class="renew-photo" src="image/changement-affiche.jpg" alt="Un couple ouvre le cadre Melimo par l'arrière pour changer l'affiche">
-        </div>
-        <div class="renew-text">
-          <span class="kicker">Un cadre, des souvenirs à l'infini</span>
-          <h2>Un seul cadre, un nouveau tableau chaque mois</h2>
-          <p>Vous ne recevez le <b>cadre en bois qu'une seule fois</b>. Ensuite, chaque mois (ou tous les deux mois selon la formule), une nouvelle affiche arrive par courrier : il suffit d'ouvrir le cadre par l'arrière, de <b>retirer l'ancienne affiche et de glisser la nouvelle</b> à la place. Deux minutes, et de nouveaux souvenirs prennent vie sur le mur.</p>
-          <a class="btn ghost small" href="#tarifs">Voir les formules</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- POURQUOI / FEATURES -->
-  <section class="landing alt" id="pourquoi">
-    <div class="landing-inner">
-      <div class="section-head">
-        <span class="kicker">Pourquoi Melimo</span>
-        <h2>Plus qu'un cadre photo</h2>
-        <p>Un moment de complicité, pas juste un objet qu'on regarde une fois.</p>
-      </div>
-      <div class="photo-strip">
-        <img src="image/couple-pointe-poster.jpg" alt="Des grands-parents pointent du doigt les photos de leur tableau Melimo">
-        <img src="image/poster-mur-salon.jpg" alt="Un tableau Melimo accroché au-dessus d'une cheminée">
-        <img src="image/couple-tient-poster.jpg" alt="Un couple tient son tableau Melimo ensemble sur le canapé">
-      </div>
-      <div class="feature-grid">
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <h4>Pêle-mêle vivant</h4>
-          <p>Vos plus belles photos rassemblées, avec un objet caché à retrouver en famille.</p>
-        </div>
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
-          <h4>Mots fléchés sur-mesure</h4>
-          <p>Générés automatiquement à partir de vos souvenirs, avec l'aide de l'IA si besoin.</p>
-        </div>
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13 7l3.5 3.5"/></svg>
-          <h4>Rébus malicieux</h4>
-          <p>Des emojis à assembler pour deviner un mot — simple et ludique pour tous les âges.</p>
-        </div>
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>
-          <h4>Jeu des différences</h4>
-          <p>Une photo à observer de près pour dénicher le détail caché.</p>
-        </div>
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l1.3-3.8a1.5 1.5 0 0 1 1.9-.9l12.6 4.2a1.5 1.5 0 0 1 .95 1.9L19.2 12H3V9.5z"/><path d="M6.5 5.3L8 9.5M11.5 6.9L13 11.1"/><rect x="3" y="12" width="18" height="8" rx="2"/></svg>
-          <h4>Vidéo surprise</h4>
-          <p>Débloquée uniquement une fois tous les jeux résolus — l'émotion en récompense.</p>
-        </div>
-        <div class="feature">
-          <svg class="emoji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <h4>Cadre réutilisable</h4>
-          <p>Envoyé une fois, il accueille ensuite un nouveau poster à chaque envoi suivant.</p>
+        <div class="how-step">
+          <h4>Ça arrive chez eux</h4>
+          <p>Par la poste, ou en direct sur le cadre écran.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- APERCU LIVE -->
-  <section class="landing" id="apercu-live">
-    <div class="landing-inner">
+  <section class="section" id="apercu">
+    <div class="section-inner">
       <div class="section-head">
         <span class="kicker">Aperçu</span>
-        <h2>Un vrai tableau Melimo, généré en direct</h2>
-        <p>Voici à quoi ressemble l'affiche envoyée à vos proches — celle-ci est générée sous vos yeux avec des données de démo.</p>
+        <h2>Une vraie affiche, générée en direct</h2>
+        <p>L'affiche envoyée à vos proches, fabriquée ici avec des données de démo.</p>
       </div>
       <div class="live-poster-wrap" id="livePosterPreview"></div>
-      <div class="preview-cta" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-        <a class="btn ghost" href="view.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="8" width="19" height="10" rx="5"/><path d="M7 11v4M5 13h4"/><circle cx="15.5" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="14.5" r="1" fill="currentColor" stroke="none"/></svg> Essayer la version interactive</a>
-        <a class="btn ghost" href="poster.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V4h12v5"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg> Voir l'affiche imprimable</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- POSITIONNEMENT -->
-  <section class="landing alt">
-    <div class="landing-inner">
-      <div class="section-head">
-        <span class="kicker">Positionnement</span>
-        <h2>Différent d'un cadre photo connecté classique</h2>
-      </div>
-      <div class="compare">
-        <div class="col">
-          <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <p>Les cadres classiques affichent des photos qu'on regarde une fois, puis qu'on oublie.</p>
-        </div>
-        <div class="col us">
-          <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
-          <p>Melimo transforme les souvenirs en jeu, avec une vidéo surprise comme récompense — un vrai moment partagé.</p>
-        </div>
+      <div class="preview-cta" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
+        <a class="btn ghost" href="view.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> Essayer la version interactive</a>
+        <a class="btn ghost" href="poster.html?demo=1">Voir l'affiche imprimable</a>
       </div>
     </div>
   </section>
 
   <!-- TARIFS -->
-  <section class="landing" id="tarifs">
-    <div class="landing-inner">
+  <section class="section alt" id="tarifs">
+    <div class="section-inner">
       <div class="section-head">
-        <span class="kicker">Tarifs envisagés</span>
-        <h2>Un format pour chaque famille</h2>
+        <span class="kicker">Tarifs</span>
+        <h2>Un prix par produit, sans engagement</h2>
+        <p>On arrête quand on veut.</p>
       </div>
+      <div class="pricing">
 
-      <div class="product-toggle">
-        <button type="button" class="product-tab active" data-product="cadre" style="--tab-color:#f8d9c9">
-          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.6"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <span class="tab-name">Cadre</span>
-          <span class="tab-tag">Inclus</span>
-        </button>
-        <button type="button" class="product-tab" data-product="puzzle" style="--tab-color:#cfe8f0">
-          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
-          <span class="tab-name">Puzzle personnalisé</span>
-          <span class="tab-tag">+10 €</span>
-        </button>
-        <button type="button" class="product-tab" data-product="both" style="--tab-color:#f6e2b8">
-          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="4" rx="1"/><rect x="4.5" y="13" width="15" height="8" rx="1.5"/><path d="M12 9v12"/><path d="M12 9C9.5 9 8 7.5 8 6a2.5 2.5 0 0 1 4-2c1 1 1 3 0 5zM12 9c2.5 0 4-1.5 4-3a2.5 2.5 0 0 0-4-2c-1 1-1 3 0 5z"/></svg>
-          <span class="tab-name">Les deux</span>
-          <span class="tab-tag">-10 €</span>
-        </button>
-      </div>
-      <p class="hint" id="productHint"></p>
-
-      <div class="pricing-grid">
-        <div class="price-card">
-          <span class="amount" id="priceUnique">29,90 €</span>
-          <span class="period">création unique</span>
-          <p class="desc">Pour un anniversaire ou une occasion spéciale, sans engagement.</p>
-          <a class="btn ghost small" href="create.html">Créer mon tableau</a>
-        </div>
-        <div class="price-card">
-          <span class="amount" id="priceBimonthly">24,90 €</span>
-          <span class="period">tous les deux mois</span>
-          <p class="desc">Un nouveau tableau régulièrement, sans y penser à chaque fois.</p>
-          <a class="btn ghost small" href="create.html">Créer mon tableau</a>
-        </div>
         <div class="price-card featured">
-          <span class="badge">Le plus populaire</span>
-          <span class="amount" id="priceMonthly">19,90 €</span>
-          <span class="period">par mois</span>
-          <p class="desc">Un tableau chaque mois pour ne jamais manquer un souvenir.</p>
-          <a class="btn small" href="create.html">Créer mon tableau</a>
+          <span class="badge">Le plus choisi</span>
+          <div class="pname">Cadre jeu</div>
+          <span class="amount">19,90 €</span>
+          <span class="period">par mois · cadre en bois offert</span>
+          <p class="desc">Une nouvelle affiche à jeux chaque mois.</p>
+          <ul class="prod-list">
+            <li>5 jeux générés par l'IA</li>
+            <li>Vidéo surprise incluse</li>
+            <li>29,90 € en création unique</li>
+          </ul>
+          <a class="btn" href="create.html">Créer mon cadre</a>
         </div>
+
+        <div class="price-card">
+          <div class="pname">Puzzle photo</div>
+          <span class="amount">24,90 €</span>
+          <span class="period">par mois · livraison comprise</span>
+          <p class="desc">Un puzzle 200 pièces envoyé tous les mois.</p>
+          <ul class="prod-list">
+            <li>1 photo ou un assemblage</li>
+            <li>Boîte personnalisée</li>
+            <li>34,90 € à l'unité</li>
+          </ul>
+          <a class="btn ghost" href="create.html">Composer mon puzzle</a>
+        </div>
+
+        <div class="price-card">
+          <div class="pname">Cadre photo écran</div>
+          <span class="amount">9 €</span>
+          <span class="period">par mois · + 129 € l'écran</span>
+          <p class="desc">L'écran une fois, puis l'abonnement qui l'alimente.</p>
+          <ul class="prod-list">
+            <li>Photos et contributeurs illimités</li>
+            <li>Wi-Fi, aimanté ou encadré</li>
+            <li>App iOS et Android incluse</li>
+          </ul>
+          <a class="btn ghost" href="#app">Être prévenu du lancement</a>
+        </div>
+
+      </div>
+      <p class="price-note">Tarifs de lancement · Livraison France comprise · Résiliable à tout moment.</p>
+    </div>
+  </section>
+
+  <!-- APP MOBILE -->
+  <section class="section" id="app">
+    <div class="section-inner">
+      <div class="app-card">
+        <div>
+          <span class="kicker">App mobile</span>
+          <h2>Toute la maison dans votre poche</h2>
+          <p>Envoyez vos photos au cadre écran, préparez vos puzzles, créez vos jeux.</p>
+          <div class="store-btns">
+            <a class="store-btn" href="#app" aria-label="Télécharger sur l'App Store">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.5 1.3 0 1.8-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.2-1.2 3.1-2.5.7-1 1-1.9 1.2-2.4-2.6-1-2.6-3.7-2.6-4.6zM14 5.6c.7-.9 1.2-2.1 1-3.3-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.1.1 2.3-.6 3.1-1.5z"/></svg>
+              <span><span class="s1">Télécharger sur</span><span class="s2">App Store</span></span>
+            </a>
+            <a class="store-btn" href="#app" aria-label="Disponible sur Google Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.4c-.3.3-.5.8-.5 1.4v16.4c0 .6.2 1.1.5 1.4l.1.1 9.2-9.2v-.2L3.6 2.4z"/><path d="M16 15.6l-3.1-3.1v-.2l3.1-3.1.1.1 3.6 2.1c1 .6 1 1.6 0 2.2L16 15.6z"/><path d="M16.1 15.5L12.9 12.3 3.6 21.6c.4.4 1 .4 1.7 0l10.8-6.1"/><path d="M16.1 8.5L5.3 2.4c-.7-.4-1.3-.4-1.7 0l9.3 9.3 3.2-3.2z"/></svg>
+              <span><span class="s1">Disponible sur</span><span class="s2">Google Play</span></span>
+            </a>
+          </div>
+          <div class="app-note">
+            <span class="app-qr"><img id="appQr" alt="QR code vers la page Nostalie"></span>
+            Bientôt sur iOS et Android. En attendant, tout fonctionne déjà depuis le navigateur.
+          </div>
+        </div>
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-head"><b>Chez Mamie</b><span>Cadre écran · connecté</span></div>
+            <div class="phone-grid">
+              <img src="image/bebe-mer.jpg" alt="">
+              <img src="image/enfants-calin.jpg" alt="">
+              <img src="image/enfants-plage-lunettes.jpg" alt="">
+              <img src="image/famille-plage-rochers.jpg" alt="">
+            </div>
+            <div class="phone-bar"><div class="phone-send">Envoyer au cadre</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section alt" id="faq">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="kicker">Questions</span>
+        <h2>Ce qu'on nous demande le plus</h2>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>Faut-il être à l'aise avec la technologie ?</summary>
+          <p>Non. Celui qui reçoit n'a rien à installer. Seul celui qui envoie utilise le site ou l'app.</p>
+        </details>
+        <details>
+          <summary>Qu'est-ce que l'IA fabrique exactement ?</summary>
+          <p>La grille de mots fléchés, les définitions, les rébus, le pêle-mêle. Tout reste modifiable à la main.</p>
+        </details>
+        <details>
+          <summary>Le cadre en bois est-il renvoyé à chaque fois ?</summary>
+          <p>Non, une seule fois. Ensuite vous ne recevez que l'affiche, à glisser dans le cadre.</p>
+        </details>
       </div>
     </div>
   </section>
 
   <!-- CTA FINAL -->
-  <section class="landing">
+  <section class="section">
     <div class="cta-banner">
-      <img class="cta-photo" src="image/papy-remplit-affiche.jpg" alt="Un grand-père remplit son tableau Melimo avec un stylo">
+      <img class="cta-photo" src="image/papy-remplit-affiche.jpg" alt="Un grand-père remplit son affiche Nostalie au stylo">
       <div class="cta-text">
-        <h2>Prêt à surprendre vos proches ?</h2>
-        <p>Créez votre premier tableau en quelques minutes, sans rien installer.</p>
-        <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon tableau</a>
+        <h2>Le prochain souvenir, il est où ?</h2>
+        <p>Quelques minutes suffisent.</p>
+        <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon premier cadre</a>
       </div>
     </div>
   </section>
 
   <footer class="site-footer">
-    Melimo — Les souvenirs deviennent un jeu. · Disponible sur web et bientôt en app mobile.
+    <div class="footer-inner">
+      <div><b>Nostalie</b> — vos souvenirs, en vrai.</div>
+      <div class="footer-links">
+        <a href="#produits">Nos produits</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="#app">App mobile</a>
+        <a href="create.html">Créer mon cadre</a>
+      </div>
+    </div>
   </footer>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
   <script>
     renderPosterInto(document.getElementById('livePosterPreview'), buildDemoBoard(), {});
-
-    const PRICING = {
-      cadre: {
-        unique: 29.90, bimonthly: 24.90, monthly: 19.90,
-        hint: 'Le tableau-cadre classique : photos, mini-jeux et vidéo surprise, envoyé imprimé et prêt à accrocher.'
-      },
-      puzzle: {
-        unique: 39.90, bimonthly: 34.90, monthly: 29.90,
-        hint: 'Un puzzle personnalisé avec une ou plusieurs de vos photos, envoyé selon le même rythme que le cadre.'
-      },
-      both: {
-        unique: 59.80, bimonthly: 49.80, monthly: 39.80,
-        hint: 'Cadre et puzzle envoyés ensemble à chaque livraison — 10 € offerts sur l’abonnement combiné.'
-      }
-    };
-
-    function formatPrice(n) {
-      return n.toFixed(2).replace('.', ',') + ' €';
-    }
-
-    function selectProduct(product) {
-      const p = PRICING[product];
-      document.getElementById('priceUnique').textContent = formatPrice(p.unique);
-      document.getElementById('priceBimonthly').textContent = formatPrice(p.bimonthly);
-      document.getElementById('priceMonthly').textContent = formatPrice(p.monthly);
-      document.getElementById('productHint').textContent = p.hint;
-      document.querySelectorAll('.product-tab').forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.product === product);
-      });
-    }
-
-    document.querySelectorAll('.product-tab').forEach(tab => {
-      tab.addEventListener('click', () => selectProduct(tab.dataset.product));
-    });
-    selectProduct('cadre');
+    document.getElementById('appQr').src =
+      'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=' +
+      encodeURIComponent(location.origin + location.pathname);
   </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Melimo — créateur : le tableau lui-même est l'unique interface d'édition.
+/* Nostalie — créateur : le tableau lui-même est l'unique interface d'édition.
    Chaque zone se modifie au clic ; seule la zone concernée est re-rendue
    pour ne jamais faire perdre le focus d'un champ en cours de saisie. */
 
@@ -12,8 +12,8 @@ const state = {
   diffPhoto: null,
   diffPoint: null,
   montage: { items: [], audio: null }, // {items:[{type:'photo'|'video', src, duration, name}], audio:{name,dataUrl}}
-  colorPrimary: '#d9527a',
-  colorSecondary: '#fbead9',
+  colorPrimary: '#8C5B4E',
+  colorSecondary: '#F5F0E9',
   finalWord: ''
 };
 
@@ -570,8 +570,8 @@ function fillDemoData() {
     ],
     audio: null
   };
-  state.colorPrimary = '#d9527a';
-  state.colorSecondary = '#fbead9';
+  state.colorPrimary = '#8C5B4E';
+  state.colorSecondary = '#F5F0E9';
   state.finalWord = 'Vacances';
 }
 

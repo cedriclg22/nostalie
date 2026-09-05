@@ -1,4 +1,4 @@
-/* Melimo — lecture directe du montage (accessible via QR code, sans les jeux) */
+/* Nostalie — lecture directe du montage (accessible via QR code, sans les jeux) */
 
 const board = loadBoard();
 const root = document.getElementById('content');

@@ -1,4 +1,4 @@
-/* Melimo — logique du tableau interactif (côté destinataire) */
+/* Nostalie — logique du tableau interactif (côté destinataire) */
 
 const board = loadBoard();
 const root = document.getElementById('content');
