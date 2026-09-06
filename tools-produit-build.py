@@ -89,7 +89,7 @@ PRODUITS = {
            mock(puzzle('image/famille-plage-rochers.jpg'), ROSE),
            mock(puzzle('image/enfants-calin.jpg', (1, 2)), SAGE),
            mock(puzzle('image/bebe-mer.jpg', (2, 3)), 'var(--lilac)')],
-   stats=[("200", "pièces"), ("38 × 26", "cm une fois monté"), ("1 à 9", "photos par puzzle"), ("3-5 j", "de délai de livraison")],
+   stats=[("200", "pièces"), ("48 × 36", "cm une fois monté"), ("1 à 9", "photos par puzzle"), ("3-5 j", "de délai de livraison")],
    raisons=[("Parce qu'on le fait ensemble.", "Deux heures autour d'une table, sans écran. C'est rare."),
             ("Parce que la surprise dure.", "On ne sait quelle photo c'est qu'au bout de vingt minutes."),
             ("Parce qu'on le refait.", "Il se démonte, se range, et ressort au Noël suivant.")],
@@ -101,7 +101,7 @@ PRODUITS = {
    etapes=[("Vous choisissez la photo", "Une seule, ou un montage de 2 à 9."),
            ("Le montage se génère", "Recadrage et découpe calculés pour que chaque visage reste lisible."),
            ("Le puzzle part", "Chaque mois, sans y penser.")],
-   specs=[("Pièces", "200"), ("Format monté", "38 × 26 cm"), ("Photos", "1 à 9 par puzzle"),
+   specs=[("Pièces", "200"), ("Format monté", "48 × 36 cm (ca.)"), ("Photos", "1 à 9 par puzzle"),
           ("Boîte", "Personnalisée, carton rigide"), ("Rythme", "Mensuel ou unique"), ("Engagement", "Aucun")],
    faq=[("Peut-on choisir le nombre de pièces ?", "200 pièces pour l'instant. D'autres formats arrivent."),
         ("Et si la photo est floue ?", "On vous prévient avant l'impression si la définition est trop faible."),
@@ -118,7 +118,8 @@ PRODUITS = {
      "<b>Toute la famille contribue</b> : chacun pousse ses photos depuis l'app, autant qu'il veut.",
      "<b>Les petits-enfants envoient le mercredi</b>, ça s'affiche chez mamie le soir même.",
    ],
-   medias=[mock(device('image/enfants-babyfoot.jpg'), SAGE),
+   medias=[photo('image/cadre-ecran-produit.jpg', "Le cadre photo écran Nostalie posé sur un meuble, relié au téléphone"),
+           mock(device('image/enfants-babyfoot.jpg'), SAGE),
            mock(device('image/bebe-mer.jpg'), SKY),
            mock(device('image/famille-plage-rochers.jpg'), ROSE),
            mock(device('image/enfants-calin.jpg'), 'var(--lilac)')],
@@ -206,9 +207,16 @@ REASSURANCE = [("🇫🇷", "Imprimé en France"), ("📦", "Livraison comprise"
                ("🔁", "Sans engagement"), ("🎁", "Emballage cadeau offert")]
 
 
+PERSO = {'puzzle': 'puzzle', 'cadre-ecran': 'ecran'}
+
+
 def page(slug):
     p = PRODUITS[slug]
     autres = [s for s in FICHES if s != slug]
+
+    # Le client importe sa photo et voit le produit avec (perso.js remplit le bloc).
+    perso = ('\n  <section class="psection perso-section" data-perso="%s"></section>\n'
+             % PERSO[slug]) if slug in PERSO else ''
 
     galerie_grande = ''.join(
         '<div class="shot%s" data-i="%d">%s</div>' % (' on' if i == 0 else '', i, m)
@@ -259,6 +267,7 @@ def page(slug):
   </div>
 
   <div class="stats">{''.join('<div class="stat"><b>%s</b><span>%s</span></div>' % s for s in p['stats'])}</div>
+{perso}
 
   <section class="psection">
     <h2>Trois bonnes raisons</h2>

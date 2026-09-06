@@ -7,6 +7,7 @@
 
   document.getElementById('pdpRoot').innerHTML = PRODUIT_PAGES[slug];
   document.title = PRODUIT_INFO[slug].nom + ' — Nostalie';
+  monterPersonnalisation(document.getElementById('pdpRoot'));
 
   let format = PRODUIT_INFO[slug].formats[0].id;
 

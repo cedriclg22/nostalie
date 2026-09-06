@@ -338,6 +338,8 @@ a.step-dot:hover { transform: scale(1.08); border-color: var(--primary); }
 }
 .btn.ghost:hover { background: #fff; color: var(--ink); border-color: var(--ink); box-shadow: var(--shadow-sm); }
 .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+/* display:inline-flex ci-dessus l'emporterait sur la règle [hidden] du navigateur. */
+[hidden] { display: none !important; }
 
 .icon { width: 1.1em; height: 1.1em; flex-shrink: 0; vertical-align: -0.16em; }
 
@@ -2105,4 +2107,263 @@ footer.site-footer {
 body, .print-poster, .mosaic img, .rebus-box2, .ribbon, .pnum-badge, .play-button {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+}
+
+/* ================= « Voir avec votre photo » (puzzle + écran) ================= */
+.psection.perso-section { padding-top: 6px; }
+.perso {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 880px) { .perso { grid-template-columns: 1fr; gap: 24px; } }
+
+.perso-vue { position: relative; border-radius: var(--radius); transition: outline-color .15s ease; }
+.perso-vue.perso-survol { outline: 3px dashed var(--primary); outline-offset: 8px; }
+.perso-vue figure { margin: 0; }
+.perso-vue figcaption {
+  margin-top: 14px;
+  text-align: center;
+  font-size: .86rem;
+  color: var(--ink-soft);
+}
+
+.perso-panneau { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.perso-texte { font-size: 1.02rem; line-height: 1.55; color: var(--ink-soft); max-width: 38ch; }
+.perso-choisir { cursor: pointer; }
+.perso-note { font-size: .82rem; line-height: 1.5; color: var(--ink-soft); opacity: .85; }
+
+/* Le puzzle : la photo, puis les lignes de découpe par-dessus. */
+.puz-plateau {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--sand);
+  box-shadow: 0 2px 4px rgba(74, 49, 40, .10), 0 26px 54px rgba(74, 49, 40, .22);
+}
+.puz-photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+.puz-coupe { position: absolute; inset: 0; width: 100%; height: 100%; }
+.puz-relief { fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 2.2; }
+.puz-trait { fill: none; stroke: rgba(58, 34, 24, .38); stroke-width: 1; }
+
+/* L'écran connecté : la photo produit, dessinée à sa taille réelle puis
+   réduite, avec la photo du client posée en perspective dans la dalle. */
+.ecr-rendu { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; }
+.ecr-scene { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.ecr-fond { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+.ecr-zone { position: absolute; left: 0; top: 0; overflow: hidden; transform-origin: 0 0; }
+.ecr-zone img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ecr-ecran::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(118deg, rgba(255,255,255,.16), rgba(255,255,255,0) 42%);
+}
+
+/* ================= CRÉATION DU CADRE JEU ================= */
+.cr-body { background: var(--paper); }
+.cr-topactions { display: flex; gap: 8px; }
+
+.cr-fil {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(253, 245, 234, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.cr-fil ol {
+  display: flex; gap: 4px; list-style: none;
+  max-width: 1180px; margin: 0 auto; padding: 10px 20px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.cr-fil ol::-webkit-scrollbar { display: none; }
+.cr-fil button {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px 12px; border-radius: 999px;
+  font-family: var(--font-body); font-size: .88rem; color: var(--ink-soft);
+  white-space: nowrap;
+}
+.cr-fil i {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--sand); color: var(--ink-soft);
+  font-style: normal; font-size: .76rem; font-weight: 600;
+}
+.cr-fil .fait i { background: var(--lilac); color: var(--primary-dark); }
+.cr-fil .on button { background: #fff; color: var(--ink); box-shadow: var(--shadow-sm); }
+.cr-fil .on i { background: var(--primary); color: #fff; }
+
+.creator {
+  max-width: 1180px; margin: 0 auto;
+  padding: 30px 20px 120px;
+  display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 46px;
+  align-items: start;
+}
+.cr-colonne { min-width: 0; }
+.cr-etape h1 { font-size: clamp(1.55rem, 4vw, 2.05rem); margin-bottom: 6px; }
+.cr-etape h2 { font-size: 1.1rem; margin-bottom: 4px; }
+.cr-etape h2 em {
+  font-style: normal; font-family: var(--font-body);
+  font-size: .76rem; font-weight: 400; color: var(--ink-soft); margin-left: 8px;
+}
+.cr-sous { color: var(--ink-soft); margin-bottom: 18px; line-height: 1.55; }
+.cr-aide { font-size: .86rem; color: var(--ink-soft); margin-top: 14px; }
+.cr-aide.cr-alerte { color: var(--primary); font-weight: 600; }
+.cr-vide { color: var(--ink-soft); font-size: .9rem; }
+.cr-bloc { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); }
+.cr-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.cr-actions-centre { justify-content: center; }
+
+/* Les photos */
+.cr-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 540px) { .cr-photos { grid-template-columns: repeat(2, 1fr); } }
+.cr-photo {
+  position: relative; aspect-ratio: 1;
+  border-radius: var(--radius-sm); overflow: hidden;
+  background: var(--sand); padding: 0; border: none;
+}
+.cr-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cr-photo-vide {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: #fff; border: 2px dashed var(--line-strong);
+  color: var(--ink-soft); font-family: var(--font-body); font-size: .86rem;
+  cursor: pointer; transition: border-color .15s ease, color .15s ease;
+}
+.cr-photo-vide:hover { border-color: var(--primary); color: var(--primary); }
+.cr-photo-vide svg { width: 26px; height: 26px; }
+.cr-photo-num {
+  position: absolute; left: 8px; top: 8px;
+  min-width: 22px; height: 22px; padding: 0 6px;
+  display: grid; place-items: center; border-radius: 999px;
+  background: rgba(74, 49, 40, .68); color: #fff;
+  font-size: .74rem; font-weight: 600;
+}
+
+/* Le choix de la photo intruse */
+.cr-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.cr-chip-photo {
+  position: relative; width: 66px; height: 66px;
+  border-radius: 16px; overflow: hidden;
+  border: 3px solid transparent; padding: 0; background: none; cursor: pointer;
+}
+.cr-chip-photo.on { border-color: var(--primary); }
+.cr-chip-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cr-chip-photo span {
+  position: absolute; left: 4px; bottom: 4px;
+  padding: 0 5px; border-radius: 6px;
+  background: rgba(74, 49, 40, .68); color: #fff; font-size: .7rem;
+}
+
+/* Les mots */
+.cr-mots { display: flex; flex-direction: column; gap: 10px; }
+.cr-mot { display: grid; grid-template-columns: 150px minmax(0, 1fr) 34px; gap: 8px; align-items: center; }
+@media (max-width: 540px) {
+  .cr-mot { grid-template-columns: minmax(0, 1fr) 34px; grid-template-areas: "m x" "d d"; row-gap: 6px; }
+  .cr-mot-mot { grid-area: m; }
+  .cr-mot-x { grid-area: x; }
+  .cr-mot-def { grid-area: d; }
+}
+.cr-mot-mot { font-weight: 600; letter-spacing: .06em; }
+
+/* Champs */
+.cr-champ { display: block; margin: 16px 0; max-width: 420px; }
+.cr-champ span { display: block; font-size: .86rem; color: var(--ink-soft); margin-bottom: 6px; }
+.cr-champ input, .cr-mot input, .share-box input {
+  width: 100%; padding: 12px 14px;
+  border-radius: 14px; border: 2px solid var(--line);
+  background: #fff; color: var(--ink);
+  font-family: var(--font-body); font-size: 1rem;
+}
+.cr-champ input:focus-visible, .cr-mot input:focus-visible { outline: none; border-color: var(--primary); }
+.cr-mot-x, .cr-photo-x {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: var(--sand); color: var(--ink-soft);
+  font-size: .78rem; cursor: pointer;
+}
+.cr-photo-x { position: absolute; right: 6px; top: 6px; background: rgba(255, 255, 255, .9); }
+.cr-mot-x:hover, .cr-photo-x:hover { background: var(--primary); color: #fff; }
+
+/* Le rébus */
+.cr-rebus {
+  display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+  min-height: 62px; padding: 8px 10px;
+  border-radius: 16px; background: #fff; border: 2px solid var(--line);
+}
+.cr-emoji {
+  font-size: 1.5rem; line-height: 1; padding: 6px;
+  background: none; border: none; border-radius: 10px; cursor: pointer;
+}
+.cr-emoji:hover { background: var(--sand); }
+.cr-palette {
+  display: flex; flex-wrap: wrap; gap: 2px;
+  max-height: 156px; overflow-y: auto;
+  padding: 6px; border-radius: 16px; background: var(--cream);
+}
+
+/* Le montage */
+.cr-montage { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.cr-mitem {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; border-radius: 14px;
+  background: #fff; border: 1px solid var(--line);
+}
+.cr-mitem img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; }
+.cr-mvideo { width: 44px; height: 44px; display: grid; place-items: center; background: var(--sand); border-radius: 8px; }
+.cr-mitem b { flex: 1; font-weight: 500; font-size: .92rem; }
+
+/* Les couleurs */
+.cr-palettes { display: flex; gap: 10px; flex-wrap: wrap; }
+.cr-swatch {
+  display: flex; width: 58px; height: 38px;
+  border-radius: 12px; overflow: hidden;
+  border: 3px solid transparent; padding: 0; background: none; cursor: pointer;
+}
+.cr-swatch i { flex: 1; display: block; }
+.cr-swatch.on { border-color: var(--ink); }
+.cr-couleurs { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+.cr-couleur { display: flex; flex-direction: column; gap: 6px; font-size: .86rem; color: var(--ink-soft); }
+.cr-couleur input { width: 66px; height: 44px; border: none; background: none; padding: 0; cursor: pointer; }
+.cr-final { margin-top: 30px; }
+.cr-generer { width: 100%; justify-content: center; }
+
+/* L'aperçu */
+.cr-apercu { position: sticky; top: 84px; }
+.cr-apercu-tete {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; font-size: .88rem; color: var(--ink-soft);
+}
+.cr-apercu-fermer { display: none; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--ink-soft); }
+#crPoster { overflow: visible; }
+
+/* La barre du bas */
+.cr-barre {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 95;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(253, 245, 234, .94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+.cr-barre #crSuivant { margin-left: auto; }
+.cr-voir-apercu { display: none; }
+.cr-secoue { animation: crSecoue .4s ease; }
+@keyframes crSecoue {
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-3px); }
+}
+
+@media (max-width: 980px) {
+  .creator { grid-template-columns: 1fr; gap: 0; padding-bottom: 110px; }
+  .cr-voir-apercu { display: inline-flex; margin-left: auto; }
+  .cr-barre #crSuivant { margin-left: 0; }
+  .cr-apercu {
+    position: fixed; inset: 0; z-index: 90;
+    display: none; overflow: auto;
+    padding: 18px 18px 100px;
+    background: var(--paper);
+  }
+  body.cr-apercu-ouvert .cr-apercu { display: block; }
+  .cr-apercu-fermer { display: block; }
 }

@@ -1,593 +1,463 @@
-/* Nostalie — créateur : le tableau lui-même est l'unique interface d'édition.
-   Chaque zone se modifie au clic ; seule la zone concernée est re-rendue
-   pour ne jamais faire perdre le focus d'un champ en cours de saisie. */
+/* Nostalie — création du cadre jeu.
+   Cinq étapes, une par écran sur téléphone, avec l'aperçu de l'affiche
+   toujours à côté sur ordinateur. Rien n'est envoyé : tout se passe dans
+   le navigateur, et l'affiche n'est enregistrée qu'au moment de générer. */
+(function () {
 
-const state = {
-  photos: [],
-  oddPhotoIndex: null, // index into photos: the one that doesn't date from last month
-  words: WORD_SUGGESTIONS.map((w, i) => ({ word: w.word, clue: w.clue, key: i === 0 })),
-  crossword: null,
-  rebusEmojis: [],
-  rebusAnswer: '',
-  diffPhoto: null,
-  diffPoint: null,
-  montage: { items: [], audio: null }, // {items:[{type:'photo'|'video', src, duration, name}], audio:{name,dataUrl}}
-  colorPrimary: '#F50068',
-  colorSecondary: '#FDF5EA',
-  finalWord: ''
-};
+  const MIN_PHOTOS = 4;
+  const MAX_PHOTOS = 6;
 
-const MOSAIC_SPANS = ['span-1', 'span-2', 'span-1', 'span-2', 'span-1', 'span-1'];
+  const ETAPES = ['Photos', 'Mots', 'Rébus', 'Récompense', 'Couleurs'];
 
-/* ---------- Squelette (rendu une seule fois) ----------
-   Le cadre (.print-poster) garde une taille fixe : les éditeurs de mots
-   et de rébus, trop volumineux pour tenir dans leur petite carte,
-   s'ouvrent juste en dessous du cadre plutôt que de le faire grandir. */
-function renderShell() {
-  document.getElementById('editablePoster').innerHTML = `
-    <div class="editable-poster-wrap">
-      <div class="color-toolbar">
-        <input type="color" id="colorPrimaryInput" value="${state.colorPrimary}" title="Couleur principale">
-        <input type="color" id="colorSecondaryInput" value="${state.colorSecondary}" title="Couleur secondaire">
-      </div>
-      <div class="print-poster" id="posterRoot">
-        <div class="mosaic-wrap">
-          <span class="corner-deco tl">🌿</span>
-          <div class="mosaic" id="edMosaic"></div>
-          <span class="corner-deco tr">🌿</span>
-        </div>
+  const PALETTES = [
+    ['#F50068', '#FDF5EA'], ['#4A3128', '#FBEEDF'], ['#2F6F63', '#F1F6F0'],
+    ['#C2410C', '#FFF4E6'], ['#3B4CCA', '#EEF1FF'], ['#8B2E5D', '#FCEEF5']
+  ];
 
-        <div class="poster-cols">
-          <div class="poster-left-col">
-            <div class="pcard pcard-found clickable" id="edFoundCard" title="Clique pour choisir la photo intruse">
-              ${ribbonLabel(1, 'Photo intruse')}
-              <div class="pcard-body"><p class="card-instruction">Quelle photo ne date pas du mois précédent ?</p></div>
-              <div class="answer-blank-input" id="edOddPhotoAnswer">${state.oddPhotoIndex !== null ? `Photo n°${state.oddPhotoIndex + 1}` : ''}</div>
-            </div>
-            <div class="pcard pcard-rebus clickable" id="edRebusCard" title="Clique pour choisir le rébus">
-              ${ribbonLabel(3, 'Rébus')}
-              <div class="pcard-body"><div class="rebus-box2" id="edRebusBox"></div></div>
-              <input type="text" class="answer-blank-input" id="edRebusAnswer" placeholder="ex : Bateau" value="${state.rebusAnswer}">
-            </div>
-          </div>
-          <div class="pcard pcard-flech clickable" id="edFlechCard" title="Clique pour ajouter des mots">
-            ${ribbonLabel(2, 'Mots fléchés')}
-            <div class="pcard-body"><div class="flech-scroll" id="edFlechWrap"></div></div>
-            <div class="answer-blank"></div>
-          </div>
-        </div>
+  const nouvelEtat = () => ({
+    photos: [],
+    oddPhotoIndex: 0,
+    words: [{ word: '', clue: '', key: true }, { word: '', clue: '', key: false }],
+    rebusAnswer: '',
+    rebusEmojis: [],
+    finalWord: '',
+    montage: { items: [], audio: null },
+    colorPrimary: '#F50068',
+    colorSecondary: '#FDF5EA'
+  });
 
-        <div class="pcard pcard-diff">
-          ${ribbonLabel(4, 'Case différente')}
-          <div class="pcard-body">
-            <p class="card-instruction">Quelle est la case différente entre ces deux images ?</p>
-            <div class="diff-card-body" id="edDiffFrame"></div>
-          </div>
-          <div class="answer-blank"></div>
-        </div>
+  let etat = nouvelEtat();
+  let etape = 0;
+  let grilleCache = { signature: '', valeur: null };
 
-        <div class="pcard pcard-final clickable" id="edFinalCard" title="Clique pour composer la vidéo surprise (photos + vidéo + son)">
-          ${ribbonLabel(null, 'Mot final', true)}
-          <div class="pcard-body" id="edMontageSummaryBody">
-            <div class="play-button-wrap"><div class="play-button"><span class="tri"></span></div></div>
-            <p class="final-caption" id="edMontageCaption">Compose ta<br>vidéo surprise !</p>
-          </div>
-          <input type="text" class="answer-blank-input" id="edFinalWord" placeholder="Réponse attendue (ex : Vacances)" value="${state.finalWord}">
-        </div>
-      </div>
-    </div>
+  const $ = (id) => document.getElementById(id);
 
-    <div class="inline-editor" id="hiddenObjEditor" hidden>
-      <p class="hint">Choisis, parmi tes photos du pêle-mêle ci-dessus, celle qui ne date pas du mois précédent (une photo plus ancienne, ou au contraire la petite dernière) :</p>
-      <div class="hobj-photo-picker" id="hobjPhotoPicker"></div>
-      <button class="btn ghost" type="button" id="clearHobjBtn">Retirer la sélection</button>
-    </div>
+  /* ---------- Photos : on réduit avant de garder, sinon l'affiche
+       ne tient pas dans le stockage du navigateur. ---------- */
 
-    <div class="inline-editor" id="wordsEditor" hidden>
-      <p class="hint">10 mots avec leur définition, déjà pré-remplis : modifie-les comme tu veux, ou clique sur « Idées de mots » pour repartir d'exemples. Coche « clé » pour le(s) mot(s) qui doivent apparaître dans le message final.</p>
-      <div id="wordRows"></div>
-      <div class="words-editor-actions">
-        <button class="btn ghost" type="button" id="addWordBtn">+ Ajouter un mot</button>
-        <button class="btn ghost" type="button" id="suggestWordsBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6.5 6.5 0 0 0-3.8 11.8c.6.4.8 1 .8 1.7v.5h6v-.5c0-.7.2-1.3.8-1.7A6.5 6.5 0 0 0 12 3z"/></svg> Idées de mots</button>
-      </div>
-    </div>
-
-    <div class="inline-editor" id="rebusEditor" hidden>
-      <p class="hint">Tape le mot à deviner et clique sur « Suggérer » pour générer un rébus automatiquement, ou compose-le toi-même avec les emojis ci-dessous (écris la réponse directement sur le tableau).</p>
-      <div class="rebus-suggest-row">
-        <input type="text" id="rebusWordInput" placeholder="Mot à représenter (ex : bateau)">
-        <button class="btn ghost" type="button" id="suggestRebusBtn"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Suggérer</button>
-      </div>
-      <div class="rebus-sequence" id="rebusSequence"></div>
-      <div class="emoji-picker" id="emojiPicker"></div>
-      <button class="btn ghost" type="button" id="clearRebusBtn">Effacer</button>
-    </div>
-
-    <div class="inline-editor" id="montageEditor" hidden>
-      <p class="hint">Ajoute des photos, une vidéo et une musique : ils s'enchaîneront automatiquement pour former la vidéo surprise finale.</p>
-      <div class="montage-items" id="montageItemsList"></div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0;">
-        <label class="btn ghost">+ Photos<input type="file" id="montagePhotoInput" accept="image/*" multiple hidden></label>
-        <label class="btn ghost">+ Vidéo<input type="file" id="montageVideoInput" accept="video/*" hidden></label>
-        <label class="btn ghost">+ Musique / son<input type="file" id="montageAudioInput" accept="audio/*" hidden></label>
-      </div>
-      <div id="montageAudioRow"></div>
-      <button class="btn" type="button" id="montagePreviewBtn">▶ Aperçu du montage</button>
-      <div id="montagePreviewStage" style="margin-top:14px;"></div>
-    </div>
-  `;
-}
-
-function applyPosterColors() {
-  const root = document.getElementById('posterRoot');
-  root.style.setProperty('--primary', state.colorPrimary);
-  root.style.setProperty('--secondary', state.colorSecondary);
-  root.style.setProperty('--primary-dark', shade(state.colorPrimary, -18));
-}
-
-/* ---------- Pêle-mêle ---------- */
-function ensureDefaultOddPhoto() {
-  if (state.oddPhotoIndex === null && state.photos.length) {
-    state.oddPhotoIndex = 0;
+  function importerPhoto(fichier, cote = 1400, qualite = 0.82) {
+    return fileToDataUrl(fichier).then((url) => new Promise((ok) => {
+      const img = new Image();
+      img.onload = () => {
+        const e = Math.min(1, cote / Math.max(img.width, img.height));
+        if (e === 1 && url.length < 900000) return ok(url);
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * e);
+        c.height = Math.round(img.height * e);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        ok(c.toDataURL('image/jpeg', qualite));
+      };
+      img.onerror = () => ok(url);
+      img.src = url;
+    }));
   }
-}
-function renderMosaicInto() {
-  const el = document.getElementById('edMosaic');
-  let html = state.photos.map((src, i) =>
-    `<div class="tile-slot ${MOSAIC_SPANS[i] || ''}"><img src="${src}"><button class="rm" data-i="${i}" type="button">✕</button></div>`
-  ).join('');
-  if (state.photos.length < 6) {
-    html += `<label class="tile-add ${MOSAIC_SPANS[state.photos.length] || ''}">+<input type="file" id="mosaicInput" accept="image/*" multiple hidden></label>`;
+
+  /* ---------- L'affiche telle qu'elle sera ---------- */
+
+  function motsUtiles() {
+    return etat.words
+      .map((m) => ({ word: (m.word || '').trim().toUpperCase(), clue: (m.clue || '').trim(), key: !!m.key }))
+      .filter((m) => m.word.length > 1 && m.clue);
   }
-  el.innerHTML = html;
-  el.querySelectorAll('.rm').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const i = Number(btn.dataset.i);
-      state.photos.splice(i, 1);
-      if (state.oddPhotoIndex === i) {
-        state.oddPhotoIndex = null;
-      } else if (state.oddPhotoIndex !== null && state.oddPhotoIndex > i) {
-        state.oddPhotoIndex -= 1;
-      }
-      ensureDefaultOddPhoto();
-      renderMosaicInto();
-      renderHobjPhotoPicker();
-      renderOddPhotoAnswer();
-    });
-  });
-  const input = document.getElementById('mosaicInput');
-  if (input) {
-    input.addEventListener('change', async (e) => {
-      const files = Array.from(e.target.files).slice(0, 6 - state.photos.length);
-      for (const f of files) state.photos.push(await fileToDataUrl(f));
-      ensureDefaultOddPhoto();
-      renderMosaicInto();
-      renderHobjPhotoPicker();
-      renderOddPhotoAnswer();
-      e.target.value = '';
-    });
-  }
-}
 
-/* ---------- Photo intruse ---------- */
-function renderHobjPhotoPicker() {
-  const el = document.getElementById('hobjPhotoPicker');
-  if (!el) return;
-  if (!state.photos.length) {
-    el.innerHTML = '<p class="hint" style="margin:0 0 10px;">Ajoute d\'abord des photos dans le pêle-mêle.</p>';
-    return;
-  }
-  el.innerHTML = state.photos.map((src, i) =>
-    `<div class="hobj-thumb ${state.oddPhotoIndex === i ? 'active' : ''}" data-i="${i}"><img src="${src}"></div>`
-  ).join('');
-  el.querySelectorAll('.hobj-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      state.oddPhotoIndex = Number(thumb.dataset.i);
-      renderHobjPhotoPicker();
-      renderOddPhotoAnswer();
-    });
-  });
-}
-function renderOddPhotoAnswer() {
-  const el = document.getElementById('edOddPhotoAnswer');
-  if (!el) return;
-  el.textContent = state.oddPhotoIndex !== null && state.oddPhotoIndex !== undefined
-    ? `Photo n°${state.oddPhotoIndex + 1}`
-    : '';
-}
-
-/* ---------- Mots fléchés ---------- */
-function currentCrossword() {
-  const valid = state.words.filter(w => w.word.trim() && w.clue.trim());
-  return valid.length >= 2 ? generateCrossword(valid) : null;
-}
-function renderFlechEditableInto() {
-  state.crossword = currentCrossword();
-  document.getElementById('edFlechWrap').innerHTML = posterFlecheesHTML({ crossword: state.crossword });
-}
-function renderWordRowsInto() {
-  const wrap = document.getElementById('wordRows');
-  wrap.innerHTML = '';
-  state.words.forEach((w, i) => {
-    const row = document.createElement('div');
-    row.className = 'word-row';
-    row.innerHTML = `
-      <input type="text" placeholder="Mot" value="${w.word}" data-field="word" data-i="${i}">
-      <input type="text" placeholder="Définition" value="${w.clue}" data-field="clue" data-i="${i}">
-      <label class="key-toggle"><input type="checkbox" data-field="key" data-i="${i}" ${w.key ? 'checked' : ''}> clé</label>
-      <button class="del" type="button" data-del="${i}">✕</button>
-    `;
-    wrap.appendChild(row);
-  });
-  wrap.querySelectorAll('input[type=text]').forEach(inp => {
-    inp.addEventListener('input', (e) => {
-      const i = Number(e.target.dataset.i);
-      state.words[i][e.target.dataset.field] = e.target.value;
-    });
-    inp.addEventListener('blur', () => renderFlechEditableInto());
-  });
-  wrap.querySelectorAll('input[type=checkbox]').forEach(cb => {
-    cb.addEventListener('change', (e) => {
-      state.words[Number(e.target.dataset.i)].key = e.target.checked;
-      renderFlechEditableInto();
-    });
-  });
-  wrap.querySelectorAll('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.words.splice(Number(btn.dataset.del), 1);
-      renderWordRowsInto();
-      renderFlechEditableInto();
-    });
-  });
-}
-
-/* ---------- Rébus ---------- */
-function renderRebusBoxInto() {
-  const el = document.getElementById('edRebusBox');
-  el.innerHTML = state.rebusEmojis.length
-    ? posterRebusHTML(state)
-    : '<span style="font-size:1.6rem; opacity:.85;">+</span>';
-}
-function renderRebusEditorSequence() {
-  const el = document.getElementById('rebusSequence');
-  el.innerHTML = state.rebusEmojis.length
-    ? state.rebusEmojis.map((e, i) => `<span class="chip" data-i="${i}" title="cliquer pour retirer">${e}</span>`).join('')
-    : '<span class="placeholder">Clique des emojis ci-dessous, ou tape un mot et clique « Suggérer »</span>';
-  el.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      state.rebusEmojis.splice(Number(chip.dataset.i), 1);
-      renderRebusEditorSequence();
-      renderRebusBoxInto();
-    });
-  });
-}
-function renderEmojiPickerInto() {
-  const el = document.getElementById('emojiPicker');
-  el.innerHTML = EMOJI_LIBRARY.map(e => `<button type="button" data-emoji="${e}">${e}</button>`).join('');
-  el.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (state.rebusEmojis.length >= 6) return;
-      state.rebusEmojis.push(btn.dataset.emoji);
-      renderRebusEditorSequence();
-      renderRebusBoxInto();
-    });
-  });
-}
-
-/* ---------- Case différente ---------- */
-function renderDiffFrameInto() {
-  const wrap = document.getElementById('edDiffFrame');
-  if (!state.diffPhoto) {
-    wrap.innerHTML = `<label class="upload-tile" style="width:65%; aspect-ratio:1; max-width:120px;">+<input type="file" id="diffInput" accept="image/*" hidden></label>`;
-    document.getElementById('diffInput').addEventListener('change', async (e) => {
-      const f = e.target.files[0];
-      if (!f) return;
-      state.diffPhoto = await fileToDataUrl(f);
-      state.diffPoint = null;
-      renderDiffFrameInto();
-    });
-    return;
-  }
-  wrap.innerHTML = `
-    <div class="diff-editor" id="diffEditor" style="width:75%; max-width:130px;">
-      <img src="${state.diffPhoto}">
-      ${state.diffPoint ? `<div class="diff-marker" style="left:${state.diffPoint.x}%; top:${state.diffPoint.y}%;"></div>` : ''}
-      <button class="diff-reset" type="button" id="diffChangeBtn" title="Changer la photo">↻</button>
-    </div>
-  `;
-  document.getElementById('diffEditor').addEventListener('click', (e) => {
-    if (e.target.closest('#diffChangeBtn')) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    state.diffPoint = {
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100
-    };
-    renderDiffFrameInto();
-  });
-  document.getElementById('diffChangeBtn').addEventListener('click', () => {
-    state.diffPhoto = null;
-    state.diffPoint = null;
-    renderDiffFrameInto();
-  });
-}
-
-/* ---------- Montage (photos + vidéo + son), dans le bloc « Mot final » ---------- */
-function renderMontageSummary() {
-  const el = document.getElementById('edMontageCaption');
-  if (!el) return;
-  const items = state.montage.items;
-  if (!items.length) {
-    el.innerHTML = `Compose ta<br>vidéo surprise !`;
-    return;
-  }
-  const photoCount = items.filter(i => i.type === 'photo').length;
-  const videoCount = items.filter(i => i.type === 'video').length;
-  const parts = [];
-  if (photoCount) parts.push(`${photoCount} photo${photoCount > 1 ? 's' : ''}`);
-  if (videoCount) parts.push(`${videoCount} vidéo${videoCount > 1 ? 's' : ''}`);
-  if (state.montage.audio) parts.push('musique');
-  el.innerHTML = `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l1.3-3.8a1.5 1.5 0 0 1 1.9-.9l12.6 4.2a1.5 1.5 0 0 1 .95 1.9L19.2 12H3V9.5z"/><path d="M6.5 5.3L8 9.5M11.5 6.9L13 11.1"/><rect x="3" y="12" width="18" height="8" rx="2"/></svg> ${parts.join(' + ')}<br><span style="font-weight:500; opacity:.7;">(clique pour modifier)</span>`;
-}
-function renderMontageItemsInto() {
-  const wrap = document.getElementById('montageItemsList');
-  if (!wrap) return;
-  if (!state.montage.items.length) {
-    wrap.innerHTML = '<p class="hint" style="margin:0 0 10px;">Aucun élément pour l\'instant.</p>';
-    return;
-  }
-  wrap.innerHTML = state.montage.items.map((it, i) => `
-    <div class="montage-row">
-      <div class="montage-thumb">${it.type === 'video' ? '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5l1.3-3.8a1.5 1.5 0 0 1 1.9-.9l12.6 4.2a1.5 1.5 0 0 1 .95 1.9L19.2 12H3V9.5z"/><path d="M6.5 5.3L8 9.5M11.5 6.9L13 11.1"/><rect x="3" y="12" width="18" height="8" rx="2"/></svg>' : `<img src="${it.src}">`}</div>
-      <div class="montage-meta">
-        <span>${it.type === 'video' ? ('Vidéo' + (it.name ? ' — ' + it.name : '')) : 'Photo'}</span>
-        ${it.type === 'photo' ? `<label>Durée <input type="number" min="0.5" step="0.5" value="${it.duration}" data-dur="${i}"> s</label>` : ''}
-      </div>
-      <div class="montage-actions">
-        <button type="button" data-up="${i}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
-        <button type="button" data-down="${i}" ${i === state.montage.items.length - 1 ? 'disabled' : ''} title="Descendre">↓</button>
-        <button type="button" data-mdel="${i}" title="Retirer">✕</button>
-      </div>
-    </div>
-  `).join('');
-  wrap.querySelectorAll('[data-dur]').forEach(inp => inp.addEventListener('input', (e) => {
-    state.montage.items[Number(e.target.dataset.dur)].duration = Number(e.target.value) || 2.5;
-  }));
-  wrap.querySelectorAll('[data-up]').forEach(btn => btn.addEventListener('click', () => {
-    const i = Number(btn.dataset.up);
-    const items = state.montage.items;
-    [items[i - 1], items[i]] = [items[i], items[i - 1]];
-    renderMontageItemsInto();
-  }));
-  wrap.querySelectorAll('[data-down]').forEach(btn => btn.addEventListener('click', () => {
-    const i = Number(btn.dataset.down);
-    const items = state.montage.items;
-    [items[i + 1], items[i]] = [items[i], items[i + 1]];
-    renderMontageItemsInto();
-  }));
-  wrap.querySelectorAll('[data-mdel]').forEach(btn => btn.addEventListener('click', () => {
-    state.montage.items.splice(Number(btn.dataset.mdel), 1);
-    renderMontageItemsInto();
-    renderMontageSummary();
-  }));
-}
-function renderMontageAudioRow() {
-  const wrap = document.getElementById('montageAudioRow');
-  if (!wrap) return;
-  wrap.innerHTML = state.montage.audio
-    ? `<p class="hint" style="margin:0 0 10px;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg> ${state.montage.audio.name} <button type="button" id="montageAudioDel" style="margin-left:6px; background:#f5dbe1; border:none; border-radius:50%; width:22px; height:22px; cursor:pointer;">✕</button></p>`
-    : '';
-  const del = document.getElementById('montageAudioDel');
-  if (del) del.addEventListener('click', () => { state.montage.audio = null; renderMontageAudioRow(); renderMontageSummary(); });
-}
-
-/* ---------- Listeners statiques (attachés une fois) ---------- */
-function attachStaticListeners() {
-  document.getElementById('edFinalWord').addEventListener('input', (e) => state.finalWord = e.target.value);
-  document.getElementById('edRebusAnswer').addEventListener('input', (e) => state.rebusAnswer = e.target.value);
-
-  document.getElementById('colorPrimaryInput').addEventListener('input', (e) => { state.colorPrimary = e.target.value; applyPosterColors(); });
-  document.getElementById('colorSecondaryInput').addEventListener('input', (e) => { state.colorSecondary = e.target.value; applyPosterColors(); });
-
-  document.getElementById('edFlechCard').addEventListener('click', () => {
-    const editor = document.getElementById('wordsEditor');
-    editor.hidden = !editor.hidden;
-    if (!editor.hidden) editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-  document.getElementById('edRebusCard').addEventListener('click', (e) => {
-    if (e.target.closest('.answer-blank-input')) return;
-    const editor = document.getElementById('rebusEditor');
-    editor.hidden = !editor.hidden;
-    if (!editor.hidden) editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-  document.getElementById('edFoundCard').addEventListener('click', (e) => {
-    if (e.target.closest('.answer-blank-input')) return;
-    const editor = document.getElementById('hiddenObjEditor');
-    editor.hidden = !editor.hidden;
-    if (!editor.hidden) editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-  document.getElementById('edFinalCard').addEventListener('click', (e) => {
-    if (e.target.closest('.answer-blank-input')) return;
-    const editor = document.getElementById('montageEditor');
-    editor.hidden = !editor.hidden;
-    if (!editor.hidden) editor.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-
-  document.getElementById('clearHobjBtn').addEventListener('click', () => {
-    state.oddPhotoIndex = null;
-    renderHobjPhotoPicker();
-    renderOddPhotoAnswer();
-  });
-
-  document.getElementById('addWordBtn').addEventListener('click', () => {
-    if (state.words.length >= 10) return;
-    state.words.push({ word: '', clue: '', key: false });
-    renderWordRowsInto();
-  });
-  document.getElementById('suggestWordsBtn').addEventListener('click', () => {
-    const used = new Set(state.words.map(w => w.word.trim().toUpperCase()).filter(Boolean));
-    let sIdx = 0;
-    state.words.forEach(w => {
-      if (!w.word.trim() && !w.clue.trim()) {
-        while (sIdx < WORD_SUGGESTIONS.length && used.has(WORD_SUGGESTIONS[sIdx].word)) sIdx++;
-        if (sIdx < WORD_SUGGESTIONS.length) {
-          w.word = WORD_SUGGESTIONS[sIdx].word;
-          w.clue = WORD_SUGGESTIONS[sIdx].clue;
-          used.add(w.word);
-          sIdx++;
-        }
-      }
-    });
-    while (state.words.length < 10 && sIdx < WORD_SUGGESTIONS.length) {
-      if (!used.has(WORD_SUGGESTIONS[sIdx].word)) {
-        state.words.push({ word: WORD_SUGGESTIONS[sIdx].word, clue: WORD_SUGGESTIONS[sIdx].clue, key: false });
-        used.add(WORD_SUGGESTIONS[sIdx].word);
-      }
-      sIdx++;
+  function grille() {
+    const mots = motsUtiles();
+    const signature = JSON.stringify(mots);
+    if (signature !== grilleCache.signature) {
+      grilleCache = { signature, valeur: mots.length >= 2 ? generateCrossword(mots) : null };
     }
-    renderWordRowsInto();
-    renderFlechEditableInto();
-  });
-  document.getElementById('clearRebusBtn').addEventListener('click', () => {
-    state.rebusEmojis = [];
-    renderRebusEditorSequence();
-    renderRebusBoxInto();
-  });
-  document.getElementById('suggestRebusBtn').addEventListener('click', () => {
-    const val = document.getElementById('rebusWordInput').value.trim();
-    if (!val) return;
-    state.rebusEmojis = suggestRebus(val);
-    state.rebusAnswer = val.charAt(0).toUpperCase() + val.slice(1);
-    document.getElementById('edRebusAnswer').value = state.rebusAnswer;
-    renderRebusEditorSequence();
-    renderRebusBoxInto();
-  });
-
-  document.getElementById('montagePhotoInput').addEventListener('change', async (e) => {
-    const files = Array.from(e.target.files);
-    for (const f of files) state.montage.items.push({ type: 'photo', src: await fileToDataUrl(f), duration: 2.5 });
-    renderMontageItemsInto();
-    renderMontageSummary();
-    e.target.value = '';
-  });
-  document.getElementById('montageVideoInput').addEventListener('change', async (e) => {
-    const f = e.target.files[0];
-    if (!f) return;
-    state.montage.items.push({ type: 'video', src: await fileToDataUrl(f), name: f.name });
-    renderMontageItemsInto();
-    renderMontageSummary();
-    e.target.value = '';
-  });
-  document.getElementById('montageAudioInput').addEventListener('change', async (e) => {
-    const f = e.target.files[0];
-    if (!f) return;
-    state.montage.audio = { name: f.name, dataUrl: await fileToDataUrl(f) };
-    renderMontageAudioRow();
-    renderMontageSummary();
-    e.target.value = '';
-  });
-  document.getElementById('montagePreviewBtn').addEventListener('click', () => {
-    renderMontagePlayer(document.getElementById('montagePreviewStage'), state.montage, { uid: 'preview' });
-  });
-}
-
-/* ---------- Générer le tableau ---------- */
-document.getElementById('generateBtn').addEventListener('click', () => {
-  if (!state.crossword) state.crossword = currentCrossword();
-  const id = Store.newId();
-  Store.save(id, state);
-  const url = new URL('view.html', window.location.href);
-  url.searchParams.set('id', id);
-  const posterUrl = new URL('poster.html', window.location.href);
-  posterUrl.searchParams.set('id', id);
-  document.getElementById('shareLink').value = url.toString();
-  document.getElementById('openViewBtn').href = url.toString();
-  document.getElementById('openPosterBtn').href = posterUrl.toString();
-
-  const montageBtn = document.getElementById('openMontageBtn2');
-  const qrWrap = document.getElementById('montageQrWrap');
-  if (state.montage && state.montage.items.length) {
-    const montageUrl = new URL('montage.html', window.location.href);
-    montageUrl.searchParams.set('id', id);
-    montageBtn.href = montageUrl.toString();
-    montageBtn.style.display = '';
-    qrWrap.style.display = '';
-    document.getElementById('montageQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=6&color=b83d63&data=${encodeURIComponent(montageUrl.toString())}`;
-  } else {
-    montageBtn.style.display = 'none';
-    qrWrap.style.display = 'none';
+    return grilleCache.valeur;
   }
 
-  document.getElementById('shareWrap').style.display = '';
-  document.getElementById('shareWrap').scrollIntoView({ behavior: 'smooth' });
-});
+  function affiche() {
+    const photos = etat.photos.filter(Boolean);
+    return {
+      photos,
+      oddPhotoIndex: Math.min(etat.oddPhotoIndex, Math.max(0, photos.length - 1)),
+      words: motsUtiles(),
+      crossword: grille(),
+      rebusEmojis: etat.rebusEmojis,
+      rebusAnswer: etat.rebusAnswer,
+      diffPhoto: photos[0] || null,
+      diffPoint: { x: 62, y: 38 },
+      coverPhoto: photos[0] || null,
+      video: null,
+      montage: etat.montage,
+      colorPrimary: etat.colorPrimary,
+      colorSecondary: etat.colorSecondary,
+      finalWord: etat.finalWord
+    };
+  }
 
-/* ---------- Démo pré-remplie ---------- */
-document.getElementById('demoFillBtn').addEventListener('click', () => {
-  fillDemoData();
-  document.getElementById('edFinalWord').value = state.finalWord;
-  document.getElementById('edRebusAnswer').value = state.rebusAnswer;
-  document.getElementById('colorPrimaryInput').value = state.colorPrimary;
-  document.getElementById('colorSecondaryInput').value = state.colorSecondary;
-  applyPosterColors();
-  renderMosaicInto();
-  renderHobjPhotoPicker();
-  renderOddPhotoAnswer();
-  renderWordRowsInto();
-  renderFlechEditableInto();
-  renderRebusEditorSequence();
-  renderRebusBoxInto();
-  renderDiffFrameInto();
-  renderMontageItemsInto();
-  renderMontageAudioRow();
-  renderMontageSummary();
-});
+  function dessinerApercu() {
+    const cible = $('crPoster');
+    cible.style.setProperty('--primary', etat.colorPrimary);
+    cible.style.setProperty('--primary-dark', shade(etat.colorPrimary, -18));
+    cible.style.setProperty('--secondary', etat.colorSecondary);
+    renderPosterInto(cible, affiche());
+    ajusterApercu();
+  }
 
-function fillDemoData() {
-  state.photos = [
-    svgPlaceholder('#f1ddd0', '⚽'),
-    svgPlaceholder('#cfe8f0', '🏖️'),
-    svgPlaceholder('#f0d9e4', '👨‍👩‍👧‍👦'),
-    svgPlaceholder('#dcead0', '🌳'),
-    svgPlaceholder('#f6e2b8', '🐚')
-  ];
-  state.oddPhotoIndex = 4;
-  state.words = [
-    { word: 'PLAGE', clue: 'On y fait des châteaux de sable', key: true },
-    { word: 'FAMILLE', clue: "Ceux qu'on aime", key: false },
-    { word: 'ETE', clue: 'Saison des vacances', key: false },
-    { word: 'FORET', clue: "Pleine d'arbres", key: false }
-  ];
-  state.rebusAnswer = 'Bateau';
-  state.rebusEmojis = suggestRebus(state.rebusAnswer);
-  state.diffPhoto = svgPlaceholder('#dcead0', '🌳');
-  state.diffPoint = { x: 62, y: 38 };
-  state.montage = {
-    items: [
-      { type: 'photo', src: svgPlaceholder('#f1ddd0', '⚽'), duration: 2.5 },
-      { type: 'photo', src: svgPlaceholder('#cfe8f0', '🏖️'), duration: 2.5 },
-      { type: 'photo', src: svgPlaceholder('#f0d9e4', '👨‍👩‍👧‍👦'), duration: 2.5 }
-    ],
-    audio: null
-  };
-  state.colorPrimary = '#F50068';
-  state.colorSecondary = '#FDF5EA';
-  state.finalWord = 'Vacances';
-}
+  /* L'affiche est composée pour 820 px de large : on la dessine à cette
+     taille puis on la réduit, sinon les jeux ne tiennent plus dedans. */
+  function ajusterApercu() {
+    const boite = document.querySelector('.cr-apercu');
+    const cible = $('crPoster');
 
-/* init */
-renderShell();
-attachStaticListeners();
-applyPosterColors();
-renderMosaicInto();
-renderHobjPhotoPicker();
-renderOddPhotoAnswer();
-renderWordRowsInto();
-renderFlechEditableInto();
-renderEmojiPickerInto();
-renderRebusEditorSequence();
-renderRebusBoxInto();
-renderDiffFrameInto();
-renderMontageItemsInto();
-renderMontageAudioRow();
-renderMontageSummary();
+    // Sous 560 px, l'affiche a ses propres règles compactes : on la laisse
+    // occuper toute la largeur plutôt que de la réduire une seconde fois.
+    if (window.matchMedia('(max-width: 560px)').matches) {
+      cible.style.width = '100%';
+      cible.style.transform = '';
+      cible.style.height = '';
+      return;
+    }
+
+    const cs = getComputedStyle(boite);
+    const dispo = boite.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const k = Math.min(1, (dispo || 820) / 820);
+    cible.style.width = '820px';
+    cible.style.transformOrigin = 'top left';
+    cible.style.transform = 'scale(' + k + ')';
+    const aff = cible.firstElementChild;
+    cible.style.height = Math.round((aff ? aff.offsetHeight : 820 * 4 / 3) * k) + 'px';
+  }
+
+  /* ---------- Étape 1 · les photos ---------- */
+
+  function dessinerPhotos() {
+    const zone = $('crPhotos');
+    const cases = [];
+    for (let i = 0; i < MAX_PHOTOS; i++) {
+      const src = etat.photos[i];
+      cases.push(src
+        ? `<div class="cr-photo" data-i="${i}"><img src="${src}" alt="Photo ${i + 1}">
+             <span class="cr-photo-num">${i + 1}</span>
+             <button type="button" class="cr-photo-x" data-suppr="${i}" aria-label="Retirer la photo ${i + 1}">✕</button>
+           </div>`
+        : `<button type="button" class="cr-photo cr-photo-vide" data-ajout="1">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v12M6 12h12"/></svg>
+             <span>Ajouter</span>
+           </button>`);
+    }
+    zone.innerHTML = cases.join('');
+
+    zone.querySelectorAll('[data-ajout]').forEach((b) => b.addEventListener('click', () => champPhotos.click()));
+    zone.querySelectorAll('[data-suppr]').forEach((b) => b.addEventListener('click', () => {
+      etat.photos.splice(+b.dataset.suppr, 1);
+      if (etat.oddPhotoIndex >= etat.photos.length) etat.oddPhotoIndex = 0;
+      dessinerPhotos();
+      rafraichir();
+    }));
+
+    const n = etat.photos.length;
+    $('crPhotosAide').textContent = n < MIN_PHOTOS
+      ? `Encore ${MIN_PHOTOS - n} photo${MIN_PHOTOS - n > 1 ? 's' : ''} pour continuer.`
+      : `${n} photo${n > 1 ? 's' : ''} — vous pouvez en mettre jusqu'à ${MAX_PHOTOS}.`;
+
+    $('crIntruseBloc').hidden = n < 2;
+    $('crIntruse').innerHTML = etat.photos.map((src, i) =>
+      `<button type="button" class="cr-chip-photo${i === etat.oddPhotoIndex ? ' on' : ''}" data-odd="${i}">
+         <img src="${src}" alt=""><span>${i + 1}</span></button>`).join('');
+    $('crIntruse').querySelectorAll('[data-odd]').forEach((b) => b.addEventListener('click', () => {
+      etat.oddPhotoIndex = +b.dataset.odd;
+      dessinerPhotos();
+    }));
+  }
+
+  const champPhotos = Object.assign(document.createElement('input'), { type: 'file', accept: 'image/*', multiple: true });
+  champPhotos.addEventListener('change', async (e) => {
+    const fichiers = [...e.target.files].slice(0, MAX_PHOTOS - etat.photos.length);
+    for (const f of fichiers) etat.photos.push(await importerPhoto(f));
+    champPhotos.value = '';
+    dessinerPhotos();
+    rafraichir();
+  });
+
+  /* ---------- Étape 2 · les mots ---------- */
+
+  function dessinerMots() {
+    $('crMots').innerHTML = etat.words.map((m, i) => `
+      <div class="cr-mot" data-i="${i}">
+        <input class="cr-mot-mot" data-champ="word" data-i="${i}" value="${echapper(m.word)}" placeholder="MOT" autocomplete="off" maxlength="14">
+        <input class="cr-mot-def" data-champ="clue" data-i="${i}" value="${echapper(m.clue)}" placeholder="Sa définition" autocomplete="off">
+        <button type="button" class="cr-mot-x" data-suppr="${i}" aria-label="Retirer ce mot">✕</button>
+      </div>`).join('');
+
+    $('crMots').querySelectorAll('input').forEach((inp) => {
+      inp.addEventListener('input', (e) => {
+        const v = e.target.value;
+        etat.words[+e.target.dataset.i][e.target.dataset.champ] =
+          e.target.dataset.champ === 'word' ? sansAccent(v).toUpperCase() : v;
+        if (e.target.dataset.champ === 'word') e.target.value = etat.words[+e.target.dataset.i].word;
+        majAideMots();
+      });
+      inp.addEventListener('blur', rafraichir);
+    });
+    $('crMots').querySelectorAll('[data-suppr]').forEach((b) => b.addEventListener('click', () => {
+      etat.words.splice(+b.dataset.suppr, 1);
+      if (!etat.words.length) etat.words.push({ word: '', clue: '', key: true });
+      dessinerMots();
+      rafraichir();
+    }));
+    majAideMots();
+  }
+
+  function majAideMots() {
+    const n = motsUtiles().length;
+    $('crMotsAide').textContent = n < 2
+      ? 'Il faut au moins deux mots avec leur définition pour croiser la grille.'
+      : `${n} mots placés dans la grille.`;
+  }
+
+  /* ---------- Étape 3 · le rébus ---------- */
+
+  function dessinerRebus() {
+    $('crRebusMot').value = etat.rebusAnswer;
+    $('crRebusApercu').innerHTML = etat.rebusEmojis.length
+      ? etat.rebusEmojis.map((e, i) => `<button type="button" class="cr-emoji" data-retire="${i}" title="Retirer">${e}</button>`).join('')
+      : '<span class="cr-vide">Les emojis apparaîtront ici.</span>';
+    $('crRebusApercu').querySelectorAll('[data-retire]').forEach((b) => b.addEventListener('click', () => {
+      etat.rebusEmojis.splice(+b.dataset.retire, 1);
+      dessinerRebus();
+      rafraichir();
+    }));
+    $('crRebusAide').textContent = !etat.rebusAnswer
+      ? 'Tapez le mot à deviner.'
+      : (etat.rebusEmojis.length ? '' : 'Ajoutez au moins un emoji.');
+  }
+
+  function dessinerPalette() {
+    $('crPalette').innerHTML = EMOJI_LIBRARY
+      .map((e) => `<button type="button" class="cr-emoji" data-ajoute="${e}">${e}</button>`).join('');
+    $('crPalette').querySelectorAll('[data-ajoute]').forEach((b) => b.addEventListener('click', () => {
+      if (etat.rebusEmojis.length < 8) etat.rebusEmojis.push(b.dataset.ajoute);
+      dessinerRebus();
+      rafraichir();
+    }));
+  }
+
+  /* ---------- Étape 4 · la vidéo ---------- */
+
+  function dessinerMontage() {
+    const items = etat.montage.items;
+    const zone = $('crMontage');
+    if (!items.length && !etat.montage.audio) {
+      zone.innerHTML = '<p class="cr-vide">Rien pour l\'instant. L\'affiche marche très bien sans.</p>';
+      return;
+    }
+    zone.innerHTML =
+      items.map((it, i) => `
+        <div class="cr-mitem">
+          ${it.type === 'photo' ? `<img src="${it.src}" alt="">` : '<span class="cr-mvideo">▶</span>'}
+          <b>${it.type === 'photo' ? 'Photo' : 'Vidéo'} ${i + 1}</b>
+          <button type="button" class="cr-mot-x" data-mdel="${i}" aria-label="Retirer">✕</button>
+        </div>`).join('') +
+      (etat.montage.audio
+        ? '<div class="cr-mitem"><span class="cr-mvideo">♪</span><b>Musique</b><button type="button" class="cr-mot-x" data-adel="1" aria-label="Retirer la musique">✕</button></div>'
+        : '');
+
+    zone.querySelectorAll('[data-mdel]').forEach((b) => b.addEventListener('click', () => {
+      items.splice(+b.dataset.mdel, 1);
+      dessinerMontage();
+    }));
+    const a = zone.querySelector('[data-adel]');
+    if (a) a.addEventListener('click', () => { etat.montage.audio = null; dessinerMontage(); });
+  }
+
+  /* ---------- Étape 5 · les couleurs ---------- */
+
+  function dessinerCouleurs() {
+    $('crPalettes').innerHTML = PALETTES.map(([a, b]) => `
+      <button type="button" class="cr-swatch${a === etat.colorPrimary && b === etat.colorSecondary ? ' on' : ''}"
+              data-a="${a}" data-b="${b}" aria-label="Palette ${a}">
+        <i style="background:${a}"></i><i style="background:${b}"></i>
+      </button>`).join('');
+    $('crPalettes').querySelectorAll('.cr-swatch').forEach((s) => s.addEventListener('click', () => {
+      etat.colorPrimary = s.dataset.a;
+      etat.colorSecondary = s.dataset.b;
+      $('crCoul1').value = etat.colorPrimary;
+      $('crCoul2').value = etat.colorSecondary;
+      dessinerCouleurs();
+      rafraichir();
+    }));
+    $('crCoul1').value = etat.colorPrimary;
+    $('crCoul2').value = etat.colorSecondary;
+  }
+
+  /* ---------- Navigation ---------- */
+
+  function manque(i) {
+    if (i === 0 && etat.photos.length < MIN_PHOTOS) return `Ajoutez au moins ${MIN_PHOTOS} photos.`;
+    if (i === 1 && motsUtiles().length < 2) return 'Il faut deux mots avec leur définition.';
+    if (i === 2 && (!etat.rebusAnswer.trim() || !etat.rebusEmojis.length)) return 'Il manque le mot ou les emojis du rébus.';
+    if (i === 3 && !etat.finalWord.trim()) return 'Il manque le mot final.';
+    return '';
+  }
+
+  function allerA(i) {
+    etape = Math.max(0, Math.min(ETAPES.length - 1, i));
+    document.querySelectorAll('.cr-etape').forEach((s) => { s.hidden = +s.dataset.etape !== etape; });
+
+    $('crFil').innerHTML = ETAPES.map((nom, k) => `
+      <li class="${k === etape ? 'on' : (k < etape ? 'fait' : '')}">
+        <button type="button" data-va="${k}"><i>${k + 1}</i><span>${nom}</span></button>
+      </li>`).join('');
+    $('crFil').querySelectorAll('[data-va]').forEach((b) => b.addEventListener('click', () => {
+      const cible = +b.dataset.va;
+      if (cible <= etape) return allerA(cible);
+      for (let k = etape; k < cible; k++) {
+        const m = manque(k);
+        if (m) { allerA(k); signaler(m); return; }
+      }
+      allerA(cible);
+    }));
+
+    $('crRetour').disabled = etape === 0;
+    $('crSuivant').hidden = etape === ETAPES.length - 1;
+    document.body.classList.toggle('cr-apercu-ouvert', etape === ETAPES.length - 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    rafraichir();
+  }
+
+  function signaler(message) {
+    const b = $('crSuivant');
+    b.classList.add('cr-secoue');
+    setTimeout(() => b.classList.remove('cr-secoue'), 500);
+    const aide = document.querySelector('.cr-etape:not([hidden]) .cr-aide');
+    if (aide) { aide.textContent = message; aide.classList.add('cr-alerte'); }
+  }
+
+  function rafraichir() {
+    dessinerApercu();
+  }
+
+  /* ---------- Petits outils ---------- */
+
+  function echapper(s) {
+    return String(s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  }
+  function sansAccent(s) {
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Za-z]/g, '');
+  }
+
+  /* ---------- Branchements ---------- */
+
+  $('crSuivant').addEventListener('click', () => {
+    const m = manque(etape);
+    if (m) return signaler(m);
+    allerA(etape + 1);
+  });
+  $('crRetour').addEventListener('click', () => allerA(etape - 1));
+
+  $('crAddMot').addEventListener('click', () => {
+    if (etat.words.length >= 6) return;
+    etat.words.push({ word: '', clue: '', key: false });
+    dessinerMots();
+  });
+  $('crIdeesMots').addEventListener('click', () => {
+    const libres = WORD_SUGGESTIONS.filter((s) => !etat.words.some((m) => m.word === s.word));
+    etat.words.forEach((m, i) => {
+      if (!m.word && libres.length) Object.assign(etat.words[i], libres.shift(), { key: i === 0 });
+    });
+    while (etat.words.length < 4 && libres.length) etat.words.push({ ...libres.shift(), key: false });
+    dessinerMots();
+    rafraichir();
+  });
+
+  $('crRebusMot').addEventListener('input', (e) => {
+    etat.rebusAnswer = e.target.value;
+    etat.rebusEmojis = e.target.value.trim() ? suggestRebus(e.target.value.trim()) : [];
+    dessinerRebus();
+    rafraichir();
+  });
+  $('crRebusRegen').addEventListener('click', () => {
+    if (!etat.rebusAnswer.trim()) return;
+    etat.rebusEmojis = suggestRebus(etat.rebusAnswer.trim());
+    dessinerRebus();
+    rafraichir();
+  });
+  $('crRebusVider').addEventListener('click', () => { etat.rebusEmojis = []; dessinerRebus(); rafraichir(); });
+
+  $('crMotFinal').addEventListener('input', (e) => { etat.finalWord = e.target.value; rafraichir(); });
+
+  $('crMontagePhotos').addEventListener('change', async (e) => {
+    for (const f of [...e.target.files]) {
+      etat.montage.items.push({ type: 'photo', src: await importerPhoto(f, 1000, 0.78), duration: 2.5 });
+    }
+    e.target.value = '';
+    dessinerMontage();
+  });
+  $('crMontageVideo').addEventListener('change', async (e) => {
+    if (e.target.files[0]) etat.montage.items.push({ type: 'video', src: await fileToDataUrl(e.target.files[0]) });
+    e.target.value = '';
+    dessinerMontage();
+  });
+  $('crMontageAudio').addEventListener('change', async (e) => {
+    if (e.target.files[0]) etat.montage.audio = await fileToDataUrl(e.target.files[0]);
+    e.target.value = '';
+    dessinerMontage();
+  });
+
+  $('crCoul1').addEventListener('input', (e) => { etat.colorPrimary = e.target.value; dessinerCouleurs(); rafraichir(); });
+  $('crCoul2').addEventListener('input', (e) => { etat.colorSecondary = e.target.value; dessinerCouleurs(); rafraichir(); });
+
+  $('crVoirApercu').addEventListener('click', () => document.body.classList.toggle('cr-apercu-ouvert'));
+  $('crFermerApercu').addEventListener('click', () => document.body.classList.remove('cr-apercu-ouvert'));
+
+  $('crGenerer').addEventListener('click', () => {
+    const id = Store.newId();
+    try {
+      Store.save(id, affiche());
+    } catch (e) {
+      return signaler("L'affiche est trop lourde pour ce navigateur. Retirez une photo de la vidéo surprise.");
+    }
+    const url = new URL('view.html', location.href);
+    url.searchParams.set('id', id);
+    $('crLien').value = url.toString();
+    $('crVoir').href = url.toString();
+    const impression = new URL('poster.html', location.href);
+    impression.searchParams.set('id', id);
+    $('crImprimer').href = impression.toString();
+    $('crPartage').hidden = false;
+    $('crFinal').hidden = true;
+    $('crPartage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  $('crLien').addEventListener('focus', (e) => e.target.select());
+
+  $('crDemo').addEventListener('click', () => {
+    const d = buildDemoBoard();
+    etat = {
+      photos: d.photos.slice(), oddPhotoIndex: d.oddPhotoIndex,
+      words: d.words.map((m) => ({ ...m })),
+      rebusAnswer: d.rebusAnswer, rebusEmojis: d.rebusEmojis.slice(),
+      finalWord: d.finalWord, montage: d.montage,
+      colorPrimary: d.colorPrimary, colorSecondary: d.colorSecondary
+    };
+    toutDessiner();
+    allerA(0);
+  });
+  $('crVider').addEventListener('click', () => {
+    etat = nouvelEtat();
+    $('crPartage').hidden = true;
+    $('crFinal').hidden = false;
+    toutDessiner();
+    allerA(0);
+  });
+
+  function toutDessiner() {
+    dessinerPhotos();
+    dessinerMots();
+    dessinerRebus();
+    dessinerMontage();
+    dessinerCouleurs();
+    $('crMotFinal').value = etat.finalWord;
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(ajusterApercu).observe(document.querySelector('.cr-apercu'));
+  else window.addEventListener('resize', ajusterApercu);
+
+  dessinerPalette();
+  toutDessiner();
+  allerA(0);
+})();
