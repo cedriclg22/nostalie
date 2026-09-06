@@ -1507,6 +1507,8 @@ footer.site-footer {
 
 /* --- Panier dans la barre --- */
 .btn.panier { position: relative; }
+.panier-lien { display: inline-flex; align-items: center; gap: 2px; }
+.panier-badge.dark { background: var(--ink); color: var(--paper); }
 .panier-badge {
   display: inline-grid; place-items: center;
   min-width: 19px; height: 19px; padding: 0 5px;
