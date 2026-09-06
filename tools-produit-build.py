@@ -251,7 +251,7 @@ def page(slug):
       </div>
 
       <button type="button" class="btn pdp-cta" id="ajouter">Ajouter à ma commande</button>
-      <p class="pdp-added" id="ajoute" hidden>Ajouté. <a href="commander.html">Voir ma commande →</a></p>
+      <p class="pdp-added" id="ajoute" hidden>Ajouté. <a href="packs.html">Voir ma commande →</a></p>
       <p class="pdp-note">Livraison France comprise · Sans engagement, résiliable à tout moment.</p>
 
       <div class="reassure">{''.join('<span><i>%s</i>%s</span>' % r for r in REASSURANCE)}</div>
