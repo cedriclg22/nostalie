@@ -18,7 +18,7 @@
 
   const VISUELS = {
     'cadre-jeu': { tint: 'var(--rose)', html: '<img src="image/mamie-remplit-affiche.jpg" alt="">' },
-    'puzzle': { tint: 'var(--sky)', html: puzzleMock('image/enfants-plage-lunettes.jpg') },
+    'puzzle': { tint: 'var(--sky)', html: '<img src="image/puzzle-mamie-table.jpg" alt="">' },
     'cadre-ecran': { tint: 'var(--sage)', html: deviceMock('image/bebe-mer.jpg') },
     'packs': {
       tint: 'linear-gradient(150deg, var(--sage), var(--sky) 60%, var(--rose))',

@@ -85,10 +85,10 @@ PRODUITS = {
      "<b>Une boîte personnalisée</b> au titre de votre souvenir. C'est déjà un cadeau avant même d'être ouvert.",
      "<b>Un nouveau puzzle chaque mois</b>, préparé à l'avance depuis l'app. Vous n'y pensez plus.",
    ],
-   medias=[mock(puzzle('image/enfants-plage-lunettes.jpg', (3, 0)), SKY),
-           mock(puzzle('image/famille-plage-rochers.jpg'), ROSE),
-           mock(puzzle('image/enfants-calin.jpg', (1, 2)), SAGE),
-           mock(puzzle('image/bebe-mer.jpg', (2, 3)), 'var(--lilac)')],
+   medias=[photo('image/puzzle-mamie-table.jpg', "Une grand-mère assemble le puzzle photo de sa petite-fille sur la table"),
+           photo('image/puzzle-noel-canape.jpg', "Un puzzle photo de Noël assemblé sur la table basse du salon"),
+           photo('image/puzzle-papy-foot.jpg', "Un grand-père termine le puzzle photo de son petit-fils footballeur"),
+           mock(puzzle('image/famille-plage-rochers.jpg'), ROSE)],
    stats=[("200", "pièces"), ("48 × 36", "cm une fois monté"), ("1 à 9", "photos par puzzle"), ("3-5 j", "de délai de livraison")],
    raisons=[("Parce qu'on le fait ensemble.", "Deux heures autour d'une table, sans écran. C'est rare."),
             ("Parce que la surprise dure.", "On ne sait quelle photo c'est qu'au bout de vingt minutes."),
@@ -118,7 +118,7 @@ PRODUITS = {
      "<b>Toute la famille contribue</b> : chacun pousse ses photos depuis l'app, autant qu'il veut.",
      "<b>Les petits-enfants envoient le mercredi</b>, ça s'affiche chez mamie le soir même.",
    ],
-   medias=[photo('image/cadre-ecran-produit.jpg', "Le cadre photo écran Nostalie posé sur un meuble, relié au téléphone"),
+   medias=[photo('image/cadre-ecran-produit.webp', "Le cadre photo écran Nostalie posé sur un meuble, relié au téléphone"),
            mock(device('image/enfants-babyfoot.jpg'), SAGE),
            mock(device('image/bebe-mer.jpg'), SKY),
            mock(device('image/famille-plage-rochers.jpg'), ROSE),
@@ -209,21 +209,33 @@ REASSURANCE = [("🇫🇷", "Imprimé en France"), ("📦", "Livraison comprise"
 
 PERSO = {'puzzle': 'puzzle', 'cadre-ecran': 'ecran'}
 
+PERSO_VIGNETTE = ('<span class="thumb-perso">'
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"'
+                  ' stroke-linecap="round" stroke-linejoin="round">'
+                  '<path d="M12 16V4"/><path d="M7.5 8.5L12 4l4.5 4.5"/>'
+                  '<path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>'
+                  '<b>Ma photo</b></span>')
+
 
 def page(slug):
     p = PRODUITS[slug]
     autres = [s for s in FICHES if s != slug]
 
-    # Le client importe sa photo et voit le produit avec (perso.js remplit le bloc).
-    perso = ('\n  <section class="psection perso-section" data-perso="%s"></section>\n'
-             % PERSO[slug]) if slug in PERSO else ''
+    # Sur le puzzle et l'écran, la première vue de la galerie est l'essai avec
+    # sa propre photo : perso.js la remplit une fois la page injectée.
+    vues = list(p['medias'])
+    vignettes = list(p['medias'])
+    if slug in PERSO:
+        vues.insert(0, '<div class="perso-galerie" data-perso="%s" data-perso-mode="galerie"></div>' % PERSO[slug])
+        vignettes.insert(0, PERSO_VIGNETTE)
 
     galerie_grande = ''.join(
-        '<div class="shot%s" data-i="%d">%s</div>' % (' on' if i == 0 else '', i, m)
-        for i, m in enumerate(p['medias']))
+        '<div class="shot%s%s" data-i="%d">%s</div>'
+        % (' on' if i == 0 else '', ' shot-perso' if 'perso-galerie' in m else '', i, m)
+        for i, m in enumerate(vues))
     galerie_vignettes = ''.join(
         '<button type="button" class="thumb%s" data-i="%d">%s</button>' % (' on' if i == 0 else '', i, m)
-        for i, m in enumerate(p['medias']))
+        for i, m in enumerate(vignettes))
 
     formats = ''.join(
         '<button type="button" class="opt%s" data-fmt="%s">'
@@ -267,7 +279,6 @@ def page(slug):
   </div>
 
   <div class="stats">{''.join('<div class="stat"><b>%s</b><span>%s</span></div>' % s for s in p['stats'])}</div>
-{perso}
 
   <section class="psection">
     <h2>Trois bonnes raisons</h2>
