@@ -707,23 +707,10 @@ video { max-width: 100%; border-radius: var(--radius); box-shadow: var(--shadow)
 
 /* --- Menu déroulant « Nos produits » --- */
 .navdrop { position: relative; }
-.navdrop-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  padding: 6px 0;
-  font: inherit;
-  font-weight: 500;
-  font-size: .92rem;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: color .16s ease;
-}
+/* Le bouton rose de la barre est aussi ce qui ouvre le menu : il hérite
+   de .btn, on ne règle ici que le chevron. */
+.navdrop-btn { gap: 7px; }
 .navdrop-btn svg { width: 13px; height: 13px; transition: transform .2s ease; }
-.navdrop:hover .navdrop-btn,
-.navdrop.open .navdrop-btn { color: var(--ink); }
 .navdrop:hover .navdrop-btn svg,
 .navdrop.open .navdrop-btn svg { transform: rotate(180deg); }
 
