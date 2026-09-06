@@ -968,7 +968,7 @@ em.wonk { font-style: italic; font-variation-settings: 'SOFT' 40, 'WONK' 1; colo
   display: block;
 }
 .puzzle-mock i.loose {
-  transform: translate(16px, -14px) rotate(9deg);
+  transform: translate(30%, -34%) rotate(9deg);
   box-shadow: 0 8px 18px rgba(44,41,37,.24);
   border-radius: 6px;
   outline: 2px solid #fff;
@@ -1260,6 +1260,114 @@ footer.site-footer {
 .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
 .footer-links a { text-decoration: none; color: var(--ink-soft); }
 .footer-links a:hover { color: var(--ink); }
+
+/* --- Pack Noël (accueil) --- */
+.xmas-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: center;
+  padding: 52px 56px;
+  border-radius: 40px;
+  background:
+    radial-gradient(520px 320px at 90% 10%, var(--sage) 0%, rgba(222,231,220,0) 62%),
+    radial-gradient(480px 300px at 6% 92%, var(--rose) 0%, rgba(242,223,218,0) 60%),
+    rgba(255,255,255,.74);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+@media (max-width: 920px) { .xmas-card { grid-template-columns: 1fr; padding: 38px 24px; gap: 34px; } }
+.xmas-card h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); }
+.xmas-card > div > p { color: var(--ink-soft); margin: 0 0 20px; }
+.xmas-price { display: flex; align-items: baseline; gap: 12px; margin: 22px 0 20px; }
+.xmas-price .amount { font-family: var(--font-display); font-size: 2.6rem; font-weight: 600; letter-spacing: -.03em; }
+.xmas-price s { color: var(--ink-soft); font-size: 1.05rem; }
+.xmas-note { font-size: .82rem; color: var(--ink-soft); margin: 16px 0 0; }
+
+.xmas-stack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+}
+.xmas-stack > * { flex: none; max-width: none; }
+.xmas-stack .frame-mock { width: 26%; transform: rotate(-7deg); z-index: 1; }
+.xmas-stack .device-mock { width: 40%; margin: 0 -4%; transform: rotate(2deg); z-index: 3; }
+.xmas-stack .puzzle-mock { width: 32%; transform: rotate(7deg); z-index: 2; }
+
+/* --- Page produit --- */
+.crumb {
+  display: inline-block;
+  font-size: .86rem;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-bottom: 30px;
+}
+.crumb:hover { color: var(--ink); }
+
+.phero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+@media (max-width: 900px) { .phero { grid-template-columns: 1fr; gap: 34px; } }
+@media (max-width: 620px) { .phero-media { padding: 22px; min-height: 240px; } }
+.phero h1 { font-size: clamp(2.2rem, 4.6vw, 3.3rem); margin: 0 0 16px; }
+.phero-media {
+  border-radius: var(--radius-lg);
+  padding: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--tint, var(--cream));
+  border: 1px solid var(--line);
+  min-height: 380px;
+}
+.phero-media img.full.portrait { aspect-ratio: 4 / 5; max-width: 300px; width: 100%; border-radius: var(--radius); object-fit: cover; box-shadow: 0 18px 40px rgba(44,41,37,.16); }
+.pprice { display: flex; align-items: baseline; gap: 10px; margin: 22px 0 6px; }
+.pprice .amount { font-family: var(--font-display); font-size: 3rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+.pprice .per { color: var(--ink-soft); font-size: .95rem; }
+.palt { font-size: .88rem; color: var(--ink-soft); margin: 0 0 24px; max-width: 420px; }
+
+.psection { padding-top: 64px; border-top: 1px solid var(--line); margin-top: 64px; }
+.psection > h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 28px; }
+.how-step.nonum::before { content: none; }
+
+.specs {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: rgba(255,255,255,.62);
+}
+.spec {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+  padding: 15px 24px;
+  border-top: 1px solid var(--line);
+}
+.spec:first-child { border-top: none; }
+.spec dt { color: var(--ink-soft); font-size: .88rem; }
+.spec dd { margin: 0; font-size: .94rem; }
+@media (max-width: 620px) { .spec { grid-template-columns: 1fr; gap: 4px; } }
+
+.otherprods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 760px) { .otherprods { grid-template-columns: 1fr; } }
+.otherprod {
+  display: block;
+  padding: 22px 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.62);
+  text-decoration: none;
+  color: inherit;
+  transition: transform .18s ease, border-color .18s ease;
+}
+.otherprod:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+.otherprod span { display: block; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.otherprod b { font-family: var(--font-display); font-size: 1.16rem; font-weight: 600; }
 
 /* ================= AFFICHE IMPRIMABLE ================= */
 .phint { opacity: .65; font-size: .9rem; margin: 4px 0 14px; }

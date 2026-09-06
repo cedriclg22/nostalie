@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nostalie — Vos souvenirs, en vrai, chez ceux que vous aimez</title>
-<meta name="description" content="Nostalie : le cadre jeu créé par l'IA, le puzzle photo chaque mois et le cadre photo écran connecté. Pour les familles, les grands-parents et les amoureux.">
+<meta name="description" content="Nostalie : le cadre jeu à jeux générés, le puzzle photo chaque mois et le cadre photo écran connecté. Pour les familles, les grands-parents et les amoureux.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20">
+<link rel="stylesheet" href="styles.css?v=21">
 </head>
 <body>
 
@@ -17,8 +17,8 @@
       <a class="logo" href="index.html">Nostalie</a>
       <nav class="nav">
         <a class="navlink" href="#produits">Nos produits</a>
+        <a class="navlink" href="#noel">Pack Noël</a>
         <a class="navlink" href="#pour-qui">Pour qui</a>
-        <a class="navlink" href="#comment">Comment ça marche</a>
         <a class="navlink" href="#tarifs">Tarifs</a>
         <a class="navlink" href="#app">App mobile</a>
         <a class="btn small" href="create.html">Créer mon cadre</a>
@@ -55,7 +55,7 @@
     </header>
 
     <div class="strip">
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Jeux générés par l'IA</div>
+      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Jeux générés automatiquement</div>
       <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="6" width="13" height="10" rx="2"/><path d="M14.5 9.5h4l3 3.2V16h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg> Envoyé chez vos proches</div>
       <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg> Cadre écran connecté</div>
       <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></svg> Sans engagement</div>
@@ -80,15 +80,15 @@
           <div class="prodcard-body">
             <div class="prod-num">Produit 01</div>
             <h3>Cadre jeu</h3>
-            <p>Un tableau à accrocher, avec 5 mini-jeux fabriqués à partir de vos photos.</p>
+            <p>Un tableau à accrocher, avec 5 mini-jeux générés à partir de vos photos.</p>
             <ul class="prod-list">
-              <li>5 jeux générés par l'IA</li>
+              <li>5 jeux générés automatiquement</li>
               <li>Vidéo surprise à débloquer</li>
               <li>Cadre en bois envoyé une fois</li>
             </ul>
             <div class="prod-foot">
               <div class="prod-price">19,90 €<small>par mois</small></div>
-              <a class="btn small" href="create.html">Créer</a>
+              <a class="btn small" href="produit.html?p=cadre-jeu">Découvrir</a>
             </div>
           </div>
         </article>
@@ -129,7 +129,7 @@
             </ul>
             <div class="prod-foot">
               <div class="prod-price">24,90 €<small>par mois</small></div>
-              <a class="btn small" href="create.html">Créer</a>
+              <a class="btn small" href="produit.html?p=puzzle">Découvrir</a>
             </div>
           </div>
         </article>
@@ -152,14 +152,36 @@
               <li>Photos et contributeurs illimités</li>
             </ul>
             <div class="prod-foot">
-              <div class="prod-price">9 €<small>par mois + 129 € l'écran</small></div>
-              <a class="btn small" href="#app">Découvrir</a>
+              <div class="prod-price">9 €<small>par mois + 89 € l'écran</small></div>
+              <a class="btn small" href="produit.html?p=cadre-ecran">Découvrir</a>
             </div>
           </div>
         </article>
 
       </div>
 
+    </div>
+  </section>
+
+<!-- PACK NOEL -->
+  <section class="section" id="noel">
+    <div class="section-inner">
+      <div class="xmas-card">
+        <div>
+          <span class="kicker">Édition limitée</span>
+          <h2>Le Pack Noël</h2>
+          <p>Les trois objets dans un coffret, livrés avant le 24 décembre.</p>
+          <ul class="prod-list">
+            <li>Le cadre écran et son cadre bois</li>
+            <li>Le cadre jeu monté avec sa première affiche</li>
+            <li>Un puzzle photo 200 pièces</li>
+          </ul>
+          <div class="xmas-price"><span class="amount">119 €</span><s>153,80 €</s></div>
+          <a class="btn" href="produit.html?p=pack-noel"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Voir le Pack Noël</a>
+          <p class="xmas-note">Réservation jusqu'au 10 décembre · abonnements démarrés en janvier.</p>
+        </div>
+        <div class="xmas-stack"><div class="frame-mock"><img src="image/poster-mur-salon.jpg" alt=""></div><div class="device-mock"><div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="screen"><img src="image/bebe-mer.jpg" alt=""></div><div class="magnet"></div></div><div class="puzzle-mock" style="--puz:url('image/famille-plage-rochers.jpg')"><i style="background-position:0.00% 0.00%"></i><i style="background-position:25.00% 0.00%"></i><i style="background-position:50.00% 0.00%"></i><i style="background-position:75.00% 0.00%"></i><i class="loose" style="background-position:100.00% 0.00%"></i><i style="background-position:0.00% 33.33%"></i><i style="background-position:25.00% 33.33%"></i><i style="background-position:50.00% 33.33%"></i><i style="background-position:75.00% 33.33%"></i><i style="background-position:100.00% 33.33%"></i><i style="background-position:0.00% 66.67%"></i><i style="background-position:25.00% 66.67%"></i><i style="background-position:50.00% 66.67%"></i><i style="background-position:75.00% 66.67%"></i><i style="background-position:100.00% 66.67%"></i><i style="background-position:0.00% 100.00%"></i><i style="background-position:25.00% 100.00%"></i><i style="background-position:50.00% 100.00%"></i><i style="background-position:75.00% 100.00%"></i><i style="background-position:100.00% 100.00%"></i></div></div>
+      </div>
     </div>
   </section>
 
@@ -174,7 +196,7 @@
         <div class="detail-copy">
           <span class="kicker">Produit 01</span>
           <h3>Le cadre jeu</h3>
-          <p>Vous choisissez vos photos et quelques mots. L'IA en fait cinq jeux sur mesure, et la vidéo surprise se débloque une fois tout résolu. Les créations des utilisateurs enrichissent la banque de jeux.</p>
+          <p>Vous choisissez vos photos et quelques mots, les cinq jeux se génèrent sur mesure, et la vidéo surprise se débloque une fois tout résolu. Les créations des utilisateurs enrichissent la banque de jeux.</p>
           <div class="chips">
             <span class="chip">Pêle-mêle</span>
             <span class="chip">Mots fléchés</span>
@@ -243,7 +265,7 @@
             <span class="chip">Photos illimitées</span>
             <span class="chip">9 €/mois</span>
           </div>
-          <a class="btn" href="#app"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Télécharger l'app</a>
+          <a class="btn" href="produit.html?p=cadre-ecran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Découvrir l'écran</a>
         </div>
       </div>
 
@@ -298,7 +320,7 @@
           <p>Depuis le web ou l'app, en quelques minutes.</p>
         </div>
         <div class="how-step">
-          <h4>L'IA fabrique le contenu</h4>
+          <h4>Le contenu se génère</h4>
           <p>Jeux, définitions, rébus, montage du puzzle. Vous corrigez ce que vous voulez.</p>
         </div>
         <div class="how-step">
@@ -342,7 +364,7 @@
           <span class="period">par mois · cadre en bois offert</span>
           <p class="desc">Une nouvelle affiche à jeux chaque mois.</p>
           <ul class="prod-list">
-            <li>5 jeux générés par l'IA</li>
+            <li>5 jeux générés automatiquement</li>
             <li>Vidéo surprise incluse</li>
             <li>29,90 € en création unique</li>
           </ul>
@@ -365,14 +387,14 @@
         <div class="price-card">
           <div class="pname">Cadre photo écran</div>
           <span class="amount">9 €</span>
-          <span class="period">par mois · + 129 € l'écran</span>
+          <span class="period">par mois · + 89 € l'écran</span>
           <p class="desc">L'écran une fois, puis l'abonnement qui l'alimente.</p>
           <ul class="prod-list">
             <li>Photos et contributeurs illimités</li>
             <li>Wi-Fi, aimanté ou encadré</li>
             <li>App iOS et Android incluse</li>
           </ul>
-          <a class="btn ghost" href="#app">Être prévenu du lancement</a>
+          <a class="btn ghost" href="produit.html?p=cadre-ecran">Découvrir l'écran</a>
         </div>
 
       </div>
@@ -432,7 +454,7 @@
           <p>Non. Celui qui reçoit n'a rien à installer. Seul celui qui envoie utilise le site ou l'app.</p>
         </details>
         <details>
-          <summary>Qu'est-ce que l'IA fabrique exactement ?</summary>
+          <summary>Qu'est-ce qui est généré exactement ?</summary>
           <p>La grille de mots fléchés, les définitions, les rébus, le pêle-mêle. Tout reste modifiable à la main.</p>
         </details>
         <details>
@@ -460,6 +482,7 @@
       <div><b>Nostalie</b> — vos souvenirs, en vrai.</div>
       <div class="footer-links">
         <a href="#produits">Nos produits</a>
+        <a href="#noel">Pack Noël</a>
         <a href="#tarifs">Tarifs</a>
         <a href="#app">App mobile</a>
         <a href="create.html">Créer mon cadre</a>
