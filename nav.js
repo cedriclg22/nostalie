@@ -47,13 +47,4 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') ouvrir(false); });
     drop.addEventListener('mouseleave', () => ouvrir(false));
   }
-
-  const badge = document.getElementById('panierBadge');
-  if (badge) {
-    let n = 0;
-    try { n = Object.keys(JSON.parse(localStorage.getItem('nostalie_selection') || '{}')).length; }
-    catch (e) { /* stockage indisponible */ }
-    badge.textContent = n;
-    badge.hidden = n === 0;
-  }
 })();

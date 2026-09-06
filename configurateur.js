@@ -96,9 +96,6 @@
     const cta = document.getElementById('recapCta');
     cta.classList.toggle('disabled', lignes.length === 0);
     cta.textContent = lignes.length > 1 ? 'Continuer avec ' + lignes.length + ' produits' : 'Continuer';
-
-    const badge = document.getElementById('panierBadge');
-    if (badge) { badge.textContent = lignes.length; badge.hidden = lignes.length === 0; }
   }
 
   document.getElementById('offresListe').addEventListener('click', (e) => {

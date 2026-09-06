@@ -1615,19 +1615,6 @@ footer.site-footer {
 .fil a:hover { color: var(--ink); }
 .fil span { margin: 0 7px; opacity: .5; }
 
-/* --- Panier dans la barre --- */
-.btn.panier { position: relative; }
-.panier-lien { display: inline-flex; align-items: center; gap: 2px; }
-.panier-badge.dark { background: var(--ink); color: var(--paper); }
-.panier-badge {
-  display: inline-grid; place-items: center;
-  min-width: 19px; height: 19px; padding: 0 5px;
-  margin-left: 4px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.9); color: var(--primary-dark);
-  font-size: .72rem; font-weight: 700;
-}
-
 /* --- Page produit : galerie + bloc d'achat --- */
 .pdp {
   display: grid;

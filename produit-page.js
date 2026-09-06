@@ -35,12 +35,6 @@
   }));
 
   // --- panier ---
-  function majBadge() {
-    const n = Object.keys(lire()).length;
-    const badge = document.getElementById('panierBadge');
-    badge.textContent = n;
-    badge.hidden = n === 0;
-  }
 
   document.getElementById('ajouter').addEventListener('click', () => {
     const sel = lire();
@@ -53,8 +47,6 @@
     sel[slug] = format;
     ecrire(sel);
     document.getElementById('ajoute').hidden = false;
-    majBadge();
   });
 
-  majBadge();
 })();
