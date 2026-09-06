@@ -200,6 +200,7 @@ FORMATS = {
 }
 
 ORDRE = ['cadre-jeu', 'puzzle', 'cadre-ecran', 'pack-noel']
+FICHES = ['cadre-jeu', 'puzzle', 'cadre-ecran']  # pages produit individuelles
 
 REASSURANCE = [("🇫🇷", "Imprimé en France"), ("📦", "Livraison comprise"),
                ("🔁", "Sans engagement"), ("🎁", "Emballage cadeau offert")]
@@ -207,7 +208,7 @@ REASSURANCE = [("🇫🇷", "Imprimé en France"), ("📦", "Livraison comprise"
 
 def page(slug):
     p = PRODUITS[slug]
-    autres = [s for s in ORDRE if s != slug]
+    autres = [s for s in FICHES if s != slug]
 
     galerie_grande = ''.join(
         '<div class="shot%s" data-i="%d">%s</div>' % (' on' if i == 0 else '', i, m)
@@ -295,11 +296,12 @@ def page(slug):
   <section class="psection">
     <h2>Vous aimerez aussi</h2>
     <div class="cross">{''.join(
-      '<a class="crossitem" href="produit.html?p=%s"><div class="crossmedia" style="--tint:%s">%s</div>'
+      '<a class="crossitem" href="%s"><div class="crossmedia" style="--tint:%s">%s</div>'
       '<div class="crossbody"><span>%s</span><b>%s</b><em>%s</em><span class="crosscta">Découvrir →</span></div></a>'
-      % (s, PRODUITS[s]['tint'], PRODUITS[s]['medias'][0], PRODUITS[s]['num'], PRODUITS[s]['nom'],
+      % (('packs.html' if s == 'pack-noel' else 'produit.html?p=' + s),
+         PRODUITS[s]['tint'], PRODUITS[s]['medias'][0], PRODUITS[s]['num'], PRODUITS[s]['nom'],
          FORMATS[s][0]['prix'] + FORMATS[s][0]['per'])
-      for s in autres)}</div>
+      for s in autres + ['pack-noel'])}</div>
   </section>
 """
 
@@ -307,11 +309,12 @@ def page(slug):
 infos = {s: dict(nom=PRODUITS[s]['nom'], num=PRODUITS[s]['num'], tint=PRODUITS[s]['tint'],
                  accroche=PRODUITS[s]['sous_titre'], formats=FORMATS[s], pack=(s == 'pack-noel'))
          for s in ORDRE}
-pages = {s: page(s) for s in ORDRE}
+pages = {s: page(s) for s in FICHES}
 
 open('produit.js', 'w').write(
   "// Fiches produit — généré par tools-produit-build.py, ne pas éditer à la main.\n"
   "const PRODUIT_ORDRE = " + json.dumps(ORDRE, ensure_ascii=False) + ";\n"
+  "const PRODUIT_FICHES = " + json.dumps(FICHES, ensure_ascii=False) + ";\n"
   "const PRODUIT_INFO = " + json.dumps(infos, ensure_ascii=False, indent=1) + ";\n"
   "const PRODUIT_PAGES = " + json.dumps(pages, ensure_ascii=False, indent=1) + ";\n")
 print('produit.js écrit :', sum(len(v) for v in pages.values()), 'caractères de pages')

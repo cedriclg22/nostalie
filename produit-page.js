@@ -2,6 +2,7 @@
 (function () {
   const CLE = 'nostalie_selection';
   const slug0 = new URLSearchParams(location.search).get('p');
+  if (slug0 === 'pack-noel') { location.replace('packs.html'); return; }
   const slug = PRODUIT_PAGES[slug0] ? slug0 : 'cadre-jeu';
 
   document.getElementById('pdpRoot').innerHTML = PRODUIT_PAGES[slug];

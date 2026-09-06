@@ -703,6 +703,88 @@ video { max-width: 100%; border-radius: var(--radius); box-shadow: var(--shadow)
   .nav a.navlink { display: none; }
 }
 
+/* --- Menu déroulant « Nos produits » --- */
+.navdrop { position: relative; }
+.navdrop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font: inherit;
+  font-weight: 500;
+  font-size: .92rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color .16s ease;
+}
+.navdrop-btn svg { width: 13px; height: 13px; transition: transform .2s ease; }
+.navdrop:hover .navdrop-btn,
+.navdrop.open .navdrop-btn { color: var(--ink); }
+.navdrop:hover .navdrop-btn svg,
+.navdrop.open .navdrop-btn svg { transform: rotate(180deg); }
+
+.navdrop-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  width: 330px;
+  padding: 10px;
+  border-radius: 22px;
+  background: #FDFCFA;
+  border: 1px solid var(--line);
+  box-shadow: 0 2px 4px rgba(44,41,37,.06), 0 22px 48px rgba(44,41,37,.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -8px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 70;
+}
+.navdrop::after {           /* pont invisible pour ne pas perdre le survol */
+  content: "";
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  height: 16px;
+}
+.navdrop:hover .navdrop-panel,
+.navdrop:focus-within .navdrop-panel,
+.navdrop.open .navdrop-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.navdrop-panel a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background .14s ease;
+}
+.navdrop-panel a:hover { background: rgba(44,41,37,.05); }
+.navdrop-panel a b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+.navdrop-panel a span {
+  display: block;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.navdrop-panel .navdrop-pack {
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  border-radius: 14px;
+}
+@media (max-width: 860px) {
+  .navdrop { display: none; }
+}
+
 /* --- Sections --- */
 .section {
   padding: 96px 20px;

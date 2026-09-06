@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=23">
+<link rel="stylesheet" href="styles.css?v=24">
 </head>
 <body>
 
@@ -16,12 +16,20 @@
     <div class="topbar">
       <a class="logo" href="index.html">Nostalie</a>
       <nav class="nav">
-        <a class="navlink" href="#produits">Nos produits</a>
+      <div class="navdrop">
+        <button type="button" class="navlink navdrop-btn" aria-expanded="false" aria-haspopup="true">Nos produits<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="navdrop-panel">
+          <a href="produit.html?p=cadre-jeu"><b>Cadre jeu</b><span>19,90 €/mois · 5 jeux et une vidéo surprise</span></a>
+          <a href="produit.html?p=puzzle"><b>Puzzle photo</b><span>24,90 €/mois · 200 pièces, chaque mois</span></a>
+          <a href="produit.html?p=cadre-ecran"><b>Cadre photo écran</b><span>89 € puis 9 €/mois · connecté en Wi-Fi</span></a>
+          <a class="navdrop-pack" href="packs.html"><b>Nos packs</b><span>Le Pack Noël à 119 €, ou composez le vôtre</span></a>
+        </div>
+      </div>
         <a class="navlink" href="#noel">Pack Noël</a>
         <a class="navlink" href="#pour-qui">Pour qui</a>
         <a class="navlink" href="#tarifs">Tarifs</a>
         <a class="navlink" href="#app">App mobile</a>
-        <a class="navlink panier-lien" href="commander.html">Ma commande <span id="panierBadge" class="panier-badge dark" hidden>0</span></a>
+        <a class="navlink panier-lien" href="packs.html">Ma commande <span id="panierBadge" class="panier-badge dark" hidden>0</span></a>
         <a class="btn small" href="create.html">Créer mon cadre</a>
       </nav>
     </div>
@@ -178,7 +186,7 @@
             <li>Un puzzle photo 200 pièces</li>
           </ul>
           <div class="xmas-price"><span class="amount">119 €</span><s>153,80 €</s></div>
-          <a class="btn" href="produit.html?p=pack-noel"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Voir le Pack Noël</a>
+          <a class="btn" href="packs.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Voir le Pack Noël</a>
           <p class="xmas-note">Réservation jusqu'au 10 décembre · abonnements démarrés en janvier.</p>
         </div>
         <div class="xmas-stack"><div class="frame-mock"><img src="image/poster-mur-salon.jpg" alt=""></div><div class="device-mock"><div class="wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="screen"><img src="image/bebe-mer.jpg" alt=""></div><div class="magnet"></div></div><div class="puzzle-mock" style="--puz:url('image/famille-plage-rochers.jpg')"><i style="background-position:0.00% 0.00%"></i><i style="background-position:25.00% 0.00%"></i><i style="background-position:50.00% 0.00%"></i><i style="background-position:75.00% 0.00%"></i><i class="loose" style="background-position:100.00% 0.00%"></i><i style="background-position:0.00% 33.33%"></i><i style="background-position:25.00% 33.33%"></i><i style="background-position:50.00% 33.33%"></i><i style="background-position:75.00% 33.33%"></i><i style="background-position:100.00% 33.33%"></i><i style="background-position:0.00% 66.67%"></i><i style="background-position:25.00% 66.67%"></i><i style="background-position:50.00% 66.67%"></i><i style="background-position:75.00% 66.67%"></i><i style="background-position:100.00% 66.67%"></i><i style="background-position:0.00% 100.00%"></i><i style="background-position:25.00% 100.00%"></i><i style="background-position:50.00% 100.00%"></i><i style="background-position:75.00% 100.00%"></i><i style="background-position:100.00% 100.00%"></i></div></div>
@@ -487,19 +495,14 @@
         <a href="#tarifs">Tarifs</a>
         <a href="#app">App mobile</a>
         <a href="create.html">Créer mon cadre</a>
-        <a href="commander.html">Ma commande</a>
+        <a href="packs.html">Nos packs</a>
       </div>
     </div>
   </footer>
 
+  <script src="nav.js?v=1"></script>
   <script src="app.js?v=7"></script>
   <script>
-    // compteur d'articles de la commande en cours
-    try {
-      const n = Object.keys(JSON.parse(localStorage.getItem('nostalie_selection') || '{}')).length;
-      const b = document.getElementById('panierBadge');
-      b.textContent = n; b.hidden = n === 0;
-    } catch (e) { /* stockage indisponible */ }
 
     renderPosterInto(document.getElementById('livePosterPreview'), buildDemoBoard(), {});
     document.getElementById('appQr').src =

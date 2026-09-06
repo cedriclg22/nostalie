@@ -63,7 +63,7 @@
         </span>
       </button>
       <div class="fmts">${formats}</div>
-      <a class="offer-lien" href="produit.html?p=${slug}">Voir la fiche produit →</a>
+      ${info.pack ? '' : `<a class="offer-lien" href="produit.html?p=${slug}">Voir la fiche produit →</a>`}
     </article>`;
   }
 
@@ -85,7 +85,7 @@
       PRODUIT_ORDRE.filter((s) => !PRODUIT_INFO[s].pack).map(carteOffre).join('');
 
     document.getElementById('recapLignes').innerHTML = lignes.length
-      ? lignes.map((l) => `<li><span><a href="produit.html?p=${l.slug}">${l.nom}</a><em>${l.format.detail}</em></span><b>${l.format.prix}</b></li>`).join('')
+      ? lignes.map((l) => `<li><span>${PRODUIT_INFO[l.slug].pack ? l.nom : `<a href="produit.html?p=${l.slug}">${l.nom}</a>`}<em>${l.format.detail}</em></span><b>${l.format.prix}</b></li>`).join('')
       : '<li class="vide">Rien de sélectionné pour l\'instant.</li>';
 
     document.getElementById('recapTotaux').innerHTML = lignes.length
