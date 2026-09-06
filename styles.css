@@ -726,26 +726,34 @@ video { max-width: 100%; border-radius: var(--radius); box-shadow: var(--shadow)
 .navdrop.open .navdrop-btn svg { transform: rotate(180deg); }
 
 .navdrop-panel {
-  position: absolute;
-  top: calc(100% + 14px);
+  position: fixed;
+  top: 94px;
   left: 50%;
-  width: 330px;
-  padding: 10px;
-  border-radius: 22px;
+  transform: translate(-50%, -8px);
+  width: min(720px, calc(100vw - 28px));
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 26px;
   background: #FDFCFA;
   border: 1px solid var(--line);
-  box-shadow: 0 2px 4px rgba(44,41,37,.06), 0 22px 48px rgba(44,41,37,.18);
+  box-shadow: 0 2px 4px rgba(44,41,37,.06), 0 24px 52px rgba(44,41,37,.18);
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -8px);
   transition: opacity .18s ease, transform .18s ease, visibility .18s;
   z-index: 70;
 }
-.navdrop::after {           /* pont invisible pour ne pas perdre le survol */
+.navdrop-panel::before {          /* pont invisible entre le bouton et le panneau */
   content: "";
   position: absolute;
-  top: 100%; left: 0; right: 0;
-  height: 16px;
+  left: 0; right: 0; top: -18px;
+  height: 18px;
+}
+.navdrop::after {
+  content: "";
+  position: absolute;
+  top: 100%; left: -14px; right: -14px;
+  height: 20px;
 }
 .navdrop:hover .navdrop-panel,
 .navdrop:focus-within .navdrop-panel,
@@ -755,31 +763,48 @@ video { max-width: 100%; border-radius: var(--radius); box-shadow: var(--shadow)
   transform: translate(-50%, 0);
 }
 .navdrop-panel a {
+  flex: 1 1 0;
+  min-width: 0;
   display: block;
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 10px 10px 14px;
+  border-radius: 18px;
   text-decoration: none;
   color: var(--ink);
+  text-align: center;
   transition: background .14s ease;
 }
-.navdrop-panel a:hover { background: rgba(44,41,37,.05); }
+.navdrop-panel a:hover { background: rgba(44,41,37,.045); }
+.navdrop-vis {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 11px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--tint, var(--cream));
+  padding: 10px;
+}
+.navdrop-vis > img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  margin: -10px;
+  max-width: none;
+  border-radius: 0;
+}
+.navdrop-vis > .puzzle-mock,
+.navdrop-vis > .device-mock { width: 100%; max-width: 116px; }
+.navdrop-vis > .frame-mock { width: auto; height: 100%; max-width: none; aspect-ratio: 3 / 4; }
+.navdrop-vis > .frame-mock img { width: 100%; height: 100%; aspect-ratio: auto; }
+.navdrop-vis > .xmas-stack { width: 100%; min-height: 0; }
+.navdrop-vis .xmas-stack .frame-mock { width: 32%; }
+.navdrop-vis .xmas-stack .device-mock { width: 48%; margin: 0 -5%; }
+.navdrop-vis .xmas-stack .puzzle-mock { width: 38%; max-width: none; }
 .navdrop-panel a b {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: .97rem;
   font-weight: 600;
-}
-.navdrop-panel a span {
-  display: block;
-  font-size: .82rem;
-  color: var(--ink-soft);
-  margin-top: 2px;
-}
-.navdrop-panel .navdrop-pack {
-  margin-top: 6px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-  border-radius: 14px;
+  line-height: 1.2;
 }
 @media (max-width: 860px) {
   .navdrop { display: none; }
