@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produit — Nostalie</title>
-<meta name="description" content="Le cadre jeu, le puzzle photo, le cadre photo écran et le Pack Noël Nostalie : détail, formules et prix.">
+<title>Ma commande — Nostalie</title>
+<meta name="description" content="Composez votre commande Nostalie : le Pack Noël, ou les produits à l'unité.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,29 @@
     </nav>
   </div>
 
-  <main class="section"><div class="section-inner" id="pdpRoot"></div></main>
+  <main class="section">
+    <div class="section-inner">
+      <a class="crumb" href="index.html">← Retour à l'accueil</a>
+
+      <div class="config-head">
+        <span class="kicker">Votre commande</span>
+        <h1>Choisissez ce que vous voulez</h1>
+        <p class="lead">Le coffret de Noël, ou les produits à l'unité — seuls ou combinés.</p>
+      </div>
+
+      <div class="config-grid">
+        <div id="offresListe" class="offres"></div>
+
+        <aside class="recap">
+          <h2>Votre sélection</h2>
+          <ul id="recapLignes" class="recap-lignes"></ul>
+          <div id="recapTotaux" class="recap-totaux"></div>
+          <a id="recapCta" class="btn" href="create.html">Continuer</a>
+          <p class="recap-note">Sans engagement, résiliable à tout moment. Livraison France comprise.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
@@ -32,12 +54,12 @@
         <a href="index.html#produits">Nos produits</a>
         <a href="index.html#noel">Pack Noël</a>
         <a href="index.html#tarifs">Tarifs</a>
-        <a href="commander.html">Ma commande</a>
+        <a href="index.html#app">App mobile</a>
       </div>
     </div>
   </footer>
 
   <script src="produit.js?v=3"></script>
-  <script src="produit-page.js?v=1"></script>
+  <script src="configurateur.js?v=2"></script>
 </body>
 </html>

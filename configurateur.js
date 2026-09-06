@@ -63,6 +63,7 @@
         </span>
       </button>
       <div class="fmts">${formats}</div>
+      <a class="offer-lien" href="produit.html?p=${slug}">Voir la fiche produit →</a>
     </article>`;
   }
 
@@ -84,7 +85,7 @@
       PRODUIT_ORDRE.filter((s) => !PRODUIT_INFO[s].pack).map(carteOffre).join('');
 
     document.getElementById('recapLignes').innerHTML = lignes.length
-      ? lignes.map((l) => `<li><span>${l.nom}<em>${l.format.detail}</em></span><b>${l.format.prix}</b></li>`).join('')
+      ? lignes.map((l) => `<li><span><a href="produit.html?p=${l.slug}">${l.nom}</a><em>${l.format.detail}</em></span><b>${l.format.prix}</b></li>`).join('')
       : '<li class="vide">Rien de sélectionné pour l\'instant.</li>';
 
     document.getElementById('recapTotaux').innerHTML = lignes.length
@@ -96,11 +97,8 @@
     cta.classList.toggle('disabled', lignes.length === 0);
     cta.textContent = lignes.length > 1 ? 'Continuer avec ' + lignes.length + ' produits' : 'Continuer';
 
-    document.getElementById('produitContent').innerHTML =
-      (lignes.length ? lignes.map((l) => PRODUIT_DETAILS[l.slug]) : [PRODUIT_DETAILS['pack-noel']]).join('');
-
-    const nom = lignes.length === 1 ? PRODUIT_INFO[lignes[0].slug].nom : 'Composez votre commande';
-    document.title = nom + ' — Nostalie';
+    const badge = document.getElementById('panierBadge');
+    if (badge) { badge.textContent = lignes.length; badge.hidden = lignes.length === 0; }
   }
 
   document.getElementById('offresListe').addEventListener('click', (e) => {
