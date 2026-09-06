@@ -1353,6 +1353,7 @@ footer.site-footer {
 .spec dd { margin: 0; font-size: .94rem; }
 @media (max-width: 620px) { .spec { grid-template-columns: 1fr; gap: 4px; } }
 
+.psection .faq { max-width: none; margin: 0; }
 .otherprods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 @media (max-width: 760px) { .otherprods { grid-template-columns: 1fr; } }
 .otherprod {
