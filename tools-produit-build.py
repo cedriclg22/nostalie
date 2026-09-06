@@ -101,92 +101,85 @@ XMAS_STACK = ('<div class="xmas-stack">%s%s%s</div>'
               % (frame('image/poster-mur-salon.jpg'), device('image/bebe-mer.jpg'),
                  puzzle('image/famille-plage-rochers.jpg')))
 
-ORDRE = ['cadre-jeu','puzzle','cadre-ecran','pack-noel']
+ORDRE = ['cadre-jeu', 'puzzle', 'cadre-ecran', 'pack-noel']
 
-def bloc(slug):
-    p = dict(PRODUITS[slug])
+XMAS_STACK = ('<div class="xmas-stack">%s%s%s</div>'
+              % (frame('image/poster-mur-salon.jpg'), device('image/bebe-mer.jpg'),
+                 puzzle('image/famille-plage-rochers.jpg')))
+
+# Formats commandables. now = payé à la commande, month = prélevé ensuite chaque mois.
+FORMATS = {
+ 'cadre-jeu': [
+   dict(id='abo',   label='Chaque mois',    prix='19,90 €', per='/mois', now=19.90, month=19.90,
+        detail='Cadre en bois offert au premier envoi.'),
+   dict(id='unite', label='Une seule fois', prix='29,90 €', per='',      now=29.90, month=0,
+        detail='Cadre en bois compris, sans suite.'),
+ ],
+ 'puzzle': [
+   dict(id='abo',   label='Chaque mois',    prix='24,90 €', per='/mois', now=24.90, month=24.90,
+        detail='Un nouveau puzzle tous les mois.'),
+   dict(id='unite', label='Une seule fois', prix='34,90 €', per='',      now=34.90, month=0,
+        detail='Un seul puzzle, sans suite.'),
+ ],
+ 'cadre-ecran': [
+   dict(id='std',   label="L'écran + son abonnement", prix='89 €', per=' puis 9 €/mois', now=89.00, month=9.00,
+        detail="89 € l'écran, une seule fois, puis 9 € par mois."),
+ ],
+ 'pack-noel': [
+   dict(id='pack',  label='Le coffret complet', prix='119 €', per='', now=119.00, month=0,
+        detail='Au lieu de 153,80 €. Les abonnements ne démarrent qu\'en janvier.'),
+ ],
+}
+
+def fiche(slug):
+    p = PRODUITS[slug]
     media = XMAS_STACK if p['media'] == 'XMAS_STACK' else p['media']
-    autres = [s for s in ORDRE if s != slug]
-    cta_txt, cta_href = p['cta']
     return f"""
-      <a class="crumb" href="index.html">← Tous les produits</a>
-
-      <div class="phero">
-        <div class="phero-media" style="--tint: {p['tint']}">{media}</div>
-        <div>
-          <span class="kicker">{p['num']}</span>
-          <h1>{p['titre']}</h1>
-          <p class="lead">{p['accroche']}</p>
-          <div class="pprice"><span class="amount">{p['prix']}</span><span class="per">{p['periode']}</span></div>
-          <p class="palt">{p['alt']}</p>
-          <div class="chips">{''.join('<span class="chip">%s</span>' % c for c in p['chips'])}</div>
-          <a class="btn" href="{cta_href}">{SPARK} {cta_txt}</a>
+      <section class="pdetail" id="fiche-{slug}">
+        <div class="phero">
+          <div class="phero-media" style="--tint: {p['tint']}">{media}</div>
+          <div>
+            <span class="kicker">{p['num']}</span>
+            <h2>{p['titre']}</h2>
+            <p class="lead">{p['accroche']}</p>
+            <div class="chips">{''.join('<span class="chip">%s</span>' % c for c in p['chips'])}</div>
+          </div>
         </div>
-      </div>
 
-      <section class="psection">
-        <h2>Dans la boîte</h2>
-        <div class="howto">{''.join('<div class="how-step nonum"><h4>%s</h4><p>%s</p></div>' % b for b in p['boite'])}</div>
-      </section>
+        <div class="psection">
+          <h3>Dans la boîte</h3>
+          <div class="howto">{''.join('<div class="how-step nonum"><h4>%s</h4><p>%s</p></div>' % b for b in p['boite'])}</div>
+        </div>
 
-      <section class="psection">
-        <h2>Comment ça marche</h2>
-        <div class="howto">{''.join('<div class="how-step"><h4>%s</h4><p>%s</p></div>' % e for e in p['etapes'])}</div>
-      </section>
+        <div class="psection">
+          <h3>Comment ça marche</h3>
+          <div class="howto">{''.join('<div class="how-step"><h4>%s</h4><p>%s</p></div>' % e for e in p['etapes'])}</div>
+        </div>
 
-      <section class="psection">
-        <h2>Caractéristiques</h2>
-        <dl class="specs">{''.join('<div class="spec"><dt>%s</dt><dd>%s</dd></div>' % s for s in p['specs'])}</dl>
-      </section>
+        <div class="psection">
+          <h3>Caractéristiques</h3>
+          <dl class="specs">{''.join('<div class="spec"><dt>%s</dt><dd>%s</dd></div>' % s for s in p['specs'])}</dl>
+        </div>
 
-      <section class="psection">
-        <h2>Questions</h2>
-        <div class="faq">{''.join('<details><summary>%s</summary><p>%s</p></details>' % f for f in p['faq'])}</div>
-      </section>
-
-      <section class="psection">
-        <h2>Les autres produits</h2>
-        <div class="otherprods">{''.join('<a class="otherprod" href="produit.html?p=%s"><span>%s</span><b>%s</b></a>' % (s, PRODUITS[s]['num'], PRODUITS[s]['nom']) for s in autres)}</div>
+        <div class="psection">
+          <h3>Questions</h3>
+          <div class="faq">{''.join('<details><summary>%s</summary><p>%s</p></details>' % f for f in p['faq'])}</div>
+        </div>
       </section>
 """
 
 import json
-data = {s: bloc(s) for s in ORDRE}
-titres = {s: PRODUITS[s]['nom'] for s in ORDRE}
-open('produit.js','w').write(
-  "// Contenu des pages produit — généré, une page pour les quatre offres.\n"
-  "const PRODUIT_BLOCS = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n"
-  "const PRODUIT_NOMS = " + json.dumps(titres, ensure_ascii=False) + ";\n\n"
-  "(function () {\n"
-  "  const slug = new URLSearchParams(location.search).get('p');\n"
-  "  const key = PRODUIT_BLOCS[slug] ? slug : 'cadre-jeu';\n"
-  "  document.getElementById('produitContent').innerHTML = PRODUIT_BLOCS[key];\n"
-  "  document.title = PRODUIT_NOMS[key] + ' — Nostalie';\n"
-  "})();\n")
+details = {s: fiche(s) for s in ORDRE}
+infos = {s: dict(nom=PRODUITS[s]['nom'], num=PRODUITS[s]['num'], tint=PRODUITS[s]['tint'],
+                 accroche=PRODUITS[s]['accroche'], formats=FORMATS[s],
+                 pack=(s == 'pack-noel'))
+         for s in ORDRE}
+
+open('produit.js', 'w').write(
+  "// Fiches produit et offres — généré par tools-produit-build.py, ne pas éditer à la main.\n"
+  "const PRODUIT_ORDRE = " + json.dumps(ORDRE, ensure_ascii=False) + ";\n"
+  "const PRODUIT_INFO = " + json.dumps(infos, ensure_ascii=False, indent=1) + ";\n"
+  "const PRODUIT_DETAILS = " + json.dumps(details, ensure_ascii=False, indent=1) + ";\n")
 print('produit.js écrit')
 
-# --- bandeau Noël pour la home ---
-open('/tmp/xmas_home.html','w').write(f"""
-  <!-- PACK NOEL -->
-  <section class="section" id="noel">
-    <div class="section-inner">
-      <div class="xmas-card">
-        <div>
-          <span class="kicker">Édition limitée</span>
-          <h2>Le Pack Noël</h2>
-          <p>Les trois objets dans un coffret, livrés avant le 24 décembre.</p>
-          <ul class="prod-list">
-            <li>Le cadre écran et son cadre bois</li>
-            <li>Le cadre jeu monté avec sa première affiche</li>
-            <li>Un puzzle photo 200 pièces</li>
-          </ul>
-          <div class="xmas-price"><span class="amount">119 €</span><s>153,80 €</s></div>
-          <a class="btn" href="produit.html?p=pack-noel">{SPARK} Voir le Pack Noël</a>
-          <p class="xmas-note">Réservation jusqu'au 10 décembre · abonnements démarrés en janvier.</p>
-        </div>
-        {XMAS_STACK}
-      </div>
-    </div>
-  </section>
-""")
-print('bandeau Noël écrit')
+open('/tmp/xmas_stack.html', 'w').write(XMAS_STACK)
