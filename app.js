@@ -209,8 +209,8 @@ function buildDemoBoard() {
       ],
       audio: null
     },
-    colorPrimary: '#8C5B4E',
-    colorSecondary: '#F5F0E9',
+    colorPrimary: '#F50068',
+    colorSecondary: '#FDF5EA',
     finalWord: 'Vacances'
   };
 }
@@ -233,9 +233,9 @@ function shade(hex, percent) {
 }
 
 function applyBoardColors(board) {
-  document.documentElement.style.setProperty('--primary', board.colorPrimary || '#8C5B4E');
-  document.documentElement.style.setProperty('--secondary', board.colorSecondary || '#F5F0E9');
-  document.documentElement.style.setProperty('--primary-dark', shade(board.colorPrimary || '#8C5B4E', -18));
+  document.documentElement.style.setProperty('--primary', board.colorPrimary || '#F50068');
+  document.documentElement.style.setProperty('--secondary', board.colorSecondary || '#FDF5EA');
+  document.documentElement.style.setProperty('--primary-dark', shade(board.colorPrimary || '#F50068', -18));
 }
 
 /* ---------- Rendu de l'affiche (partagé entre poster.html et l'aperçu en direct de create.html) ---------- */

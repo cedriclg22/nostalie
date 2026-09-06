@@ -12,8 +12,8 @@ const state = {
   diffPhoto: null,
   diffPoint: null,
   montage: { items: [], audio: null }, // {items:[{type:'photo'|'video', src, duration, name}], audio:{name,dataUrl}}
-  colorPrimary: '#8C5B4E',
-  colorSecondary: '#F5F0E9',
+  colorPrimary: '#F50068',
+  colorSecondary: '#FDF5EA',
   finalWord: ''
 };
 
@@ -570,8 +570,8 @@ function fillDemoData() {
     ],
     audio: null
   };
-  state.colorPrimary = '#8C5B4E';
-  state.colorSecondary = '#F5F0E9';
+  state.colorPrimary = '#F50068';
+  state.colorSecondary = '#FDF5EA';
   state.finalWord = 'Vacances';
 }
 
