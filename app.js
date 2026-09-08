@@ -186,26 +186,26 @@ function buildDemoBoard() {
   ];
   return {
     photos: [
-      'image/enfants-babyfoot.jpg',
-      'image/enfants-plage-lunettes.jpg',
-      'image/famille-plage-rochers.jpg',
-      'image/enfants-calin.jpg',
-      'image/bebe-mer.jpg'
+      'image/enfants-babyfoot.webp',
+      'image/enfants-plage-lunettes.webp',
+      'image/famille-plage-rochers.webp',
+      'image/enfants-calin.webp',
+      'image/bebe-mer.webp'
     ],
     oddPhotoIndex: 4,
     words,
     crossword: generateCrossword(words),
     rebusEmojis: suggestRebus('Bateau'),
     rebusAnswer: 'Bateau',
-    diffPhoto: 'image/enfants-calin.jpg',
+    diffPhoto: 'image/enfants-calin.webp',
     diffPoint: { x: 62, y: 38 },
-    coverPhoto: 'image/famille-plage-rochers.jpg',
+    coverPhoto: 'image/famille-plage-rochers.webp',
     video: null,
     montage: {
       items: [
-        { type: 'photo', src: 'image/enfants-babyfoot.jpg', duration: 2.5 },
-        { type: 'photo', src: 'image/enfants-plage-lunettes.jpg', duration: 2.5 },
-        { type: 'photo', src: 'image/famille-plage-rochers.jpg', duration: 2.5 }
+        { type: 'photo', src: 'image/enfants-babyfoot.webp', duration: 2.5 },
+        { type: 'photo', src: 'image/enfants-plage-lunettes.webp', duration: 2.5 },
+        { type: 'photo', src: 'image/famille-plage-rochers.webp', duration: 2.5 }
       ],
       audio: null
     },

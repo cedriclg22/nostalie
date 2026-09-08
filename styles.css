@@ -340,6 +340,9 @@ a.step-dot:hover { transform: scale(1.08); border-color: var(--primary); }
 .btn:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
 /* display:inline-flex ci-dessus l'emporterait sur la règle [hidden] du navigateur. */
 [hidden] { display: none !important; }
+/* Filet de sécurité : sans cette règle, une image sans classe s'affiche à sa
+   taille naturelle et fait exploser la mise en page. */
+img { max-width: 100%; }
 
 .icon { width: 1.1em; height: 1.1em; flex-shrink: 0; vertical-align: -0.16em; }
 

@@ -5,14 +5,14 @@
   const photo = (src) => `<img src="${src}" alt="">`;
 
   const VISUELS = {
-    'cadre-jeu': { tint: 'var(--rose)', html: photo('image/mamie-remplit-affiche.jpg') },
-    'puzzle': { tint: 'var(--sky)', html: photo('image/puzzle-mamie-table.jpg') },
-    'cadre-ecran': { tint: 'var(--sage)', html: photo('image/ecran-grands-parents-salon.jpg') },
+    'cadre-jeu': { tint: 'var(--rose)', html: photo('image/mamie-remplit-affiche.webp') },
+    'puzzle': { tint: 'var(--sky)', html: photo('image/puzzle-mamie-table.webp') },
+    'cadre-ecran': { tint: 'var(--sage)', html: photo('image/ecran-grands-parents-salon.webp') },
     'packs': {
       tint: 'linear-gradient(150deg, var(--sage), var(--sky) 60%, var(--rose))',
-      html: `<div class="xmas-stack">${frameMock('image/poster-mur-salon.jpg')}` +
-            `<div class="xmas-photo ecran"><img src="image/ecran-famille-buffet.jpg" alt=""></div>` +
-            `<div class="xmas-photo puzzle"><img src="image/puzzle-noel-canape.jpg" alt=""></div></div>`
+      html: `<div class="xmas-stack">${frameMock('image/poster-mur-salon.webp')}` +
+            `<div class="xmas-photo ecran"><img src="image/ecran-famille-buffet.webp" alt=""></div>` +
+            `<div class="xmas-photo puzzle"><img src="image/puzzle-noel-canape.webp" alt=""></div></div>`
     }
   };
 

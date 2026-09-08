@@ -117,7 +117,7 @@ function persoMatrice(larg, haut, coins) {
 const PERSO_PUZZLE = {
   cols: 20, rows: 10,          // 200 pièces sur 48 × 36 cm
   larg: 480, haut: 360,
-  defaut: 'image/famille-plage-rochers.jpg',
+  defaut: 'image/famille-plage-rochers.webp',
   legende: 'Puzzle personnalisé 200 pièces · taille montée ca. 48 × 36 cm'
 };
 

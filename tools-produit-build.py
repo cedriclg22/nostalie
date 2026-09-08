@@ -13,13 +13,15 @@ def empile(src, classe):
 
 
 XMAS_STACK = '<div class="xmas-stack">%s%s%s</div>' % (
-    frame('image/poster-mur-salon.jpg'),
-    empile('image/ecran-famille-buffet.jpg', 'ecran'),
-    empile('image/puzzle-noel-canape.jpg', 'puzzle'))
+    frame('image/poster-mur-salon.webp'),
+    empile('image/ecran-famille-buffet.webp', 'ecran'),
+    empile('image/puzzle-noel-canape.webp', 'puzzle'))
 
 
-def photo(src, alt):
-    return '<img src="%s" alt="%s">' % (src, alt)
+def photo(src, alt, differe=True):
+    """Les vues de galerie ne sont pas toutes visibles : on diffère leur chargement."""
+    attrs = ' loading="lazy" decoding="async"' if differe else ''
+    return '<img%s src="%s" alt="%s">' % (attrs, src, alt)
 
 
 def mock(html, tint):
@@ -41,11 +43,11 @@ PRODUITS = {
      "<b>Une vidéo surprise</b> qui ne se débloque qu'une fois les cinq jeux résolus. C'est la récompense, et elle fait son effet.",
      "<b>Le cadre en bois n'est envoyé qu'une fois.</b> Ensuite, seule l'affiche arrive : on ouvre par l'arrière, on glisse la nouvelle. Deux minutes.",
    ],
-   medias=[photo('image/mamie-remplit-affiche.jpg', "Une grand-mère remplit les jeux de son cadre Nostalie au stylo"),
-           photo('image/poster-mur-salon.jpg', "Le cadre jeu accroché au-dessus d'une cheminée"),
-           photo('image/couple-pointe-poster.jpg', "Des grands-parents jouent avec leur cadre"),
-           photo('image/papy-remplit-affiche.jpg', "Un grand-père remplit son affiche"),
-           photo('image/changement-affiche.jpg', "On change l'affiche par l'arrière du cadre")],
+   medias=[photo('image/mamie-remplit-affiche.webp', "Une grand-mère remplit les jeux de son cadre Nostalie au stylo"),
+           photo('image/poster-mur-salon.webp', "Le cadre jeu accroché au-dessus d'une cheminée"),
+           photo('image/couple-pointe-poster.webp', "Des grands-parents jouent avec leur cadre"),
+           photo('image/papy-remplit-affiche.webp', "Un grand-père remplit son affiche"),
+           photo('image/changement-affiche.webp', "On change l'affiche par l'arrière du cadre")],
    stats=[("5", "jeux par affiche"), ("1", "vidéo surprise"), ("2 min", "pour changer l'affiche"), ("3-5 j", "de délai de livraison")],
    raisons=[("Parce que ça se joue à plusieurs.", "Un cadre photo se regarde. Celui-là, on s'assoit autour."),
             ("Parce que c'est vous dedans.", "Vos photos, vos mots, vos private jokes. Rien de générique."),
@@ -75,10 +77,10 @@ PRODUITS = {
      "<b>Une boîte personnalisée</b> au titre de votre souvenir. C'est déjà un cadeau avant même d'être ouvert.",
      "<b>Un nouveau puzzle chaque mois</b>, préparé à l'avance depuis l'app. Vous n'y pensez plus.",
    ],
-   medias=[photo('image/puzzle-mamie-table.jpg', "Une grand-mère assemble le puzzle photo de sa petite-fille sur la table"),
-           photo('image/puzzle-noel-canape.jpg', "Un puzzle photo de Noël assemblé sur la table basse du salon"),
-           photo('image/puzzle-papy-foot.jpg', "Un grand-père termine le puzzle photo de son petit-fils footballeur"),
-           photo('image/enfants-plage-lunettes.jpg', "Le genre de photo qui devient un puzzle")],
+   medias=[photo('image/puzzle-mamie-table.webp', "Une grand-mère assemble le puzzle photo de sa petite-fille sur la table"),
+           photo('image/puzzle-noel-canape.webp', "Un puzzle photo de Noël assemblé sur la table basse du salon"),
+           photo('image/puzzle-papy-foot.webp', "Un grand-père termine le puzzle photo de son petit-fils footballeur"),
+           photo('image/enfants-plage-lunettes.webp', "Le genre de photo qui devient un puzzle")],
    stats=[("200", "pièces"), ("48 × 36", "cm une fois monté"), ("1 à 9", "photos par puzzle"), ("3-5 j", "de délai de livraison")],
    raisons=[("Parce qu'on le fait ensemble.", "Deux heures autour d'une table, sans écran. C'est rare."),
             ("Parce que la surprise dure.", "On ne sait quelle photo c'est qu'au bout de vingt minutes."),
@@ -109,9 +111,9 @@ PRODUITS = {
      "<b>Les petits-enfants envoient le mercredi</b>, ça s'affiche chez mamie le soir même.",
    ],
    medias=[photo('image/cadre-ecran-produit.webp', "Le cadre photo écran Nostalie posé sur un meuble, relié au téléphone"),
-           photo('image/ecran-grands-parents-salon.jpg', "Des grands-parents devant leur cadre photo écran posé sur la table basse"),
-           photo('image/ecran-famille-buffet.jpg', "Une famille dans son salon, le cadre écran posé sur le buffet"),
-           photo('image/ecran-amoureux-soir.jpg', "Le cadre écran affiche la photo d'un proche dans un salon le soir")],
+           photo('image/ecran-grands-parents-salon.webp', "Des grands-parents devant leur cadre photo écran posé sur la table basse"),
+           photo('image/ecran-famille-buffet.webp', "Une famille dans son salon, le cadre écran posé sur le buffet"),
+           photo('image/ecran-amoureux-soir.webp', "Le cadre écran affiche la photo d'un proche dans un salon le soir")],
    stats=[("10,1\"", "de diagonale"), ("∞", "photos stockées"), ("∞", "contributeurs"), ("0", "réglage à faire")],
    raisons=[("Parce qu'ils ne savent pas installer une app.", "Et qu'ils n'auront jamais à le faire."),
             ("Parce que le frigo, c'est là qu'on passe.", "Dix fois par jour, sans y penser."),
@@ -142,9 +144,9 @@ PRODUITS = {
      "<b>Les abonnements ne démarrent qu'en janvier</b>, et restent résiliables à tout moment.",
    ],
    medias=[mock(XMAS_STACK, XMAS_TINT),
-           photo('image/ecran-grands-parents-salon.jpg', "Le cadre photo écran du coffret"),
-           mock(frame('image/poster-mur-salon.jpg'), ROSE),
-           photo('image/puzzle-noel-canape.jpg', "Le puzzle photo du coffret")],
+           photo('image/ecran-grands-parents-salon.webp', "Le cadre photo écran du coffret"),
+           mock(frame('image/poster-mur-salon.webp'), ROSE),
+           photo('image/puzzle-noel-canape.webp', "Le puzzle photo du coffret")],
    stats=[("3", "objets dans le coffret"), ("-35 €", "sur le prix à l'unité"), ("24/12", "livré avant"), ("Janvier", "démarrage des abonnements")],
    raisons=[("Parce qu'un seul cadeau suffit.", "Trois objets, un seul paquet, une seule commande."),
             ("Parce que c'est moins cher.", "34,80 € de moins qu'à l'unité."),
