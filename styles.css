@@ -782,14 +782,12 @@ video { max-width: 100%; border-radius: var(--radius); box-shadow: var(--shadow)
   max-width: none;
   border-radius: 0;
 }
-.navdrop-vis > .puzzle-mock,
-.navdrop-vis > .device-mock { width: 100%; max-width: 116px; }
 .navdrop-vis > .frame-mock { width: auto; height: 100%; max-width: none; aspect-ratio: 3 / 4; }
 .navdrop-vis > .frame-mock img { width: 100%; height: 100%; aspect-ratio: auto; }
 .navdrop-vis > .xmas-stack { width: 100%; min-height: 0; }
 .navdrop-vis .xmas-stack .frame-mock { width: 32%; }
-.navdrop-vis .xmas-stack .device-mock { width: 48%; margin: 0 -5%; }
-.navdrop-vis .xmas-stack .puzzle-mock { width: 38%; max-width: none; }
+.navdrop-vis .xmas-stack .xmas-photo { width: 44%; max-width: none; padding: 5px; }
+.navdrop-vis .xmas-stack .xmas-photo.ecran { margin: 0 -5%; }
 .navdrop-panel a b {
   display: block;
   font-family: var(--font-display);
@@ -1049,64 +1047,20 @@ em.wonk { font-style: normal; color: var(--brown); }
 }
 .frame-mock img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 3px; display: block; }
 
-.puzzle-mock {
+/* Photo inclinée, pour la pile du coffret de Noël. */
+.xmas-photo {
   width: 100%; max-width: 260px;
-  aspect-ratio: 4 / 3;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  gap: 3px;
-  transform: rotate(1.5deg);
-  filter: drop-shadow(0 14px 26px rgba(74, 49, 40,.16));
+  padding: 9px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 3px rgba(74, 49, 40, .06), 0 18px 36px rgba(74, 49, 40, .18);
 }
-.puzzle-mock i {
-  background-image: var(--puz);
-  background-size: 500% 400%;
-  border-radius: 5px;
+.xmas-photo img {
   display: block;
-}
-.puzzle-mock i.loose {
-  transform: translate(30%, -34%) rotate(9deg);
-  box-shadow: 0 8px 18px rgba(74, 49, 40,.24);
-  border-radius: 6px;
-  outline: 2px solid #fff;
-  z-index: 2;
-}
-
-.device-mock {
-  width: 100%; max-width: 260px;
-  padding: 11px;
-  background: linear-gradient(160deg, #fdfcfa, #ece5db);
-  border: 1px solid var(--line-strong);
-  border-radius: 20px;
-  box-shadow: 0 2px 3px rgba(74, 49, 40,.05), 0 18px 36px rgba(74, 49, 40,.16);
-  position: relative;
-}
-.device-mock .screen {
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #2c2925;
-  position: relative;
-}
-.device-mock .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.device-mock .wifi {
-  position: absolute;
-  top: -11px; right: -11px;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
-  display: grid; place-items: center;
-  color: var(--primary);
-}
-.device-mock .wifi svg { width: 17px; height: 17px; }
-.device-mock .magnet {
-  position: absolute;
-  left: 50%; bottom: -9px; transform: translateX(-50%);
-  width: 56px; height: 6px; border-radius: 99px;
-  background: var(--line-strong);
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 3px;
 }
 
 /* --- Détail produit (lignes alternées) --- */
@@ -1391,8 +1345,8 @@ footer.site-footer {
 }
 .xmas-stack > * { flex: none; max-width: none; }
 .xmas-stack .frame-mock { width: 26%; transform: rotate(-7deg); z-index: 1; }
-.xmas-stack .device-mock { width: 40%; margin: 0 -4%; transform: rotate(2deg); z-index: 3; }
-.xmas-stack .puzzle-mock { width: 32%; transform: rotate(7deg); z-index: 2; }
+.xmas-stack .xmas-photo.ecran { width: 42%; margin: 0 -4%; transform: rotate(2deg); z-index: 3; }
+.xmas-stack .xmas-photo.puzzle { width: 34%; transform: rotate(7deg); z-index: 2; }
 
 /* --- Page produit --- */
 .crumb {

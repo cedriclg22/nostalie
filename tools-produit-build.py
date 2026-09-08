@@ -3,29 +3,19 @@
    Relancer après chaque modification : python3 tools-produit-build.py"""
 import json
 
-WIFI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg>'
-
-
-def puzzle(src, loose=(0, 4)):
-    tiles = []
-    for r in range(4):
-        for c in range(5):
-            cls = ' class="loose"' if (r, c) == loose else ''
-            tiles.append('<i%s style="background-position:%.2f%% %.2f%%"></i>' % (cls, c * 25, r * 100 / 3))
-    return '<div class="puzzle-mock" style="--puz:url(\'%s\')">%s</div>' % (src, ''.join(tiles))
-
-
-def device(src):
-    return ('<div class="device-mock"><div class="wifi">%s</div>'
-            '<div class="screen"><img src="%s" alt=""></div><div class="magnet"></div></div>' % (WIFI, src))
-
-
 def frame(src):
     return '<div class="frame-mock"><img src="%s" alt=""></div>' % src
 
 
+def empile(src, classe):
+    """Une photo inclinée dans la pile du coffret."""
+    return '<div class="xmas-photo %s"><img src="%s" alt=""></div>' % (classe, src)
+
+
 XMAS_STACK = '<div class="xmas-stack">%s%s%s</div>' % (
-    frame('image/poster-mur-salon.jpg'), device('image/bebe-mer.jpg'), puzzle('image/famille-plage-rochers.jpg'))
+    frame('image/poster-mur-salon.jpg'),
+    empile('image/ecran-famille-buffet.jpg', 'ecran'),
+    empile('image/puzzle-noel-canape.jpg', 'puzzle'))
 
 
 def photo(src, alt):
@@ -88,7 +78,7 @@ PRODUITS = {
    medias=[photo('image/puzzle-mamie-table.jpg', "Une grand-mère assemble le puzzle photo de sa petite-fille sur la table"),
            photo('image/puzzle-noel-canape.jpg', "Un puzzle photo de Noël assemblé sur la table basse du salon"),
            photo('image/puzzle-papy-foot.jpg', "Un grand-père termine le puzzle photo de son petit-fils footballeur"),
-           mock(puzzle('image/famille-plage-rochers.jpg'), ROSE)],
+           photo('image/enfants-plage-lunettes.jpg', "Le genre de photo qui devient un puzzle")],
    stats=[("200", "pièces"), ("48 × 36", "cm une fois monté"), ("1 à 9", "photos par puzzle"), ("3-5 j", "de délai de livraison")],
    raisons=[("Parce qu'on le fait ensemble.", "Deux heures autour d'une table, sans écran. C'est rare."),
             ("Parce que la surprise dure.", "On ne sait quelle photo c'est qu'au bout de vingt minutes."),
@@ -119,10 +109,9 @@ PRODUITS = {
      "<b>Les petits-enfants envoient le mercredi</b>, ça s'affiche chez mamie le soir même.",
    ],
    medias=[photo('image/cadre-ecran-produit.webp', "Le cadre photo écran Nostalie posé sur un meuble, relié au téléphone"),
-           mock(device('image/enfants-babyfoot.jpg'), SAGE),
-           mock(device('image/bebe-mer.jpg'), SKY),
-           mock(device('image/famille-plage-rochers.jpg'), ROSE),
-           mock(device('image/enfants-calin.jpg'), 'var(--lilac)')],
+           photo('image/ecran-grands-parents-salon.jpg', "Des grands-parents devant leur cadre photo écran posé sur la table basse"),
+           photo('image/ecran-famille-buffet.jpg', "Une famille dans son salon, le cadre écran posé sur le buffet"),
+           photo('image/ecran-amoureux-soir.jpg', "Le cadre écran affiche la photo d'un proche dans un salon le soir")],
    stats=[("10,1\"", "de diagonale"), ("∞", "photos stockées"), ("∞", "contributeurs"), ("0", "réglage à faire")],
    raisons=[("Parce qu'ils ne savent pas installer une app.", "Et qu'ils n'auront jamais à le faire."),
             ("Parce que le frigo, c'est là qu'on passe.", "Dix fois par jour, sans y penser."),
@@ -153,9 +142,9 @@ PRODUITS = {
      "<b>Les abonnements ne démarrent qu'en janvier</b>, et restent résiliables à tout moment.",
    ],
    medias=[mock(XMAS_STACK, XMAS_TINT),
-           mock(device('image/bebe-mer.jpg'), SAGE),
+           photo('image/ecran-grands-parents-salon.jpg', "Le cadre photo écran du coffret"),
            mock(frame('image/poster-mur-salon.jpg'), ROSE),
-           mock(puzzle('image/famille-plage-rochers.jpg'), SKY)],
+           photo('image/puzzle-noel-canape.jpg', "Le puzzle photo du coffret")],
    stats=[("3", "objets dans le coffret"), ("-35 €", "sur le prix à l'unité"), ("24/12", "livré avant"), ("Janvier", "démarrage des abonnements")],
    raisons=[("Parce qu'un seul cadeau suffit.", "Trois objets, un seul paquet, une seule commande."),
             ("Parce que c'est moins cher.", "34,80 € de moins qu'à l'unité."),
