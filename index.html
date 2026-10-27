@@ -4,23 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nostalie — Vos souvenirs, en vrai, chez ceux que vous aimez</title>
-<meta name="description" content="Nostalie : le cadre jeu à jeux générés, le puzzle photo chaque mois et le cadre photo écran connecté. Pour les familles, les grands-parents et les amoureux.">
+<meta name="description" content="Nostalie : le cadre jeu, le puzzle photo chaque mois et le cadre photo écran connecté. Pour les familles, les grands-parents et les amoureux.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="image/favicon.png">
-<link rel="stylesheet" href="styles.css?v=39">
+<link rel="stylesheet" href="styles.css?v=40">
 </head>
-<body>
+<body class="home">
 
   <div class="top-banner">
     <div class="topbar">
       <a class="logo" href="index.html"><img src="image/logo-nostalie.png" alt="Nostalie" width="900" height="196"></a>
       <nav class="nav">
+        <a class="navlink" href="#comment">Comment ça marche</a>
+        <a class="navlink" href="#produits">Produits</a>
         <a class="navlink" href="#noel">Pack Noël</a>
-        <a class="navlink" href="#pour-qui">Pour qui</a>
-        <a class="navlink" href="#tarifs">Tarifs</a>
-        <a class="navlink" href="#app">App mobile</a>
         <div class="navdrop">
           <button type="button" class="btn small navdrop-btn" aria-expanded="false" aria-haspopup="true">Nos produits<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
           <div class="navdrop-panel">
@@ -36,20 +35,15 @@
     <!-- HERO -->
     <header class="hero">
       <div class="hero-copy">
-        <span class="hero-eyebrow"><span class="dot"></span> Trois façons de faire vivre vos photos</span>
-        <h1>Vos souvenirs méritent mieux qu'une <em class="wonk">pellicule</em> de téléphone.</h1>
-        <p class="hero-sub">Un cadre jeu, un puzzle chaque mois, un cadre écran connecté.</p>
-        <div class="hero-ctas">
-          <a class="btn" href="#produits"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Découvrir les 3 produits</a>
-          <a class="btn ghost" href="view.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> Voir un exemple</a>
+        <h1>Vos photos, <em class="wonk">en vrai</em>, chez ceux que vous aimez.</h1>
+        <div class="hero-trio">
+          <a href="produit.html?p=cadre-jeu"><svg class="ic"><use href="#i-frame"/></svg>Cadre jeu</a>
+          <a href="produit.html?p=puzzle"><svg class="ic"><use href="#i-puzzle"/></svg>Puzzle</a>
+          <a href="produit.html?p=cadre-ecran"><svg class="ic"><use href="#i-screen"/></svg>Écran</a>
         </div>
-        <div class="hero-proof">
-          <span class="proof-dots">
-            <span style="background-image:url('image/mamie-remplit-affiche.webp')"></span>
-            <span style="background-image:url('image/enfants-babyfoot.webp')"></span>
-            <span style="background-image:url('image/couple-tient-poster.webp')"></span>
-          </span>
-          Pensé pour les familles, les grands-parents et les amoureux.
+        <div class="hero-ctas">
+          <a class="btn" href="#produits"><svg class="icon ic"><use href="#i-spark"/></svg> Découvrir</a>
+          <a class="btn ghost" href="view.html?demo=1"><svg class="icon ic"><use href="#i-eye"/></svg> Voir un exemple</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -57,176 +51,193 @@
           <img class="hc-2" src="image/couple-pointe-poster.webp" alt="Des grands-parents montrent du doigt une photo de leur cadre Nostalie">
           <img class="hc-1" src="image/enfants-calin.webp" alt="Deux enfants se font un câlin">
           <img class="hc-3" src="image/famille-plage-rochers.webp" alt="Une famille sur les rochers au bord de la mer">
-          <div class="hc-badge"><b>Chaque mois</b><span>un nouveau souvenir arrive par la poste.</span></div>
+          <div class="hc-badge"><b>Chaque mois</b><span>un nouveau souvenir.</span></div>
         </div>
       </div>
     </header>
 
     <div class="strip">
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Jeux générés automatiquement</div>
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="6" width="13" height="10" rx="2"/><path d="M14.5 9.5h4l3 3.2V16h-7z"/><circle cx="6" cy="18" r="1.8"/><circle cx="17.5" cy="18" r="1.8"/></svg> Envoyé chez vos proches</div>
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a13 13 0 0 1 16 0"/><path d="M7 13a8.5 8.5 0 0 1 10 0"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg> Cadre écran connecté</div>
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.3A4 4 0 0 1 12 8a4 4 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></svg> Sans engagement</div>
+      <div class="strip-item"><svg class="ic"><use href="#i-spark"/></svg> Jeux générés</div>
+      <div class="strip-item"><svg class="ic"><use href="#i-box"/></svg> Livraison comprise</div>
+      <div class="strip-item"><svg class="ic"><use href="#i-wifi"/></svg> Écran connecté</div>
+      <div class="strip-item"><svg class="ic"><use href="#i-heart"/></svg> Sans engagement</div>
     </div>
   </div>
 
+  <!-- SCHÉMA 1 : LE PARCOURS -->
+  <section class="section" id="comment">
+    <div class="section-inner">
+      <div class="section-head">
+        <span class="kicker">Comment ça marche</span>
+        <h2>3 minutes pour vous. Zéro pour eux.</h2>
+      </div>
+
+      <div class="flow">
+        <div class="flow-node">
+          <div class="flow-disc phone-disc">
+            <span style="background-image:url('image/bebe-mer.webp')"></span>
+            <span style="background-image:url('image/enfants-calin.webp')"></span>
+            <span style="background-image:url('image/enfants-plage-lunettes.webp')"></span>
+            <span style="background-image:url('image/famille-plage-rochers.webp')"></span>
+          </div>
+          <b>Vous</b><span>choisissez vos photos</span>
+        </div>
+
+        <svg class="flow-link" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50H100"/></svg>
+
+        <div class="flow-node">
+          <div class="flow-disc hub-disc"><svg class="ic"><use href="#i-spark"/></svg></div>
+          <b>Nostalie</b><span>génère, imprime, envoie</span>
+        </div>
+
+        <svg class="flow-link" viewBox="0 0 100 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150C50 150 50 50 100 50"/><path d="M0 150H100"/><path d="M0 150C50 150 50 250 100 250"/></svg>
+
+        <div class="flow-outs">
+          <a class="flow-out" href="produit.html?p=cadre-jeu"><i><svg class="ic"><use href="#i-frame"/></svg></i><b>Cadre jeu</b><em><svg class="ic"><use href="#i-box"/></svg>poste</em></a>
+          <a class="flow-out" href="produit.html?p=puzzle"><i><svg class="ic"><use href="#i-puzzle"/></svg></i><b>Puzzle</b><em><svg class="ic"><use href="#i-box"/></svg>poste</em></a>
+          <a class="flow-out" href="produit.html?p=cadre-ecran"><i><svg class="ic"><use href="#i-screen"/></svg></i><b>Écran</b><em><svg class="ic"><use href="#i-wifi"/></svg>Wi-Fi</em></a>
+        </div>
+
+        <svg class="flow-link" viewBox="0 0 100 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 50C50 50 50 150 100 150"/><path d="M0 150H100"/><path d="M0 250C50 250 50 150 100 150"/></svg>
+
+        <div class="flow-node">
+          <div class="flow-disc home-disc" style="background-image:url('image/couple-pointe-poster.webp')"><i><svg class="ic"><use href="#i-home"/></svg></i></div>
+          <b>Chez eux</b><span>rien à installer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PRODUITS -->
-  <section class="section" id="produits">
+  <section class="section alt" id="produits">
     <div class="section-inner">
       <div class="section-head">
         <span class="kicker">Nos produits</span>
         <h2>Trois objets, une même idée</h2>
-        <p>Sur un mur, sur une table, sur la porte du frigo.</p>
       </div>
 
       <div class="prodgrid">
-
-        <article class="prodcard">
-          <div class="prodcard-media photo" style="--tint: var(--rose)">
-            <img loading="lazy" decoding="async" class="media-photo" src="image/poster-mur-salon.webp" alt="Le cadre jeu Nostalie accroché au mur d'un salon">
-          </div>
+        <a class="prodcard" href="produit.html?p=cadre-jeu">
+          <div class="prodcard-media photo"><img loading="lazy" decoding="async" class="media-photo" src="image/poster-mur-salon.webp" alt="Le cadre jeu Nostalie accroché au mur d'un salon"><span class="prod-tag">Le plus choisi</span></div>
           <div class="prodcard-body">
-            <div class="prod-num">Produit 01</div>
-            <h3>Cadre jeu</h3>
-            <p>Un tableau à accrocher, avec 5 mini-jeux générés à partir de vos photos.</p>
-            <ul class="prod-list">
-              <li>5 jeux générés automatiquement</li>
-              <li>Vidéo surprise à débloquer</li>
-              <li>Cadre en bois envoyé une fois</li>
-            </ul>
-            <div class="prod-foot">
-              <div class="prod-price">19,90 €<small>par mois</small></div>
-              <a class="btn small" href="produit.html?p=cadre-jeu">Découvrir</a>
-            </div>
+            <h3><svg class="ic"><use href="#i-frame"/></svg>Cadre jeu</h3>
+            <div class="facts"><span><svg class="ic"><use href="#i-spark"/></svg>5 jeux</span><span><svg class="ic"><use href="#i-play"/></svg>1 vidéo</span><span><svg class="ic"><use href="#i-gift"/></svg>Cadre offert</span></div>
+            <div class="prod-foot"><div class="prod-price">19,90 €<small>/ mois</small></div><span class="btn small">Voir</span></div>
           </div>
-        </article>
-
-        <article class="prodcard">
-          <div class="prodcard-media photo" style="--tint: var(--sky)">
-            <img loading="lazy" decoding="async" class="media-photo" src="image/puzzle-mamie-table.webp" alt="Une grand-mère assemble le puzzle photo de sa petite-fille">
-          </div>
+        </a>
+        <a class="prodcard" href="produit.html?p=puzzle">
+          <div class="prodcard-media photo"><img loading="lazy" decoding="async" class="media-photo" src="image/puzzle-mamie-table.webp" alt="Une grand-mère assemble le puzzle photo de sa petite-fille"></div>
           <div class="prodcard-body">
-            <div class="prod-num">Produit 02</div>
-            <h3>Puzzle photo</h3>
-            <p>Une photo, ou un montage, imprimée sur un puzzle et envoyée chaque mois.</p>
-            <ul class="prod-list">
-              <li>1 photo ou un montage</li>
-              <li>200 pièces, boîte personnalisée</li>
-              <li>Un nouveau puzzle chaque mois</li>
-            </ul>
-            <div class="prod-foot">
-              <div class="prod-price">24,90 €<small>par mois</small></div>
-              <a class="btn small" href="produit.html?p=puzzle">Découvrir</a>
-            </div>
+            <h3><svg class="ic"><use href="#i-puzzle"/></svg>Puzzle photo</h3>
+            <div class="facts"><span><svg class="ic"><use href="#i-puzzle"/></svg>200 pièces</span><span><svg class="ic"><use href="#i-cal"/></svg>Chaque mois</span><span><svg class="ic"><use href="#i-gift"/></svg>Boîte perso</span></div>
+            <div class="prod-foot"><div class="prod-price">24,90 €<small>/ mois</small></div><span class="btn small">Voir</span></div>
           </div>
-        </article>
-
-        <article class="prodcard">
-          <div class="prodcard-media photo" style="--tint: var(--sage)">
-            <img loading="lazy" decoding="async" class="media-photo" src="image/ecran-grands-parents-salon.webp" alt="Des grands-parents devant leur cadre photo écran Nostalie posé sur la table basse">
-          </div>
+        </a>
+        <a class="prodcard" href="produit.html?p=cadre-ecran">
+          <div class="prodcard-media photo"><img loading="lazy" decoding="async" class="media-photo" src="image/ecran-grands-parents-salon.webp" alt="Des grands-parents devant leur cadre photo écran Nostalie"><span class="prod-tag">Nouveau</span></div>
           <div class="prodcard-body">
-            <div class="prod-num">Produit 03</div>
-            <h3>Cadre photo écran</h3>
-            <p>Un écran connecté sur le frigo ou au mur. La famille y envoie ses photos depuis l'app.</p>
-            <ul class="prod-list">
-              <li>Wi-Fi, mise à jour automatique</li>
-              <li>Aimanté ou encadré</li>
-              <li>Photos et contributeurs illimités</li>
-            </ul>
-            <div class="prod-foot">
-              <div class="prod-price">89 €<small>puis 9 € par mois</small></div>
-              <a class="btn small" href="produit.html?p=cadre-ecran">Découvrir</a>
-            </div>
+            <h3><svg class="ic"><use href="#i-screen"/></svg>Cadre écran</h3>
+            <div class="facts"><span><svg class="ic"><use href="#i-wifi"/></svg>Wi-Fi</span><span><svg class="ic"><use href="#i-heart"/></svg>Photos illimitées</span><span><svg class="ic"><use href="#i-check"/></svg>0 réglage</span></div>
+            <div class="prod-foot"><div class="prod-price">89 €<small>puis 9 € / mois</small></div><span class="btn small">Voir</span></div>
           </div>
-        </article>
-
-      </div>
-
-    </div>
-  </section>
-
-<!-- PACK NOEL -->
-  <section class="section" id="noel">
-    <div class="section-inner">
-      <div class="xmas-card">
-        <div>
-          <span class="kicker">Édition limitée</span>
-          <h2>Le Pack Noël</h2>
-          <p>Les trois objets dans un coffret, livrés avant le 24 décembre.</p>
-          <ul class="prod-list">
-            <li>Le cadre écran et son cadre bois</li>
-            <li>Le cadre jeu monté avec sa première affiche</li>
-            <li>Un puzzle photo 200 pièces</li>
-          </ul>
-          <div class="xmas-price"><span class="amount">119 €</span><s>153,80 €</s></div>
-          <a class="btn" href="packs.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Voir le Pack Noël</a>
-          <p class="xmas-note">Réservation jusqu'au 10 décembre · abonnements démarrés en janvier.</p>
-        </div>
-        <div class="xmas-stack"><div class="frame-mock"><img loading="lazy" decoding="async" src="image/poster-mur-salon.webp" alt=""></div><div class="xmas-photo ecran"><img loading="lazy" decoding="async" src="image/ecran-famille-buffet.webp" alt=""></div><div class="xmas-photo puzzle"><img loading="lazy" decoding="async" src="image/puzzle-mamie-table.webp" alt=""></div></div>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- DETAIL PRODUITS -->
-  <section class="section alt" id="detail">
+  <!-- SCHÉMA 2 : CADRE JEU -->
+  <section class="section" id="cadre-jeu">
+    <div class="section-inner duo">
+      <div class="jeu-poster" id="livePosterPreview" aria-label="Exemple d'affiche cadre jeu"></div>
+      <div>
+        <span class="kicker">Cadre jeu</span>
+        <h2 class="duo-title">5 jeux. 1 vidéo surprise.</h2>
+        <ol class="chain">
+          <li><i><svg class="ic"><use href="#i-search"/></svg></i>Photo intruse</li>
+          <li><i><svg class="ic"><use href="#i-grid"/></svg></i>Mots fléchés</li>
+          <li><i><svg class="ic"><use href="#i-bulb"/></svg></i>Rébus</li>
+          <li><i><svg class="ic"><use href="#i-diff"/></svg></i>Case différente</li>
+          <li><i><svg class="ic"><use href="#i-key"/></svg></i>Mot final</li>
+          <li class="chain-end"><i><svg class="ic"><use href="#i-play"/></svg></i>La vidéo se débloque</li>
+        </ol>
+        <a class="btn" href="view.html?demo=1"><svg class="icon ic"><use href="#i-eye"/></svg> Essayer en ligne</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHÉMA 3 : CADRE ÉCRAN -->
+  <section class="section alt" id="ecran">
+    <div class="section-inner duo reverse">
+      <div class="fan">
+        <div class="fan-senders">
+          <span><i style="background-image:url('image/enfants-calin.webp')"></i>Les petits</span>
+          <span><i style="background-image:url('image/bebe-mer.webp')"></i>Tata</span>
+          <span><i style="background-image:url('image/enfants-plage-lunettes.webp')"></i>Les cousins</span>
+          <span><i style="background-image:url('image/famille-plage-rochers.webp')"></i>Papa</span>
+        </div>
+        <svg class="fan-links" viewBox="0 0 100 400" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 50C55 50 45 200 100 200"/><path d="M0 150C55 150 45 200 100 200"/><path d="M0 250C55 250 45 200 100 200"/><path d="M0 350C55 350 45 200 100 200"/>
+        </svg>
+        <div class="fan-screen">
+          <div class="tv"><img loading="lazy" decoding="async" src="image/bebe-mer.webp" alt="Une photo affichée sur le cadre écran"><span class="tv-wifi"><svg class="ic"><use href="#i-wifi"/></svg></span></div>
+          <b>Chez Mamie</b>
+        </div>
+      </div>
+      <div>
+        <span class="kicker">Cadre écran</span>
+        <h2 class="duo-title">Tout le monde envoie. Mamie ne touche à rien.</h2>
+        <div class="bigfacts">
+          <div><b>∞</b><span>photos</span></div>
+          <div><b>∞</b><span>contributeurs</span></div>
+          <div><b>0</b><span>réglage</span></div>
+        </div>
+        <a class="btn" href="produit.html?p=cadre-ecran">Voir l'écran <svg class="icon ic"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHÉMA 4 : PUZZLE -->
+  <section class="section" id="puzzle">
+    <div class="section-inner duo">
+      <div class="puz">
+        <div class="puz-photo" style="--img:url('image/enfants-plage-lunettes.webp')">
+          <span class="puz-piece"></span>
+        </div>
+      </div>
+      <div>
+        <span class="kicker">Puzzle photo</span>
+        <h2 class="duo-title">1 photo. 200 pièces. Chaque mois.</h2>
+        <div class="months">
+          <div><i style="background-image:url('image/enfants-plage-lunettes.webp')"></i><b>Nov.</b></div>
+          <div><i style="background-image:url('image/famille-plage-rochers.webp')"></i><b>Déc.</b></div>
+          <div><i style="background-image:url('image/enfants-calin.webp')"></i><b>Janv.</b></div>
+          <div class="next"><i><svg class="ic"><use href="#i-puzzle"/></svg></i><b>Févr.</b></div>
+        </div>
+        <a class="btn" href="produit.html?p=puzzle">Voir le puzzle <svg class="icon ic"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACK NOËL : L'ÉQUATION -->
+  <section class="section alt" id="noel">
     <div class="section-inner">
-
-      <div class="detail">
-        <div class="detail-media" style="--tint: var(--rose)">
-          <img loading="lazy" decoding="async" class="full portrait" src="image/mamie-remplit-affiche.webp" alt="Une grand-mère remplit les jeux de son cadre Nostalie au stylo">
-        </div>
-        <div class="detail-copy">
-          <span class="kicker">Produit 01</span>
-          <h3>Le cadre jeu</h3>
-          <p>Vous choisissez vos photos et quelques mots, les cinq jeux se génèrent sur mesure, et la vidéo surprise se débloque une fois tout résolu. Les créations des utilisateurs enrichissent la banque de jeux.</p>
-          <div class="chips">
-            <span class="chip">Pêle-mêle</span>
-            <span class="chip">Mots fléchés</span>
-            <span class="chip">Rébus</span>
-            <span class="chip">Différences</span>
-            <span class="chip">Vidéo surprise</span>
-          </div>
-          <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon cadre jeu</a>
-        </div>
+      <div class="section-head">
+        <span class="kicker">Édition limitée</span>
+        <h2>Le Pack Noël</h2>
       </div>
-
-      <div class="detail reverse">
-        <div class="detail-media" style="--tint: var(--sky)">
-          <img loading="lazy" decoding="async" class="full" src="image/puzzle-papy-foot.webp" alt="Un grand-père assemble le puzzle photo de son petit-fils">
-        </div>
-        <div class="detail-copy">
-          <span class="kicker">Produit 02</span>
-          <h3>Le puzzle photo</h3>
-          <p>Une photo, ou un montage, sur un puzzle 200 pièces. On l'assemble à plusieurs et on découvre l'image en même temps que le souvenir. Vos envois se préparent à l'avance depuis l'app.</p>
-          <div class="chips">
-            <span class="chip">200 pièces</span>
-            <span class="chip">1 photo ou un montage</span>
-            <span class="chip">Boîte personnalisée</span>
-            <span class="chip">Livré chaque mois</span>
-          </div>
-          <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Composer mon puzzle</a>
-        </div>
+      <div class="equation">
+        <div class="eq-item"><img loading="lazy" decoding="async" src="image/ecran-famille-buffet.webp" alt=""><b>Écran</b><span>89 €</span></div>
+        <span class="eq-op">+</span>
+        <div class="eq-item"><img loading="lazy" decoding="async" src="image/poster-mur-salon.webp" alt=""><b>Cadre jeu</b><span>29,90 €</span></div>
+        <span class="eq-op">+</span>
+        <div class="eq-item"><img loading="lazy" decoding="async" src="image/puzzle-noel-canape.webp" alt=""><b>Puzzle</b><span>34,90 €</span></div>
+        <span class="eq-op">=</span>
+        <div class="eq-total"><s>153,80 €</s><b>119 €</b><span>livré avant le 24/12</span></div>
       </div>
-
-      <div class="detail">
-        <div class="detail-media" style="--tint: var(--sage)">
-          <img loading="lazy" decoding="async" class="full" src="image/ecran-amoureux-soir.webp" alt="Le cadre photo écran affiche la photo d'un proche dans un salon le soir">
-        </div>
-        <div class="detail-copy">
-          <span class="kicker">Produit 03</span>
-          <h3>Le cadre photo écran</h3>
-          <p>Un écran fin, aimanté au frigo ou encadré au mur. Connecté une fois au Wi-Fi, il affiche en quelques secondes chaque photo envoyée depuis l'app. Rien à faire de l'autre côté.</p>
-          <div class="chips">
-            <span class="chip">Wi-Fi</span>
-            <span class="chip">Aimanté ou encadré</span>
-            <span class="chip">Photos illimitées</span>
-            <span class="chip">9 €/mois</span>
-          </div>
-          <a class="btn" href="produit.html?p=cadre-ecran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Découvrir l'écran</a>
-        </div>
+      <div class="center-cta">
+        <a class="btn" href="packs.html"><svg class="icon ic"><use href="#i-gift"/></svg> Réserver le pack</a>
+        <p class="tiny-note">Jusqu'au 10 décembre · abonnements en janvier</p>
       </div>
-
     </div>
   </section>
 
@@ -235,139 +246,23 @@
     <div class="section-inner">
       <div class="section-head">
         <span class="kicker">Pour qui</span>
-        <h2>Ceux à qui ça fait le plus d'effet</h2>
-        <p>Trois manières de dire « je pense à toi ».</p>
+        <h2>Trois façons de dire « je pense à toi »</h2>
       </div>
-      <div class="audience">
-        <div class="aud-card">
-          <img loading="lazy" decoding="async" src="image/fami.webp" alt="Une mère et ses enfants préparent leur cadre Nostalie">
-          <div class="aud-body">
-            <h4>Les familles</h4>
-            <p>On choisit les photos ensemble, et le colis devient un petit événement.</p>
-          </div>
-        </div>
-        <div class="aud-card">
-          <img loading="lazy" decoding="async" src="image/couple-pointe-poster.webp" alt="Des grands-parents jouent avec leur cadre Nostalie">
-          <div class="aud-body">
-            <h4>Les grands-parents</h4>
-            <p>Rien à installer. Une affiche à remplir, un puzzle à monter, un écran qui se remplit seul.</p>
-          </div>
-        </div>
-        <div class="aud-card">
-          <img loading="lazy" decoding="async" src="image/couple-tient-poster.webp" alt="Un couple tient son cadre Nostalie">
-          <div class="aud-body">
-            <h4>Les amoureux</h4>
-            <p>Vos souvenirs à deux en énigmes, avec un message vidéo au bout.</p>
-          </div>
-        </div>
+      <div class="audience tiles">
+        <figure class="tile"><img loading="lazy" decoding="async" src="image/fami.webp" alt="Une mère et ses enfants préparent leur cadre Nostalie"><figcaption>Familles</figcaption></figure>
+        <figure class="tile"><img loading="lazy" decoding="async" src="image/couple-pointe-poster.webp" alt="Des grands-parents jouent avec leur cadre Nostalie"><figcaption>Grands-parents</figcaption></figure>
+        <figure class="tile"><img loading="lazy" decoding="async" src="image/couple-tient-poster.webp" alt="Un couple tient son cadre Nostalie"><figcaption>Amoureux</figcaption></figure>
       </div>
-    </div>
-  </section>
-
-  <!-- COMMENT CA MARCHE -->
-  <section class="section alt" id="comment">
-    <div class="section-inner">
-      <div class="section-head">
-        <span class="kicker">Comment ça marche</span>
-        <h2>Trois minutes de votre côté</h2>
-        <p>Mise en page, jeux, impression, envoi : c'est nous.</p>
-      </div>
-      <div class="howto">
-        <div class="how-step">
-          <h4>Vous choisissez vos photos</h4>
-          <p>Depuis le web ou l'app, en quelques minutes.</p>
-        </div>
-        <div class="how-step">
-          <h4>Le contenu se génère</h4>
-          <p>Jeux, définitions, rébus, montage du puzzle. Vous corrigez ce que vous voulez.</p>
-        </div>
-        <div class="how-step">
-          <h4>Ça arrive chez eux</h4>
-          <p>Par la poste, ou en direct sur le cadre écran.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- APERCU LIVE -->
-  <section class="section" id="apercu">
-    <div class="section-inner">
-      <div class="section-head">
-        <span class="kicker">Aperçu</span>
-        <h2>Une vraie affiche, générée en direct</h2>
-        <p>L'affiche envoyée à vos proches, fabriquée ici avec des données de démo.</p>
-      </div>
-      <div class="live-poster-wrap" id="livePosterPreview"></div>
-      <div class="preview-cta" style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
-        <a class="btn ghost" href="view.html?demo=1"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg> Essayer la version interactive</a>
-        <a class="btn ghost" href="poster.html?demo=1">Voir l'affiche imprimable</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TARIFS -->
-  <section class="section alt" id="tarifs">
-    <div class="section-inner">
-      <div class="section-head">
-        <span class="kicker">Tarifs</span>
-        <h2>Un prix par produit, sans engagement</h2>
-        <p>On arrête quand on veut.</p>
-      </div>
-      <div class="pricing">
-
-        <div class="price-card featured">
-          <span class="badge">Le plus choisi</span>
-          <div class="pname">Cadre jeu</div>
-          <span class="amount">19,90 €</span>
-          <span class="period">par mois · cadre en bois offert</span>
-          <p class="desc">Une nouvelle affiche à jeux chaque mois.</p>
-          <ul class="prod-list">
-            <li>5 jeux générés automatiquement</li>
-            <li>Vidéo surprise incluse</li>
-            <li>29,90 € en création unique</li>
-          </ul>
-          <a class="btn" href="produit.html?p=cadre-jeu">Choisir cette offre</a>
-        </div>
-
-        <div class="price-card">
-          <div class="pname">Puzzle photo</div>
-          <span class="amount">24,90 €</span>
-          <span class="period">par mois · livraison comprise</span>
-          <p class="desc">Un puzzle 200 pièces envoyé tous les mois.</p>
-          <ul class="prod-list">
-            <li>1 photo ou un assemblage</li>
-            <li>Boîte personnalisée</li>
-            <li>34,90 € à l'unité</li>
-          </ul>
-          <a class="btn ghost" href="produit.html?p=puzzle">Choisir cette offre</a>
-        </div>
-
-        <div class="price-card">
-          <div class="pname">Cadre photo écran</div>
-          <span class="amount">9 €</span>
-          <span class="period">par mois · + 89 € l'écran</span>
-          <p class="desc">L'écran une fois, puis l'abonnement qui l'alimente.</p>
-          <ul class="prod-list">
-            <li>Photos et contributeurs illimités</li>
-            <li>Wi-Fi, aimanté ou encadré</li>
-            <li>App iOS et Android incluse</li>
-          </ul>
-          <a class="btn ghost" href="produit.html?p=cadre-ecran">Choisir cette offre</a>
-        </div>
-
-      </div>
-      <p class="price-note">Tarifs de lancement · Livraison France comprise · Résiliable à tout moment.</p>
     </div>
   </section>
 
   <!-- APP MOBILE -->
-  <section class="section" id="app">
+  <section class="section alt" id="app">
     <div class="section-inner">
       <div class="app-card">
         <div>
           <span class="kicker">App mobile</span>
-          <h2>Toute la maison dans votre poche</h2>
-          <p>Envoyez vos photos au cadre écran, préparez vos puzzles, créez vos jeux.</p>
+          <h2>Tout part de votre téléphone</h2>
           <div class="store-btns">
             <a class="store-btn" href="#app" aria-label="Télécharger sur l'App Store">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.3 1-4.2 2.5-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.5 1.3 0 1.8-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.2-1.2 3.1-2.5.7-1 1-1.9 1.2-2.4-2.6-1-2.6-3.7-2.6-4.6zM14 5.6c.7-.9 1.2-2.1 1-3.3-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.1.1 2.3-.6 3.1-1.5z"/></svg>
@@ -378,10 +273,7 @@
               <span><span class="s1">Disponible sur</span><span class="s2">Google Play</span></span>
             </a>
           </div>
-          <div class="app-note">
-            <span class="app-qr"><img loading="lazy" decoding="async" id="appQr" alt="QR code vers la page Nostalie"></span>
-            Bientôt sur iOS et Android. En attendant, tout fonctionne déjà depuis le navigateur.
-          </div>
+          <p class="tiny-note">Bientôt sur iOS et Android. Déjà dispo sur le web.</p>
         </div>
         <div class="phone">
           <div class="phone-screen">
@@ -399,38 +291,13 @@
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section alt" id="faq">
-    <div class="section-inner">
-      <div class="section-head">
-        <span class="kicker">Questions</span>
-        <h2>Ce qu'on nous demande le plus</h2>
-      </div>
-      <div class="faq">
-        <details open>
-          <summary>Faut-il être à l'aise avec la technologie ?</summary>
-          <p>Non. Celui qui reçoit n'a rien à installer. Seul celui qui envoie utilise le site ou l'app.</p>
-        </details>
-        <details>
-          <summary>Qu'est-ce qui est généré exactement ?</summary>
-          <p>La grille de mots fléchés, les définitions, les rébus, le pêle-mêle. Tout reste modifiable à la main.</p>
-        </details>
-        <details>
-          <summary>Le cadre en bois est-il renvoyé à chaque fois ?</summary>
-          <p>Non, une seule fois. Ensuite vous ne recevez que l'affiche, à glisser dans le cadre.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
   <!-- CTA FINAL -->
   <section class="section">
     <div class="cta-banner">
       <img loading="lazy" decoding="async" class="cta-photo" src="image/papy-remplit-affiche.webp" alt="Un grand-père remplit son affiche Nostalie au stylo">
       <div class="cta-text">
         <h2>Le prochain souvenir, il est où ?</h2>
-        <p>Quelques minutes suffisent.</p>
-        <a class="btn" href="create.html"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg> Créer mon premier cadre</a>
+        <a class="btn" href="create.html"><svg class="icon ic"><use href="#i-spark"/></svg> Créer mon premier cadre</a>
       </div>
     </div>
   </section>
@@ -439,24 +306,29 @@
     <div class="footer-inner">
       <div><b>Nostalie</b> — vos souvenirs, en vrai.</div>
       <div class="footer-links">
-        <a href="#produits">Nos produits</a>
+        <a href="#produits">Produits</a>
         <a href="#noel">Pack Noël</a>
-        <a href="#tarifs">Tarifs</a>
-        <a href="#app">App mobile</a>
         <a href="create.html">Créer mon cadre</a>
         <a href="packs.html">Nos packs</a>
       </div>
     </div>
   </footer>
 
+  <script src="icones.js?v=1"></script>
   <script src="nav.js?v=5"></script>
   <script src="app.js?v=8"></script>
   <script>
-
-    renderPosterInto(document.getElementById('livePosterPreview'), buildDemoBoard(), {});
-    document.getElementById('appQr').src =
-      'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=' +
-      encodeURIComponent(location.origin + location.pathname);
+    // L'affiche est dessinée à sa taille réelle (820 px) puis réduite à la largeur de la colonne.
+    (function () {
+      const wrap = document.getElementById('livePosterPreview');
+      const inner = document.createElement('div');
+      inner.className = 'jeu-poster-inner';
+      wrap.appendChild(inner);
+      renderPosterInto(inner, buildDemoBoard(), {});
+      const fit = () => wrap.style.setProperty('--s', wrap.clientWidth / 820);
+      fit();
+      addEventListener('resize', fit);
+    })();
   </script>
 </body>
 </html>
